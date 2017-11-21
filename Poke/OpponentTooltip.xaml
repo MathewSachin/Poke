@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Poke.OpponentTooltip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Poke">
+    <StackPanel Background="White">
+        <TextBlock>
+            <Run Text="{Binding Name, Mode=OneWay}"/>
+            <Run Text="{Binding Gender, Mode=OneWay, Converter={StaticResource GenderToSymbolConverter}}"
+                 Foreground="{Binding Gender, Converter={StaticResource GenderToColorConverter}}"/>
+            (Lv. <Run Text="{Binding Level, Mode=OneWay}"/>)
+            <Run Text="{Binding NonVolatileStatus, Converter={StaticResource StatusToDisplayConverter}}"
+                 Background="{Binding NonVolatileStatus, Converter={StaticResource StatusToColorConverter}}"
+                 Foreground="White"/>
+        </TextBlock>
+        <ProgressBar Margin="0,5"
+                     Height="5"
+                     Maximum="{Binding Stats.MaxHP}"
+                     Value="{Binding Stats.CurrentHP, Mode=OneWay}"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding PrimaryType}"
+                   FontSize="10"
+                   Padding="2"
+                   Foreground="White"
+                   Background="{Binding PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
+            <Label Content="{Binding SecondaryType}"
+                   FontSize="10"
+                   Padding="2"
+                   Foreground="White"
+                   Background="{Binding SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

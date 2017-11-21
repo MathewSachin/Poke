@@ -1,0 +1,23 @@
+﻿<Window x:Class="Poke.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Poke"
+        Title="Poke" Height="300" Width="300">
+    <StackPanel VerticalAlignment="Center">
+        <Button Content="Battle Simulator"
+                Click="OpenBattleSimulator"
+                Margin="5"/>
+        <Button Content="Double Battle Simulator"
+                Click="OpenDoubleSimulator"
+                Margin="5"/>
+        <Button Content="Triple Battle Simulator"
+                Click="OpenTripleSimulator"
+                Margin="5"/>
+        <Button Content="Type Effectiveness"
+                Click="OpenTypeEffectiveness"
+                Margin="5"/>
+        <Button Content="Natures"
+                Click="OpenNatures"
+                Margin="5"/>
+    </StackPanel>
+</Window>

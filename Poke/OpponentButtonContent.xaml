@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Poke.OpponentButtonContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Poke"
+             Background="#B7FFFFFF">
+    <StackPanel Margin="4">
+        <TextBlock Text="{Binding Name}"
+                    Margin="0,0,0,2"/>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding PrimaryType}"
+                    FontSize="10"
+                    Padding="2"
+                    Foreground="White"
+                    Background="{Binding PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
+            <Label Content="{Binding SecondaryType}"
+                    FontSize="10"
+                    Padding="2"
+                    Foreground="White"
+                    Background="{Binding SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
+        </StackPanel>
+    </StackPanel>
+    <UserControl.ToolTip>
+        <local:OpponentTooltip/>
+    </UserControl.ToolTip>
+</UserControl>

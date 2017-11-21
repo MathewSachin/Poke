@@ -1,0 +1,195 @@
+﻿<Window x:Class="Poke.BattleSimulatorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Poke"
+        xmlns:poke="clr-namespace:Poke;assembly=Core"
+        Title="Pokemon Battle Simulator"
+        Height="800"
+        Width="450"
+        ResizeMode="NoResize">
+    <Window.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="{Binding Weather, Converter={StaticResource WeatherToColorConverter}}" Offset="0"/>
+            <GradientStop Color="White" Offset="0.5"/>
+            <GradientStop Color="{Binding Weather, Converter={StaticResource WeatherToColorConverter}}" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.DataContext>
+        <poke:BattleViewModel/>
+    </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Key="A"
+                    Command="{Binding ContinueCommand}"/>
+        <KeyBinding Key="B"
+                    Command="{Binding CancelCommand}"/>
+    </Window.InputBindings>
+    <DockPanel Margin="5">
+        <local:Switcher DockPanel.Dock="Bottom"/>
+        
+        <CheckBox DockPanel.Dock="Bottom"
+                  Content="Mega Evolve"
+                  HorizontalAlignment="Center"
+                  Margin="0,5"
+                  IsChecked="{Binding UseMegaEvolution, Mode=TwoWay}"
+                  Visibility="{Binding CanMegaEvolve, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <ItemsControl DockPanel.Dock="Bottom"
+                      ItemsSource="{Binding SelectOpponent}"
+                      Visibility="{Binding BattleState, ConverterParameter={x:Static poke:BattleState.Target}, Converter={StaticResource EqualityConverter}}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Margin="3"
+                            HorizontalContentAlignment="Stretch"
+                            CommandParameter="{Binding}"
+                            Command="{Binding DataContext.TargetCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}">
+                        <local:OpponentButtonContent/>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel ItemWidth="100"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>
+
+        <local:MoveSelector DockPanel.Dock="Bottom"/>
+
+        <local:TextDisplay DockPanel.Dock="Bottom"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+          
+            <StackPanel>
+                <ItemsControl ItemsSource="{Binding OpponentSide.Battling}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:StatusControl/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <local:PokeballCounter DataContext="{Binding OpponentSide.Party}"
+                                       HorizontalAlignment="Right"/>
+            </StackPanel>
+
+            <ItemsControl ItemsSource="{Binding OpponentSide.Battling}"
+                          Grid.Column="1">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Rectangle Height="5"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,20"
+                                       Fill="#2D333333"/>
+                            <DockPanel Visibility="{Binding Stats.CurrentHP, Converter={StaticResource NotFaintedToVisibilityConverter}, TargetNullValue=0}">
+                                <!--<local:BattlingSprite DataContext="{Binding Converter={StaticResource PokemonSpriteConverter}, ConverterParameter=Front}"/>-->
+                                <local:BattlingSprite>
+                                    <local:BattlingSprite.DataContext>
+                                        <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
+                                                      ConverterParameter="Front">
+                                            <MultiBinding.Bindings>
+                                                <Binding/>
+                                                <Binding Path="Species"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </local:BattlingSprite.DataContext>
+                                </local:BattlingSprite>
+                                <DockPanel.ToolTip>
+                                    <local:OpponentTooltip/>
+                                </DockPanel.ToolTip>
+                            </DockPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <ItemsControl ItemsSource="{Binding PlayerSide.Battling}"
+                          Grid.Row="1">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Rectangle Height="5"
+                                       VerticalAlignment="Bottom"
+                                       Margin="10,20"
+                                       Fill="#2D333333"/>
+                            <DockPanel Visibility="{Binding Stats.CurrentHP, Converter={StaticResource NotFaintedToVisibilityConverter}, TargetNullValue=0}">
+                                <!--<local:BattlingSprite DataContext="{Binding Converter={StaticResource PokemonSpriteConverter}, ConverterParameter=Back}"/>-->
+                                <local:BattlingSprite>
+                                    <local:BattlingSprite.DataContext>
+                                        <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
+                                                      ConverterParameter="Back">
+                                            <MultiBinding.Bindings>
+                                                <Binding/>
+                                                <Binding Path="Species"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </local:BattlingSprite.DataContext>
+                                </local:BattlingSprite>
+                                <DockPanel.ToolTip>
+                                    <local:PokemonTooltip/>
+                                </DockPanel.ToolTip>
+                            </DockPanel>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Border Grid.Row="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Background="#E7ef6c00"
+                    Margin="-25,0,0,0"
+                    Padding="20,10,15,10"
+                    CornerRadius="20"
+                    Visibility="{Binding AbilityPlayer, Converter={StaticResource NullToVisibleConverter}}">
+                <Label Content="{Binding AbilityPlayer}"
+                       Foreground="White"/>
+            </Border>
+
+            <Border Grid.Column="1"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Background="#E76a1b9a"
+                    Margin="0,0,-25,0"
+                    Padding="15,10,20,10"
+                    CornerRadius="20"
+                    Visibility="{Binding AbilityOpponent, Converter={StaticResource NullToVisibleConverter}}">
+                <Label Content="{Binding AbilityOpponent}"
+                       Foreground="White"/>
+            </Border>
+
+            <StackPanel Grid.Row="1"
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom">
+                <ItemsControl ItemsSource="{Binding PlayerSide.Battling}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:StatusControl/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <local:PokeballCounter DataContext="{Binding PlayerSide.Party}"
+                                       HorizontalAlignment="Right"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
+</Window>

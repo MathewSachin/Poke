@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="Poke.PokeballCounter"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Poke">
+    <ItemsControl ItemsSource="{Binding}"
+                  Margin="5">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Path Fill="{Binding Stats.CurrentHP, TargetNullValue=0, Converter={StaticResource NotFaintedConverter}}"
+                      Data="{StaticResource Icon_Pokeball}"
+                      Opacity="0.6"/>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

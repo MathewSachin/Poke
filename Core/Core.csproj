@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{6D3A10DF-B206-4305-BF10-31D65E8BBB51}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Core</RootNamespace>
+    <AssemblyName>Core</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CsQuery, Version=1.3.3.249, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsQuery.1.3.4\lib\net40\CsQuery.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Abilities\Ability.cs" />
+    <Compile Include="Abilities\AbilityDefinitions.cs" />
+    <Compile Include="Battle\Commands.cs" />
+    <Compile Include="Battle\Fields.cs" />
+    <Compile Include="Battle\BattleState.cs" />
+    <Compile Include="Battle\BattleViewModel.cs" />
+    <Compile Include="Battle\Weather.cs" />
+    <Compile Include="GenderRatio.cs" />
+    <Compile Include="HeldItems\Berry.cs" />
+    <Compile Include="HeldItems\DamageReductionBerry.cs" />
+    <Compile Include="HeldItems\Drive.cs" />
+    <Compile Include="HeldItems\Gem.cs" />
+    <Compile Include="HeldItems\Memory.cs" />
+    <Compile Include="SpriteManager.cs" />
+    <Compile Include="Z\ExclusiveZCrystal.cs" />
+    <Compile Include="Z\TypeZCrystal.cs" />
+    <Compile Include="Z\ZCrystal.cs" />
+    <Compile Include="Moves\ContestCategory.cs" />
+    <Compile Include="Moves\CriticalHit.cs" />
+    <Compile Include="DamageFunction.cs" />
+    <Compile Include="DamageFunctionFactory.cs" />
+    <Compile Include="Lists.cs" />
+    <Compile Include="Moves\PowerFunction.cs" />
+    <Compile Include="MVVM\DelegateCommand.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="Flavour.cs" />
+    <Compile Include="Gender.cs" />
+    <Compile Include="HeldItems\HeldItem.cs" />
+    <Compile Include="HeldItems\Plate.cs" />
+    <Compile Include="PokemonMovePair.cs" />
+    <Compile Include="PokemonMovePairComparer.cs" />
+    <Compile Include="MegaEvolution.cs" />
+    <Compile Include="HeldItems\MegaStone.cs" />
+    <Compile Include="Pokemon\SpeciesDefinitions.cs" />
+    <Compile Include="Side.cs" />
+    <Compile Include="Moves\Move.cs" />
+    <Compile Include="Moves\MoveFactory.cs" />
+    <Compile Include="Moves\MoveFlags.cs" />
+    <Compile Include="Moves\MoveInfo.cs" />
+    <Compile Include="Moves\MoveKind.cs" />
+    <Compile Include="Moves\MoveSet.cs" />
+    <Compile Include="Moves\MoveTarget.cs" />
+    <Compile Include="Nature.cs" />
+    <Compile Include="NonVolatileStatusDefinition.cs" />
+    <Compile Include="MVVM\NotifyPropertyChanged.cs" />
+    <Compile Include="Pokemon\Pokemon.cs" />
+    <Compile Include="Pokemon\PokemonFactory.cs" />
+    <Compile Include="Pokemon\PokemonSpecies.cs" />
+    <Compile Include="Stats\Stat.cs" />
+    <Compile Include="Stats\StatChange.cs" />
+    <Compile Include="Stats\Stats.cs" />
+    <Compile Include="StatusCondition.cs" />
+    <Compile Include="Moves\StatusMoves.cs" />
+    <Compile Include="TypeEffectiveness.cs" />
+    <Compile Include="HeldItems\TypeEnhancement.cs" />
+    <Compile Include="Types.cs" />
+    <Compile Include="Weather.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

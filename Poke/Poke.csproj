@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31477FBF-118E-4F2E-959F-AEB3D584CE92}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Poke</RootNamespace>
+    <AssemblyName>Poke</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>pokeball.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BattlingSprite.xaml.cs">
+      <DependentUpon>BattlingSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MoveButtonContent.xaml.cs">
+      <DependentUpon>MoveButtonContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MoveSelector.xaml.cs">
+      <DependentUpon>MoveSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NaturesWindow.xaml.cs">
+      <DependentUpon>NaturesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OpponentButtonContent.xaml.cs">
+      <DependentUpon>OpponentButtonContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PokeballCounter.xaml.cs">
+      <DependentUpon>PokeballCounter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OpponentTooltip.xaml.cs">
+      <DependentUpon>OpponentTooltip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PokemonTooltip.xaml.cs">
+      <DependentUpon>PokemonTooltip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatusControl.xaml.cs">
+      <DependentUpon>StatusControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SwitchButtonContent.xaml.cs">
+      <DependentUpon>SwitchButtonContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Switcher.xaml.cs">
+      <DependentUpon>Switcher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TextDisplay.xaml.cs">
+      <DependentUpon>TextDisplay.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TypeEffect.cs" />
+    <Compile Include="TypeEffectivenessWindow.xaml.cs">
+      <DependentUpon>TypeEffectivenessWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="TypeEffectivenessViewModel.cs" />
+    <Compile Include="ValueConverters\FaintedToColorConverter.cs" />
+    <Compile Include="ValueConverters\GenderToColorConverter.cs" />
+    <Compile Include="ValueConverters\GenderToSymbolConverter.cs" />
+    <Compile Include="ValueConverters\NotFaintedToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\NotFaintedConverter.cs" />
+    <Compile Include="ValueConverters\EqualityToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\PokemonSpriteConverter.cs" />
+    <Compile Include="ValueConverters\MoveKindToColorConverter.cs" />
+    <Compile Include="ValueConverters\WeatherToColorConverter.cs" />
+    <Compile Include="ValueConverters\StatusToColorConverter.cs" />
+    <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
+    <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
+    <Compile Include="ValueConverters\TypeToColorConverter.cs" />
+    <Page Include="BattleSimulatorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BattleSimulatorWindow.xaml.cs">
+      <DependentUpon>BattleSimulatorWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="BattlingSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoveButtonContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MoveSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NaturesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpponentButtonContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PokeballCounter.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OpponentTooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PokemonTooltip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatusControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SwitchButtonContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Switcher.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TextDisplay.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TypeEffectivenessWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{6d3a10df-b206-4305-bf10-31d65e8bbb51}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pokeball.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mega.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

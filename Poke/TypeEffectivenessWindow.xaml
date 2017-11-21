@@ -1,0 +1,113 @@
+﻿<Window x:Class="Poke.TypeEffectivenessWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Poke"
+        Title="Type Effectiveness"
+        Height="400"
+        Width="500">
+    <Window.DataContext>
+        <local:TypeEffectivenessViewModel/>
+    </Window.DataContext>
+    <Window.Resources>
+        <Style TargetType="ItemsControl" x:Key="TypeEffects">
+            <Setter Property="ItemTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <DockPanel Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"
+                                   Margin="3"
+                                   Width="100">
+                            <Label DockPanel.Dock="Right"
+                                   Content="{Binding Effectiveness}"
+                                   ContentStringFormat="{}x {0}"
+                                   Foreground="#B7000000"
+                                   Background="#27FFFFFF"
+                                   Margin="5,0,0,0"/>
+                            <Label Content="{Binding Type}"
+                                   Foreground="White"/>
+                        </DockPanel>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="ItemsPanel">
+                <Setter.Value>
+                    <ItemsPanelTemplate>
+                        <WrapPanel/>
+                    </ItemsPanelTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <StackPanel Margin="5">
+        <Grid Margin="0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Primary Type"
+                   FontWeight="Bold"/>
+
+            <Label Content="Secondary Type"
+                   FontWeight="Bold"
+                   Grid.Column="2"/>
+
+            <ComboBox ItemsSource="{Binding PrimaryTypesAvailable}"
+                      SelectedItem="{Binding PrimaryType, Mode=TwoWay}"
+                      HorizontalContentAlignment="Stretch"
+                      Grid.Row="1">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="{Binding Converter={StaticResource TypeToColorConverter}}"
+                                   Text="{Binding}"
+                                   Foreground="White"
+                                   Margin="-5,-2,-21,-2"
+                                   Padding="1"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <ComboBox ItemsSource="{Binding SecondaryTypesAvailable}"
+                      SelectedValue="{Binding SecondaryType, Mode=TwoWay}"
+                      SelectedValuePath="Key"
+                      Grid.Row="1"
+                      Grid.Column="2"
+                      HorizontalContentAlignment="Stretch">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="{Binding Key, Converter={StaticResource TypeToColorConverter}, ConverterParameter='#777777'}"
+                                   Text="{Binding Value}"
+                                   Foreground="White"
+                                   Margin="-5,-2,-21,-2"
+                                   Padding="1"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </Grid>
+        
+        <Label Content="Weak against"
+               FontWeight="Bold"/>
+        
+        <ItemsControl ItemsSource="{Binding WeakAgainst}"
+                      Style="{StaticResource TypeEffects}"
+                      Margin="2,0,0,0"/>
+        
+        <Label Content="Resistant against"
+               FontWeight="Bold"/>
+
+        <ItemsControl ItemsSource="{Binding ResistantAgainst}"
+                      Style="{StaticResource TypeEffects}"
+                      Margin="2,0,0,0"/>
+
+        <Label Content="Normal damage from"
+               FontWeight="Bold"/>
+        
+        <ItemsControl ItemsSource="{Binding NormalDamage}"
+                      Style="{StaticResource TypeEffects}"
+                      Margin="2,0,0,0"/>
+    </StackPanel>
+</Window>

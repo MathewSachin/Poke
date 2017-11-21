@@ -1,0 +1,68 @@
+﻿<Window x:Class="Poke.NaturesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Poke"
+        xmlns:poke="clr-namespace:Poke;assembly=Core"
+        Title="Natures"
+        Height="700"
+        Width="300"
+        DataContext="{x:Static poke:Lists.Natures}">
+    <Grid>
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{Binding}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderThickness="0,0,0,1"
+                                BorderBrush="#B7000000">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                            
+                                <Label Content="{Binding}"
+                                       FontWeight="Bold"
+                                       Grid.ColumnSpan="2"/>
+                            
+                                <Label Content="Increased Stat:"
+                                       Grid.Row="1"/>
+                            
+                                <Label Content="{Binding IncreasedStat, TargetNullValue='--'}"
+                                       Grid.Row="1"
+                                       Grid.Column="1"/>
+                            
+                                <Label Content="Decreased Stat:"
+                                       Grid.Row="2"/>
+                            
+                                <Label Content="{Binding DecreasedStat, TargetNullValue='--'}"
+                                       Grid.Row="2"
+                                       Grid.Column="1"/>
+                            
+                                <Label Content="Favourite Flavour:"
+                                       Grid.Row="3"/>
+                            
+                                <Label Content="{Binding FavouriteFlavour, TargetNullValue='--'}"
+                                       Grid.Row="3"
+                                       Grid.Column="1"/>
+                            
+                                <Label Content="Disliked Flavour"
+                                       Grid.Row="4"/>
+                            
+                                <Label Content="{Binding DislikedFlavour, TargetNullValue='--'}"
+                                       Grid.Row="4"
+                                       Grid.Column="1"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

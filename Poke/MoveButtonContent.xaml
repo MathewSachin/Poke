@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="Poke.MoveButtonContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Poke"
+             Background="#B7FFFFFF">
+    <StackPanel>
+        <Label Content="{Binding Name}"/>
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Right"
+                       Margin="5,0">
+                <Run Text="{Binding PPLeft}"/> / <Run Text="{Binding PP, Mode=OneWay}"/>
+            </TextBlock>
+            <Label Content="{Binding Type}"
+                   FontSize="10"
+                   Margin="3"
+                   Padding="2"
+                   HorizontalAlignment="Left"
+                   Foreground="White"
+                   Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
+        </DockPanel>
+    </StackPanel>
+    <UserControl.ToolTip>
+        <DockPanel Background="White"
+                   Width="200"
+                   LastChildFill="False">
+            <Label Content="{Binding Name}"
+                   DockPanel.Dock="Top"/>
+
+            <TextBlock Text="{Binding Info.Description}"
+                       TextWrapping="Wrap"
+                       Margin="5,15"
+                       DockPanel.Dock="Bottom"/>
+
+            <Grid ShowGridLines="True"
+                  DockPanel.Dock="Bottom"
+                  Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="Power"/>
+                <Label Content="Accuracy"
+                       Grid.Column="1"/>
+                <Label Content="PP"
+                       Grid.Column="2"/>
+
+                <Label Content="{Binding Info.Power, TargetNullValue='--'}"
+                       Grid.Row="1"/>
+
+                <Label Content="{Binding Info.Accuracy, TargetNullValue='--'}"
+                       Grid.Row="1"
+                       Grid.Column="1"/>
+
+                <Label Content="{Binding PPLeft}"
+                       Grid.Row="1"
+                       Grid.Column="2"/>
+            </Grid>
+
+            <Label Content="{Binding Kind}"
+                   Foreground="White"
+                   Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
+                   DockPanel.Dock="Right"
+                   Margin="3"
+                   FontSize="10"
+                   Padding="2"/>
+
+            <Label Content="{Binding Type}"
+                   FontSize="10"
+                   Margin="3"
+                   Padding="2"
+                   HorizontalAlignment="Left"
+                   Foreground="White"
+                   Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
+        </DockPanel>
+    </UserControl.ToolTip>
+</UserControl>
