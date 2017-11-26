@@ -10,7 +10,14 @@ namespace Poke
         {
             if (value[0] is Pokemon pokemon && parameter is string s)
             {
-                return SpriteManager.GetSpriteLink(pokemon, s == "Back");
+                try
+                {
+                    return SpriteManager.GetSpriteLink(pokemon, s == "Back");
+                }
+                catch
+                {
+                    return "unknown.png";
+                }
             }
 
             return null;

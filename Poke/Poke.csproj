@@ -194,5 +194,8 @@
   <ItemGroup>
     <Resource Include="mega.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="unknown.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
