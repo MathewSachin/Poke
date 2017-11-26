@@ -6,31 +6,15 @@ namespace Poke
 {
     public static class SpriteManager
     {
-        public static Stream GetStream(string Link)
+        static SpriteManager()
         {
-            const int bytesToRead = 100;
+            LocalPrefix = Path.Combine(Path.GetTempPath(), "pkimg");
 
-            var request = WebRequest.Create(Link);
-            request.Timeout = -1;
-            
-            var reader = new BinaryReader(request.GetResponse().GetResponseStream());
-            var memoryStream = new MemoryStream();
-
-            var bytebuffer = new byte[bytesToRead];
-            var bytesRead = reader.Read(bytebuffer, 0, bytesToRead);
-
-            while (bytesRead > 0)
-            {
-                memoryStream.Write(bytebuffer, 0, bytesRead);
-                bytesRead = reader.Read(bytebuffer, 0, bytesToRead);
-            }
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            return memoryStream;
+            if (!Directory.Exists(LocalPrefix))
+                Directory.CreateDirectory(LocalPrefix);
         }
-
-        static string MakeSpriteLink(int Number, bool Back, bool Mega, bool Alolan, Gender Gender, bool Shiny)
+        
+        static string GetSpriteFileName(int Number, bool Back, bool Mega, bool Alolan, Gender Gender, bool Shiny)
         {
             var b = Back ? "b_" : "";
 
@@ -56,8 +40,11 @@ namespace Poke
 
             var s = Shiny ? "_s" : "";
 
-            return $"https://bulbapedia.bulbagarden.net/wiki/File:Spr_{b}7s_{Number:D3}{m}{a}{gender}{s}.png";
+            return $"Spr_{b}7s_{Number:D3}{m}{a}{gender}{s}.png";
         }
+
+        const string BulbapediaPrefix = "https://bulbapedia.bulbagarden.net/wiki/File:";
+        static readonly string LocalPrefix;
 
         public static string GetSpriteLink(Pokemon Pokemon, bool Back = false)
         {
@@ -79,14 +66,23 @@ namespace Poke
 
             string GetLink(Gender Gender = Gender.Genderless)
             {
-                var link = MakeSpriteLink(Pokemon.Species.Number, Back, mega, alolan, Gender, Pokemon.Shiny);
+                var fileName = GetSpriteFileName(Pokemon.Species.Number, Back, mega, alolan, Gender, Pokemon.Shiny);
 
-                var request = WebRequest.Create(link);
-                request.Timeout = -1;
+                var localPath = Path.Combine(LocalPrefix, fileName);
 
-                var stream = request.GetResponse().GetResponseStream();
+                if (File.Exists(localPath))
+                    return localPath;
+                
+                using (var w = new WebClient())
+                {
+                    var content = w.DownloadString(BulbapediaPrefix + fileName);
 
-                return "https:" + CQ.Create(stream)[".fullImageLink a"].Attr("href");
+                    var imgLink = "https:" + CQ.Create(content)[".fullImageLink a"].Attr("href");
+
+                    w.DownloadFile(imgLink, localPath);
+                }
+
+                return localPath;
             }
 
             // Mega Charizard
