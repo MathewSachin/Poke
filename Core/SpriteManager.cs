@@ -86,7 +86,7 @@ namespace Poke
             }
 
             // Mega Charizard
-            if (mega && name.StartsWith(nameof(PokemonFactory.Charizard)))
+            if (mega && Pokemon.Species.Number == PokemonSpecies.Charizard.Number)
             {
                 var kind = name[name.Length - 1];
 
@@ -98,16 +98,17 @@ namespace Poke
                 // Gender variants
                 case nameof(PokemonFactory.Alakazam):
                 case nameof(PokemonFactory.Blaziken):
-                case nameof(PokemonFactory.Venusaur):
-                case nameof(PokemonFactory.Pikachu):
                 case nameof(PokemonFactory.Gyarados):
-                case nameof(PokemonFactory.Meganium):
-                case nameof(PokemonFactory.Politoed):
-                case nameof(PokemonFactory.Steelix):
-                case nameof(PokemonFactory.Scizor):
                 case nameof(PokemonFactory.Heracross):
                 case nameof(PokemonFactory.Houndoom):
+                case nameof(PokemonFactory.Meganium):
+                case nameof(PokemonFactory.Milotic):
+                case nameof(PokemonFactory.Pikachu):
+                case nameof(PokemonFactory.Politoed):
+                case nameof(PokemonFactory.Scizor):
+                case nameof(PokemonFactory.Steelix):
                 case nameof(PokemonFactory.Toxicroak):
+                case nameof(PokemonFactory.Venusaur):
                     return GetLink(Pokemon.Gender);
 
                 default:

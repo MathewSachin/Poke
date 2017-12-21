@@ -283,6 +283,10 @@
             GenderRatio = new GenderRatio(87.5, 12.5)
         };
 
+        public static PokemonSpecies Milotic { get; } = new PokemonSpecies(350, nameof(Milotic), Types.Water, null,
+            95, 60, 79, 100, 125, 81,
+            Ability.MarvelScale);
+
         public static PokemonSpecies Ninetales { get; } = new PokemonSpecies(38, nameof(Ninetales), Types.Fire, null,
             73, 76, 75, 81, 100, 100,
             Ability.FlashFire, HiddenAbility: Ability.Drought)

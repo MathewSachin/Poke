@@ -593,6 +593,21 @@ namespace Poke
             }
         }
 
+        public static Pokemon Milotic
+        {
+            get
+            {
+                var pokemon = new Pokemon(PokemonSpecies.Milotic, 55);
+
+                pokemon.Moves.Assign(MoveInfo.WaterPulse,
+                    MoveInfo.DragonPulse,
+                    MoveInfo.IceBeam,
+                    MoveInfo.BrutalSwing);
+
+                return pokemon;
+            }
+        }
+
         public static Pokemon Ninetales
         {
             get
