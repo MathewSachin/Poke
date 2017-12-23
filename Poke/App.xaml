@@ -11,12 +11,12 @@
         <local:GenderToSymbolConverter x:Key="GenderToSymbolConverter"/>
         <local:GenderToColorConverter x:Key="GenderToColorConverter"/>
         <local:NullToVisibleConverter x:Key="NullToVisibleConverter"/>
-        <local:NotFaintedConverter x:Key="NotFaintedConverter"/>
         <local:WeatherToColorConverter x:Key="WeatherToColorConverter"/>
         <local:FaintedToColorConverter x:Key="FaintedToColorConverter"/>
         <local:EqualityToVisibilityConverter x:Key="EqualityConverter"/>
         <local:NotFaintedToVisibilityConverter x:Key="NotFaintedToVisibilityConverter"/>
         <local:MoveKindToColorConverter x:Key="MoveKindToColorConverter"/>
+        <local:PokeballColorConverter x:Key="PokeballColorConverter"/>
         
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 

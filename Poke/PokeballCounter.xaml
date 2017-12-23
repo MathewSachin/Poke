@@ -11,9 +11,17 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
             <DataTemplate>
-                <Path Fill="{Binding Stats.CurrentHP, TargetNullValue=0, Converter={StaticResource NotFaintedConverter}}"
-                      Data="{StaticResource Icon_Pokeball}"
-                      Opacity="0.6"/>
+                <Path Data="{StaticResource Icon_Pokeball}"
+                      Opacity="0.6">
+                    <Path.Fill>
+                        <MultiBinding Converter="{StaticResource PokeballColorConverter}">
+                            <Binding/>
+                            <Binding Path="Stats.CurrentHP"/>
+                            <Binding Path="NonVolatileStatus"/>
+                            <Binding Path="ConfusionCounter"/>
+                        </MultiBinding>
+                    </Path.Fill>
+                </Path>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>

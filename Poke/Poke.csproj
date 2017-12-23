@@ -98,8 +98,8 @@
     <Compile Include="ValueConverters\GenderToColorConverter.cs" />
     <Compile Include="ValueConverters\GenderToSymbolConverter.cs" />
     <Compile Include="ValueConverters\NotFaintedToVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\NotFaintedConverter.cs" />
     <Compile Include="ValueConverters\EqualityToVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\PokeballColorConverter.cs" />
     <Compile Include="ValueConverters\PokemonSpriteConverter.cs" />
     <Compile Include="ValueConverters\MoveKindToColorConverter.cs" />
     <Compile Include="ValueConverters\WeatherToColorConverter.cs" />
