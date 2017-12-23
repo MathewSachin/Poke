@@ -46,6 +46,7 @@
     <Compile Include="Battle\BattleState.cs" />
     <Compile Include="Battle\BattleViewModel.cs" />
     <Compile Include="Battle\Weather.cs" />
+    <Compile Include="Z\ExclusiveZCrystalFactory.cs" />
     <Compile Include="Z\ZMoveSelectionViewModel.cs" />
     <Compile Include="GenderRatio.cs" />
     <Compile Include="HeldItems\Berry.cs" />

@@ -1,17 +1,15 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Poke
 {
-    public class ExclusiveZCrystal : ZCrystal
+    public partial class ExclusiveZCrystal : ZCrystal
     {
         readonly PokemonSpecies[] _supportedSpecies;
-        readonly Func<Move, MoveInfo> _upgrader;
 
-        public ExclusiveZCrystal(string CrystalName, MoveInfo BaseMove, string MoveName, Func<Move, MoveInfo> Upgrader, params PokemonSpecies[] SupportedSpecies) : base(CrystalName, BaseMove.Type, MoveName)
+        public ExclusiveZCrystal(string CrystalName, MoveInfo BaseMove, string MoveName, MoveInfo ZMove, params PokemonSpecies[] SupportedSpecies) : base(CrystalName, BaseMove.Type, MoveName)
         {
             this.BaseMove = BaseMove;
-            _upgrader = Upgrader;
+            this.ZMove = ZMove;
             _supportedSpecies = SupportedSpecies;
         }
 
@@ -20,11 +18,16 @@ namespace Poke
             return _supportedSpecies.Contains(Pokemon.Species) && Move.Info == BaseMove;
         }
 
-        public override MoveInfo Upgrade(Move Move)
+        public override MoveInfo Upgrade(Move Move) => ZMove;
+
+        static ExclusiveZCrystal MakeCrystal(string CrystalName, MoveInfo BaseMove, string MoveName, int Power, params PokemonSpecies[] SupportedSpecies)
         {
-            return _upgrader(Move);
+            return new ExclusiveZCrystal(CrystalName + " Z", BaseMove, MoveName,
+                new MoveInfo(MoveName, BaseMove.Type, BaseMove.Kind, Power, null, 1, null, true), SupportedSpecies);
         }
 
         public MoveInfo BaseMove { get; }
+
+        public MoveInfo ZMove { get; }
     }
 }
