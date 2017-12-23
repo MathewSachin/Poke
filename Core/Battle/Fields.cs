@@ -149,6 +149,47 @@ namespace Poke
             }
         }
 
+        bool _canZ, _useZ;
+
+        public bool CanZ
+        {
+            get => _canZ;
+            set
+            {
+                _canZ = value;
+
+                OnPropertyChanged();
+            }
+        }
+
+        public bool UseZ
+        {
+            get => _useZ;
+            set
+            {
+                _useZ = value;
+
+                BattleState = _useZ ? BattleState.Z : BattleState.Move;
+
+                OnPropertyChanged();
+            }
+        }
+
+        ZMoveSelectionViewModel _zSelector;
+
+        public ZMoveSelectionViewModel ZSelector
+        {
+            get => _zSelector;
+            set
+            {
+                _zSelector = value;
+                
+                OnPropertyChanged();
+
+                ZMoveCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         #region Status
         string _status;
 
@@ -169,7 +210,7 @@ namespace Poke
             {
                 _continueEvent.Reset();
 
-                await Task.Factory.StartNew(() => _continueEvent.WaitOne(1000));
+                await Task.Factory.StartNew(() => _continueEvent.WaitOne(3000));
             }
         }
         #endregion
@@ -237,7 +278,7 @@ namespace Poke
 
             _continueEvent.Reset();
 
-            await Task.Factory.StartNew(() => _continueEvent.WaitOne(1000));
+            await Task.Factory.StartNew(() => _continueEvent.WaitOne(3000));
 
             if (playerTurn)
                 AbilityPlayer = null;

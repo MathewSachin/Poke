@@ -33,6 +33,13 @@
                   IsChecked="{Binding UseMegaEvolution, Mode=TwoWay}"
                   Visibility="{Binding CanMegaEvolve, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
+        <CheckBox DockPanel.Dock="Bottom"
+                  Content="Z Power"
+                  HorizontalAlignment="Center"
+                  Margin="0,5"
+                  IsChecked="{Binding UseZ, Mode=TwoWay}"
+                  Visibility="{Binding CanZ, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
         <ItemsControl DockPanel.Dock="Bottom"
                       ItemsSource="{Binding SelectOpponent}"
                       Visibility="{Binding BattleState, ConverterParameter={x:Static poke:BattleState.Target}, Converter={StaticResource EqualityConverter}}">
@@ -54,6 +61,8 @@
         </ItemsControl>
 
         <local:MoveSelector DockPanel.Dock="Bottom"/>
+        
+        <local:ZMoveSelector DockPanel.Dock="Bottom"/>
 
         <local:TextDisplay DockPanel.Dock="Bottom"/>
 

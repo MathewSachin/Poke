@@ -6,12 +6,9 @@ namespace Poke
     public class TypeZCrystal : ZCrystal
     {
         readonly Func<Move, MoveInfo> _upgrader;
-
-        public Types Type { get; }
-
-        TypeZCrystal(string Name, Types Type, Func<Move, MoveInfo> Upgrader) : base(Name)
+        
+        TypeZCrystal(string Name, Types Type, string MoveName, Func<Move, MoveInfo> Upgrader) : base(Name, Type, MoveName)
         {
-            this.Type = Type;
             _upgrader = Upgrader;
         }
         
@@ -75,7 +72,7 @@ namespace Poke
 
         static TypeZCrystal MakeCrystal(string CrystalName, Types Type, string MoveName)
         {
-            return new TypeZCrystal(CrystalName, Type,
+            return new TypeZCrystal(CrystalName, Type, MoveName,
                 M => new MoveInfo(MoveName, Type, M.Kind, GetZPower(M.Info), null, 1, null, true));
         }
 

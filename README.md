@@ -6,6 +6,9 @@ A proper internet connection is required for the emulator since the sprites are 
 
 ## Lacking
 - Animation
-- Z Moves
+- Exclusive Z Moves
+- Status Z Moves
+- Many Pokemon
+- Many Abilities
 - Many Status Moves
 - Shifting Pokemon in Triple battles

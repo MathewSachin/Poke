@@ -13,6 +13,8 @@ namespace Poke
 
             MoveCommand = new DelegateCommand(OnMoveExecute, M => BattleState == BattleState.Move);
 
+            ZMoveCommand = new DelegateCommand(OnMoveExecute, OnZMoveCanExecute);
+
             SwitchCommand = new DelegateCommand(OnSwitchExecute, OnSwitchCanExecute);
 
             ContinueCommand = new DelegateCommand(M => _continueEvent.Set(), M => true);
@@ -24,7 +26,7 @@ namespace Poke
         
         async Task Reset()
         {
-            UseMegaEvolution = false;
+            UseMegaEvolution = UseZ = false;
             PlayerSide = OpponentSide = null;
             
             BattleState = BattleState.Wait;
@@ -47,6 +49,11 @@ namespace Poke
             await WriteStatus(text);
             
             PlayerSide = new Side(Format, arr[6].Invoke(), arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
+
+            // Assign a single Z Crystal
+            var zIndex = Random.Next(6);
+
+            PlayerSide.Party[zIndex].HeldItem = TypeZCrystal.Crystrals[PlayerSide.Party[zIndex].Moves[0].Type];
 
             OpponentSide.OpposingSide = PlayerSide;
             PlayerSide.OpposingSide = OpponentSide;
@@ -464,7 +471,7 @@ namespace Poke
                 if (pokemon != null)
                     yield return new PokemonMovePair(pokemon, null);
         }
-
+        
         async void BattleLoop()
         {
             while (true)
@@ -574,10 +581,17 @@ namespace Poke
 
                             CanMegaEvolve = !PlayerSide.UsedMegaEvolution && PlayerSide.Battling[i].CanMegaEvolve(out var _);
 
+                            CanZ = !PlayerSide.UsedZ
+                                && PlayerSide.Battling[i].HeldItem is ZCrystal zCrystal
+                                && PlayerSide.Battling[i].Moves.Any(M => zCrystal.Supports(PlayerSide.Battling[i], M));
+
+                            if (CanZ)
+                                ZSelector = new ZMoveSelectionViewModel(PlayerSide.Battling[i]);
+
                             await WaitForPlayer();
 
-                            CanMegaEvolve = false;
-
+                            CanMegaEvolve = CanZ = false;
+                            
                             // Switch
                             if (_toSwitch != null)
                             {
@@ -604,6 +618,14 @@ namespace Poke
                                     await WriteStatus("This move has no PP Left");
 
                                     continue;
+                                }
+
+                                if (UseZ && PlayerSide.Battling[i].HeldItem is ZCrystal z)
+                                {
+                                    move = new Move(z.Upgrade(move));
+
+                                    UseZ = false;
+                                    PlayerSide.UsedZ = true;
                                 }
 
                                 Pokemon target = null;

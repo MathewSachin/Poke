@@ -1,8 +1,8 @@
 ﻿namespace Poke
 {
-    public partial class MoveButtonContent
+    public partial class ZMoveSelector
     {
-        public MoveButtonContent()
+        public ZMoveSelector()
         {
             InitializeComponent();
         }

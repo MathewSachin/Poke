@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 namespace Poke
 {
     public partial class MoveInfo

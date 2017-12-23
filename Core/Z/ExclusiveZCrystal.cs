@@ -8,7 +8,7 @@ namespace Poke
         readonly PokemonSpecies[] _supportedSpecies;
         readonly Func<Move, MoveInfo> _upgrader;
 
-        public ExclusiveZCrystal(string Name, MoveInfo BaseMove, Func<Move, MoveInfo> Upgrader, params PokemonSpecies[] SupportedSpecies) : base(Name)
+        public ExclusiveZCrystal(string CrystalName, MoveInfo BaseMove, string MoveName, Func<Move, MoveInfo> Upgrader, params PokemonSpecies[] SupportedSpecies) : base(CrystalName, BaseMove.Type, MoveName)
         {
             this.BaseMove = BaseMove;
             _upgrader = Upgrader;

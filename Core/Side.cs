@@ -50,6 +50,19 @@ namespace Poke
                 OnPropertyChanged();
             }
         }
+
+        bool _usedZ;
+
+        public bool UsedZ
+        {
+            get => _usedZ;
+            set
+            {
+                _usedZ = value;
+                
+                OnPropertyChanged();
+            }
+        }
         
         public Side OpposingSide { get; set; }
     }

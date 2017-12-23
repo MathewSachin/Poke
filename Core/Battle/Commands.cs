@@ -10,6 +10,8 @@ namespace Poke
 
         public DelegateCommand MoveCommand { get; }
 
+        public DelegateCommand ZMoveCommand { get; }
+
         public DelegateCommand SwitchCommand { get; }
 
         public DelegateCommand ContinueCommand { get; }
@@ -69,6 +71,16 @@ namespace Poke
 
                 _battleEvent.Set();
             }
+        }
+
+        bool OnZMoveCanExecute(object Parameter)
+        {
+            if (Parameter is int index || Parameter is string s && int.TryParse(s, out index))
+            {
+                return ZSelector?.Available[index] ?? false;
+            }
+
+            return false;
         }
     }
 }

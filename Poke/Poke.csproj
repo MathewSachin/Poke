@@ -59,6 +59,9 @@
     <Compile Include="MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ZMoveSelector.xaml.cs">
+      <DependentUpon>ZMoveSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MoveSelector.xaml.cs">
       <DependentUpon>MoveSelector.xaml</DependentUpon>
     </Compile>
@@ -130,6 +133,10 @@
     <Page Include="MoveButtonContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ZMoveSelector.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MoveSelector.xaml">
       <SubType>Designer</SubType>

@@ -5,6 +5,7 @@ namespace Poke
         Wait,
         Move,
         Switch,
-        Target
+        Target,
+        Z
     }
 }
