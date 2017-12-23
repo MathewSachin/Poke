@@ -626,6 +626,7 @@ namespace Poke
 
                                     UseZ = false;
                                     PlayerSide.UsedZ = true;
+                                    BattleState = BattleState.Wait;
                                 }
 
                                 Pokemon target = null;

@@ -18,8 +18,13 @@
                 <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                 <Setter Property="Margin" Value="4"/>
                 <Setter Property="BorderThickness" Value="2"/>
-                <Setter Property="Background" Value="{Binding ZSelector.Type, Converter={StaticResource TypeToColorConverter}}"/>
-                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{Binding ZSelector.Type, Converter={StaticResource TypeToColorConverter}}"
+                                         Opacity="0.5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Padding" Value="5,10"/>
             </Style>
         </Grid.Resources>
         
