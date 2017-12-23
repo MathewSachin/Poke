@@ -237,7 +237,7 @@ namespace Poke
 
             _continueEvent.Reset();
 
-            await Task.Factory.StartNew(_continueEvent.WaitOne);
+            await Task.Factory.StartNew(() => _continueEvent.WaitOne(1000));
 
             if (playerTurn)
                 AbilityPlayer = null;
