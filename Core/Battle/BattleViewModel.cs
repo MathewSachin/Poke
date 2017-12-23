@@ -339,8 +339,14 @@ namespace Poke
                     return;
                 }
             }
-            
-            await WriteStatus($"{GetStatusName(Attacker)} used {Move}{(Format != 1 && Opponent != null ? $" on {Opponent}" : "")}");
+
+            if (Move.Info.IsZ)
+            {
+                await WriteStatus($"{GetStatusName(Attacker)} surrounded itself with its Z-Power");
+                await WriteStatus($"{GetStatusName(Attacker)} unleashes its full force Z-Move");
+                await WriteStatus(Move.Name.ToUpper());
+            }
+            else await WriteStatus($"{GetStatusName(Attacker)} used {Move}{(Format != 1 && Opponent != null ? $" on {Opponent}" : "")}");
             
             Move.Multitargets = false;
 

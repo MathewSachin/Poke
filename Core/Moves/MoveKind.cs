@@ -4,7 +4,6 @@
     {
         Status,
         Special,
-        Physical,
-        Z
+        Physical
     }
 }

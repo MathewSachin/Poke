@@ -4,7 +4,7 @@ namespace Poke
 {
     public partial class MoveInfo
     {
-        MoveInfo(string Name, Types Type, MoveKind Kind, int? Power, int? Accuracy, int PP, DamageFunction DamageFunction = null)
+        internal MoveInfo(string Name, Types Type, MoveKind Kind, int? Power, int? Accuracy, int PP, DamageFunction DamageFunction = null, bool IsZ = false)
         {
             this.Name = Name;
             this.Type = Type;
@@ -12,6 +12,7 @@ namespace Poke
             this.Power = Power;
             this.PP = PP;
             this.Accuracy = Accuracy;
+            this.IsZ = IsZ;
 
             this.DamageFunction = DamageFunction ?? DamageFunctionFactory.DefaultDamageFunction;
             PowerFunction = DamageFunctionFactory.DefaultPowerFunction;
@@ -19,6 +20,8 @@ namespace Poke
             
             Lists.Moves.Add(this);
         }
+
+        public bool IsZ { get; }
 
         public PowerFunction PowerFunction { get; private set; }
 

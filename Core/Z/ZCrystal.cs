@@ -6,6 +6,8 @@
         {
         }
 
-        public MoveInfo Move { get; protected set; }
+        public abstract bool Supports(Pokemon Pokemon, Move Move);
+
+        public abstract MoveInfo Upgrade(Move Move);
     }
 }
