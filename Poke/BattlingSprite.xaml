@@ -34,11 +34,10 @@
             </Image.Triggers>
         </Image>
 
-        <Image Source="mega.png"
+        <Image Source="{Binding DataContext.HeldItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}, Converter={StaticResource TransformSpriteConverter}}"
                VerticalAlignment="Center"
                HorizontalAlignment="Center"
-               Width="30"
-               Opacity="0.8"
-               Visibility="{Binding DataContext.MegaEvolving, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}, FallbackValue={x:Static Visibility.Collapsed}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+               Width="50"
+               Visibility="{Binding DataContext.Transforming, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}, FallbackValue={x:Static Visibility.Collapsed}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </UserControl>

@@ -210,7 +210,7 @@ namespace Poke
             {
                 _continueEvent.Reset();
 
-                await Task.Factory.StartNew(() => _continueEvent.WaitOne(3000));
+                await Task.Factory.StartNew(() => _continueEvent.WaitOne(5000));
             }
         }
         #endregion
@@ -278,7 +278,7 @@ namespace Poke
 
             _continueEvent.Reset();
 
-            await Task.Factory.StartNew(() => _continueEvent.WaitOne(3000));
+            await Task.Factory.StartNew(() => _continueEvent.WaitOne(5000));
 
             if (playerTurn)
                 AbilityPlayer = null;

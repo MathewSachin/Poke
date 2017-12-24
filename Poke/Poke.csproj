@@ -59,6 +59,7 @@
     <Compile Include="MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="ZMoveSelector.xaml.cs">
       <DependentUpon>ZMoveSelector.xaml</DependentUpon>
     </Compile>
@@ -203,6 +204,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="unknown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="UltraBurst.png" />
+    <Resource Include="Z.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

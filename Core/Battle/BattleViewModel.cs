@@ -94,7 +94,7 @@ namespace Poke
 
             if (Pokemon.CanMegaEvolve(out var mega))
             {
-                Pokemon.MegaEvolving = true;
+                Pokemon.Transforming = true;
                 
                 await WriteStatus($"The light from the Key Stone is reacting with {mega.MegaStone}");
 
@@ -104,7 +104,7 @@ namespace Poke
 
                 await WriteStatus($"{statusName} Mega Evolved into {Pokemon.Species.Name}");
 
-                Pokemon.MegaEvolving = false;
+                Pokemon.Transforming = false;
 
                 await SwitchInEffects(Pokemon);
             }
@@ -349,9 +349,13 @@ namespace Poke
 
             if (Move.Info.IsZ)
             {
+                Attacker.Transforming = true;
+
                 await WriteStatus($"{GetStatusName(Attacker)} surrounded itself with its Z-Power");
                 await WriteStatus($"{GetStatusName(Attacker)} unleashes its full force Z-Move");
                 await WriteStatus(Move.Name.ToUpper());
+
+                Attacker.Transforming = false;
             }
             else await WriteStatus($"{GetStatusName(Attacker)} used {Move}{(Format != 1 && Opponent != null ? $" on {Opponent}" : "")}");
             

@@ -17,6 +17,7 @@
         <local:NotFaintedToVisibilityConverter x:Key="NotFaintedToVisibilityConverter"/>
         <local:MoveKindToColorConverter x:Key="MoveKindToColorConverter"/>
         <local:PokeballColorConverter x:Key="PokeballColorConverter"/>
+        <local:TransformSpriteConverter x:Key="TransformSpriteConverter"/>
         
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 

@@ -49,6 +49,7 @@ namespace Poke
         public static string GetSpriteLink(Pokemon Pokemon, bool Back = false)
         {
             var name = Pokemon.Species.Name;
+            var num = Pokemon.Species.Number;
 
             var mega = false;
             var alolan = false;
@@ -66,7 +67,7 @@ namespace Poke
 
             string GetLink(Gender Gender = Gender.Genderless)
             {
-                var fileName = GetSpriteFileName(Pokemon.Species.Number, Back, mega, alolan, Gender, Pokemon.Shiny);
+                var fileName = GetSpriteFileName(num, Back, mega, alolan, Gender, Pokemon.Shiny);
 
                 var localPath = Path.Combine(LocalPrefix, fileName);
 
@@ -86,11 +87,17 @@ namespace Poke
             }
 
             // Mega Charizard
-            if (mega && Pokemon.Species.Number == PokemonSpecies.Charizard.Number)
+            if (mega && num == PokemonSpecies.Charizard.Number)
             {
                 var kind = name[name.Length - 1];
 
-                return GetLink().Replace($"{Pokemon.Species.Number}M", $"{Pokemon.Species.Number}M{kind}");
+                return GetLink().Replace($"{num}M", $"{num}M{kind}");
+            }
+
+            // Midnight Lycanroc
+            if (Pokemon.Species == PokemonSpecies.LycanrocMidnight)
+            {
+                return GetLink().Replace(num.ToString(), $"{num}Mn");
             }
 
             switch (name)

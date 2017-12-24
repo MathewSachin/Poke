@@ -191,14 +191,14 @@
 
         public bool IsFainted => Stats.CurrentHP == 0;
 
-        bool _megaEvolving;
+        bool _transforming;
 
-        public bool MegaEvolving
+        public bool Transforming
         {
-            get => _megaEvolving;
+            get => _transforming;
             set
             {
-                _megaEvolving = value;
+                _transforming = value;
 
                 OnPropertyChanged();
             }
