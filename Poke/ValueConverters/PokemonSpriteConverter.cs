@@ -1,31 +1,63 @@
 ﻿using System;
 using System.Globalization;
+using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace Poke
 {
     public class PokemonSpriteConverter : IMultiValueConverter
     {
-        public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
+        const string Default = "/Images/Unknown.png";
+
+        public object Convert(object[] Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            if (value[0] is Pokemon pokemon && parameter is string s)
+            if (Value[0] is Pokemon pokemon && Parameter is string s)
             {
-                try
+                return new AsyncTask(Default, async () =>
                 {
-                    return SpriteManager.GetSpriteLink(pokemon, s == "Back");
-                }
-                catch
-                {
-                    return "unknown.png";
-                }
+                    try
+                    {
+                        return await SpriteManager.GetSpriteLink(pokemon, s == "Back");
+                    }
+                    catch
+                    {
+                        return Default;
+                    }
+                });
             }
 
+            return Default;
+        }
+
+        public object[] ConvertBack(object Value, Type[] TargetType, object Parameter, CultureInfo Culture)
+        {
             return null;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        class AsyncTask : NotifyPropertyChanged
         {
-            return null;
+            public AsyncTask(object Default, Func<Task<object>> ValueFunc)
+            {
+                AsyncValue = Default;
+
+                Task.Run(ValueFunc).ContinueWith(Task =>
+                {
+                    AsyncValue = Task.Result;
+                });
+            }
+
+            object _value;
+
+            public object AsyncValue
+            {
+                get => _value;
+                set
+                {
+                    _value = value;
+
+                    OnPropertyChanged();
+                }
+            }
         }
     }
 }

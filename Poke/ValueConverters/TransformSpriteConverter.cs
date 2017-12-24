@@ -11,13 +11,13 @@ namespace Poke
             switch (value)
             {
                 case MegaStone _:
-                    return "mega.png";
+                    return "/Images/Mega.png";
 
                 case ZCrystal zCrystal when zCrystal == ExclusiveZCrystal.Ultranecrozium:
-                    return "UltraBurst.png";
+                    return "/Images/UltraBurst.png";
 
                 case ZCrystal _:
-                    return "Z.png";
+                    return "/Images/Z.png";
             }
             
             return null;

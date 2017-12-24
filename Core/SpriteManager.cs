@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net;
+using System.Threading.Tasks;
 using CsQuery;
 
 namespace Poke
@@ -46,7 +47,7 @@ namespace Poke
         const string BulbapediaPrefix = "https://bulbapedia.bulbagarden.net/wiki/File:";
         static readonly string LocalPrefix;
 
-        public static string GetSpriteLink(Pokemon Pokemon, bool Back = false)
+        public static async Task<string> GetSpriteLink(Pokemon Pokemon, bool Back = false)
         {
             var name = Pokemon.Species.Name;
             var num = Pokemon.Species.Number;
@@ -65,7 +66,7 @@ namespace Poke
                 name = name.Substring(7);
             }
 
-            string GetLink(Gender Gender = Gender.Genderless)
+            async Task<string> GetLink(Gender Gender = Gender.Genderless)
             {
                 var fileName = GetSpriteFileName(num, Back, mega, alolan, Gender, Pokemon.Shiny);
 
@@ -80,7 +81,7 @@ namespace Poke
 
                     var imgLink = "https:" + CQ.Create(content)[".fullImageLink a"].Attr("href");
 
-                    w.DownloadFile(imgLink, localPath);
+                    await w.DownloadFileTaskAsync(imgLink, localPath);
                 }
 
                 return localPath;
@@ -91,13 +92,13 @@ namespace Poke
             {
                 var kind = name[name.Length - 1];
 
-                return GetLink().Replace($"{num}M", $"{num}M{kind}");
+                return (await GetLink()).Replace($"{num}M", $"{num}M{kind}");
             }
 
             // Midnight Lycanroc
             if (Pokemon.Species == PokemonSpecies.LycanrocMidnight)
             {
-                return GetLink().Replace(num.ToString(), $"{num}Mn");
+                return (await GetLink()).Replace(num.ToString(), $"{num}Mn");
             }
 
             switch (name)
@@ -116,10 +117,10 @@ namespace Poke
                 case nameof(PokemonFactory.Steelix):
                 case nameof(PokemonFactory.Toxicroak):
                 case nameof(PokemonFactory.Venusaur):
-                    return GetLink(Pokemon.Gender);
+                    return await GetLink(Pokemon.Gender);
 
                 default:
-                    return GetLink();
+                    return await GetLink();
             }
         }
     }

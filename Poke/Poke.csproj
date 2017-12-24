@@ -50,54 +50,52 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BattlingSprite.xaml.cs">
+    <Compile Include="Controls\BattlingSprite.xaml.cs">
       <DependentUpon>BattlingSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MoveButtonContent.xaml.cs">
+    <Compile Include="Controls\MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
-    <Compile Include="ZMoveSelector.xaml.cs">
+    <Compile Include="Controls\ZMoveSelector.xaml.cs">
       <DependentUpon>ZMoveSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MoveSelector.xaml.cs">
+    <Compile Include="Controls\MoveSelector.xaml.cs">
       <DependentUpon>MoveSelector.xaml</DependentUpon>
     </Compile>
     <Compile Include="NaturesWindow.xaml.cs">
       <DependentUpon>NaturesWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OpponentButtonContent.xaml.cs">
+    <Compile Include="Controls\OpponentButtonContent.xaml.cs">
       <DependentUpon>OpponentButtonContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PokeballCounter.xaml.cs">
+    <Compile Include="Controls\PokeballCounter.xaml.cs">
       <DependentUpon>PokeballCounter.xaml</DependentUpon>
     </Compile>
-    <Compile Include="OpponentTooltip.xaml.cs">
+    <Compile Include="Controls\OpponentTooltip.xaml.cs">
       <DependentUpon>OpponentTooltip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PokemonTooltip.xaml.cs">
+    <Compile Include="Controls\PokemonTooltip.xaml.cs">
       <DependentUpon>PokemonTooltip.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StatusControl.xaml.cs">
+    <Compile Include="Controls\StatusControl.xaml.cs">
       <DependentUpon>StatusControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SwitchButtonContent.xaml.cs">
+    <Compile Include="Controls\SwitchButtonContent.xaml.cs">
       <DependentUpon>SwitchButtonContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Switcher.xaml.cs">
+    <Compile Include="Controls\Switcher.xaml.cs">
       <DependentUpon>Switcher.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TextDisplay.xaml.cs">
+    <Compile Include="Controls\TextDisplay.xaml.cs">
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeEffect.cs" />
     <Compile Include="TypeEffectivenessWindow.xaml.cs">
       <DependentUpon>TypeEffectivenessWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeEffectivenessViewModel.cs" />
     <Compile Include="ValueConverters\FaintedToColorConverter.cs" />
     <Compile Include="ValueConverters\GenderToColorConverter.cs" />
     <Compile Include="ValueConverters\GenderToSymbolConverter.cs" />
@@ -123,7 +121,7 @@
       <DependentUpon>BattleSimulatorWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="BattlingSprite.xaml">
+    <Page Include="Controls\BattlingSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,15 +129,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MoveButtonContent.xaml">
+    <Page Include="Controls\MoveButtonContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ZMoveSelector.xaml">
+    <Page Include="Controls\ZMoveSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MoveSelector.xaml">
+    <Page Include="Controls\MoveSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,35 +145,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OpponentButtonContent.xaml">
+    <Page Include="Controls\OpponentButtonContent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PokeballCounter.xaml">
+    <Page Include="Controls\PokeballCounter.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="OpponentTooltip.xaml">
+    <Page Include="Controls\OpponentTooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PokemonTooltip.xaml">
+    <Page Include="Controls\PokemonTooltip.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="StatusControl.xaml">
+    <Page Include="Controls\StatusControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SwitchButtonContent.xaml">
+    <Page Include="Controls\SwitchButtonContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Switcher.xaml">
+    <Page Include="Controls\Switcher.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TextDisplay.xaml">
+    <Page Include="Controls\TextDisplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,14 +198,14 @@
     <Resource Include="pokeball.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="mega.png" />
+    <Resource Include="Images\Mega.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="unknown.png" />
+    <Resource Include="Images\Unknown.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="UltraBurst.png" />
-    <Resource Include="Z.png" />
+    <Resource Include="Images\UltraBurst.png" />
+    <Resource Include="Images\Z.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
