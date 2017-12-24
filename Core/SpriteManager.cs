@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Threading.Tasks;
 using CsQuery;
@@ -9,7 +10,7 @@ namespace Poke
     {
         static SpriteManager()
         {
-            LocalPrefix = Path.Combine(Path.GetTempPath(), "pkimg");
+            LocalPrefix = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "pkimg");
 
             if (!Directory.Exists(LocalPrefix))
                 Directory.CreateDirectory(LocalPrefix);
@@ -66,9 +67,14 @@ namespace Poke
                 name = name.Substring(7);
             }
 
-            async Task<string> GetLink(Gender Gender = Gender.Genderless)
+            async Task<string> GetLink(Gender Gender = Gender.Genderless, Func<string, string> FileNameModifier = null)
             {
                 var fileName = GetSpriteFileName(num, Back, mega, alolan, Gender, Pokemon.Shiny);
+
+                if (FileNameModifier != null)
+                {
+                    fileName = FileNameModifier.Invoke(fileName);
+                }
 
                 var localPath = Path.Combine(LocalPrefix, fileName);
 
@@ -92,13 +98,13 @@ namespace Poke
             {
                 var kind = name[name.Length - 1];
 
-                return (await GetLink()).Replace($"{num}M", $"{num}M{kind}");
+                return await GetLink(FileNameModifier: M => M.Replace($"{num}M", $"{num}M{kind}"));
             }
 
             // Midnight Lycanroc
             if (Pokemon.Species == PokemonSpecies.LycanrocMidnight)
             {
-                return (await GetLink()).Replace(num.ToString(), $"{num}Mn");
+                return await GetLink(FileNameModifier: M => M.Replace(num.ToString(), $"{num}Mn"));
             }
 
             switch (name)

@@ -35,7 +35,7 @@ namespace Poke
             
             var arr = PokemonGenerators.Shuffle();
             
-            OpponentSide = new Side(Format, arr[0].Invoke(), arr[1].Invoke(), arr[2].Invoke(), arr[3].Invoke(), arr[4].Invoke(), arr[5].Invoke());
+            OpponentSide = new Side(Format, PokemonFactory.LycanrocMidnight, arr[1].Invoke(), arr[2].Invoke(), arr[3].Invoke(), arr[4].Invoke(), arr[5].Invoke());
 
             var text = $"The opposing player sent out {OpponentSide.Battling[0]}";
 
@@ -48,7 +48,7 @@ namespace Poke
             
             await WriteStatus(text);
             
-            PlayerSide = new Side(Format, arr[6].Invoke(), arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
+            PlayerSide = new Side(Format, PokemonFactory.Charizard, arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
 
             // Assign a single Z Crystal
             var zIndex = Random.Next(6);
