@@ -716,14 +716,14 @@ namespace Poke
             {
                 var pokemon = new Pokemon(PokemonSpecies.Pikachu, 60, "Spark")
                 {
-                    HeldItem = HeldItem.LightBall
+                    HeldItem = new[] { HeldItem.LightBall, ExclusiveZCrystal.Pikanium }.Random()
                 };
 
                 pokemon.Stats.EV[Stats.Speed] = 252;
 
                 pokemon.Moves.Assign(MoveInfo.QuickAttack,
                     MoveInfo.Thunderbolt,
-                    MoveInfo.ElectroBall,
+                    pokemon.HeldItem == ExclusiveZCrystal.Pikanium ? MoveInfo.VoltTackle : MoveInfo.ElectroBall,
                     MoveInfo.IronTail);
 
                 return pokemon;

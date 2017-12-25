@@ -37,7 +37,7 @@ namespace Poke
 
             if (M is int index || M is string s && int.TryParse(s, out index))
             {
-                if (index >= 0 && index < PlayerSide.Party.Count)
+                if (index >= 0 && index < PlayerSide?.Party.Count)
                 {
                     return !PlayerSide.Party[index].IsFainted;
                 }
