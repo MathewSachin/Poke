@@ -521,6 +521,11 @@
             Description = "Copies burn, paralysis and poison received onto the Pokemon that inflicted them."
         };
 
+        public static Ability TangledFeet { get; } = new Ability("Tangled Feet")
+        {
+            Description = "Doubles evasion when confused."
+        };
+
         public static Ability TanglingHair { get; } = new Ability("Tangling Hair")
         {
             Description = "Lowers attacking Pokemon's Speed by one stage on contact."

@@ -315,7 +315,7 @@
 
         public static PokemonSpecies Pidgeot { get; } = new PokemonSpecies(18, nameof(Pidgeot), Types.Normal, Types.Flying,
             83, 80, 75, 70, 70, 101,
-            Ability.KeenEye, HiddenAbility: Ability.BigPecks)
+            Ability.KeenEye, Ability.TangledFeet, Ability.BigPecks)
         {
             MegaEvolutions =
             {

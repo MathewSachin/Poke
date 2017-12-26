@@ -45,6 +45,10 @@ namespace Poke
             if (Attacker.Ability == Ability.CompoundEyes && !Move.Info.OneHitKO)
                 accuracyMultiplier *= 1.3;
 
+            // Tangled Feet
+            if (Attacker.Ability == Ability.TangledFeet && Attacker.ConfusionCounter > 0)
+                accuracyMultiplier *= 2;
+
             // Bright Powder
             if (Opponent.HeldItem == HeldItem.BrightPowder)
                 accuracyMultiplier *= 0.9;
