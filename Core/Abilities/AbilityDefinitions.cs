@@ -87,6 +87,11 @@
             Description = "Affects weather and nullifies any Water-type attacks."
         };
 
+        public static Ability Disguise { get; } = new Ability(nameof(Disguise))
+        {
+            Description = "Allows the Pokemon to escape damage from an enemy's attack just one time, and then its appearance changes."
+        };
+
         public static Ability Download { get; } = new Ability(nameof(Download))
         {
             Description = "Raises the attack stat corresponding to the opponents weaker defense one stage upon entering battle."

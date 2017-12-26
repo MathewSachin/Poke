@@ -539,6 +539,16 @@ namespace Poke
                 if (damage < 1)
                     damage = 1;
 
+                // Disguise
+                if (Opponent.Ability == Ability.Disguise)
+                {
+                    await Battle.ShowAbility(Opponent);
+
+                    await Battle.WriteStatus($"{Battle.GetStatusName(Opponent)}'s disguise was busted");
+
+                    return;
+                }
+
                 await Opponent.Stats.Damage((int)damage, Battle);
 
                 foreach (var display in typeEffectivenessDisplays)
