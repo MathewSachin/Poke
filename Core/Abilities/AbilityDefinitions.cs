@@ -531,6 +531,11 @@
             Description = "Strengthens moves of 60 base power or less to 1.5x their power."
         };
 
+        public static Ability Telepathy { get; } = new Ability(nameof(Telepathy))
+        {
+            Description = "Anticipates an ally's attack and dodges it."
+        };
+
         public static Ability ThickFat { get; } = new Ability("Thick Fat")
         {
             Description = "Halves damage from fire and ice moves."

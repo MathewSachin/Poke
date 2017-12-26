@@ -403,7 +403,7 @@ namespace Poke
                         break;
 
                     case MoveTarget.AllAdjacent:
-                        var adjacents = Attacker.GetAdjacent().ToArray();
+                        var adjacents = Attacker.GetAdjacent(true).ToArray();
 
                         Move.Multitargets = adjacents.Length > 1;
 

@@ -122,7 +122,7 @@
         
         public static PokemonSpecies Gardevoir { get; } = new PokemonSpecies(282, nameof(Gardevoir), Types.Psychic, Types.Fairy,
             68, 65, 65, 125, 115, 80,
-            null)
+            Ability.Synchronize, HiddenAbility: Ability.Telepathy)
         {
             MegaEvolutions =
             {
@@ -303,7 +303,7 @@
 
         public static PokemonSpecies Noivern { get; } = new PokemonSpecies(715, nameof(Noivern), Types.Flying, Types.Dragon,
             85, 70, 80, 97, 80, 123,
-            Ability.Frisk);
+            Ability.Frisk, HiddenAbility: Ability.Telepathy);
 
         public static PokemonSpecies Pangoro { get; } = new PokemonSpecies(675, nameof(Pangoro), Types.Fighting, Types.Dark,
             95, 124, 78, 69, 71, 58,

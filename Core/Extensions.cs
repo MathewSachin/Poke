@@ -200,7 +200,7 @@ namespace Poke
             }
         }
 
-        public static IEnumerable<Pokemon> GetAdjacentAllies(this Pokemon Pokemon)
+        public static IEnumerable<Pokemon> GetAdjacentAllies(this Pokemon Pokemon, bool ExcludeTelepathy = false)
         {
             var attackerPosition = -1;
 
@@ -223,7 +223,8 @@ namespace Poke
 
                 if (ally != null && !ally.IsFainted)
                 {
-                    yield return ally;
+                    if (!(ExcludeTelepathy && ally.Ability == Ability.Telepathy))
+                        yield return ally;
                 }
             }
             
@@ -234,14 +235,15 @@ namespace Poke
 
                 if (ally != null && !ally.IsFainted)
                 {
-                    yield return ally;
+                    if (!(ExcludeTelepathy && ally.Ability == Ability.Telepathy))
+                        yield return ally;
                 }
             }
         }
 
-        public static IEnumerable<Pokemon> GetAdjacent(this Pokemon Pokemon)
+        public static IEnumerable<Pokemon> GetAdjacent(this Pokemon Pokemon, bool ExcludeTelepathy = false)
         {
-            return Pokemon.GetAdjacentFoes().Concat(Pokemon.GetAdjacentAllies());
+            return Pokemon.GetAdjacentFoes().Concat(Pokemon.GetAdjacentAllies(ExcludeTelepathy));
         }
 
         public static T Random<T>(this IReadOnlyList<T> List)
