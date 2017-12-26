@@ -17,6 +17,8 @@
         
         public string Name { get; }
 
+        public bool Disabled { get; set; }
+
         // Set before every attack
         public bool Multitargets { get; set; }
 

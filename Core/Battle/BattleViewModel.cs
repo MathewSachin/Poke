@@ -624,6 +624,13 @@ namespace Poke
                                     continue;
                                 }
 
+                                if (move.Disabled)
+                                {
+                                    await WriteStatus($"{GetStatusName(PlayerSide.Battling[i])}'s {move} was disabled");
+
+                                    continue;
+                                }
+
                                 if (UseZ && PlayerSide.Battling[i].HeldItem is ZCrystal z)
                                 {
                                     move = new Move(z.Upgrade(move));
@@ -711,14 +718,14 @@ namespace Poke
 
                             OpponentSide.UsedMegaEvolution = true;
                         }
-
+                        
                         var moves = new List<Move>();
 
                         for (var j = 0; j < 4; ++j)
                         {
                             var move = OpponentSide.Battling[i].Moves[j];
 
-                            if (move.PPLeft != 0 && move.Kind != MoveKind.Status)
+                            if (move.PPLeft != 0 && move.Kind != MoveKind.Status && !move.Disabled)
                                 moves.Add(move);
                         }
 

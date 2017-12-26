@@ -133,7 +133,7 @@
 
         public static PokemonSpecies Gengar { get; } = new PokemonSpecies(94, nameof(Gengar), Types.Ghost, Types.Poison,
             60, 65, 60, 130, 75, 110,
-            Ability.Levitate)
+            Ability.Levitate, Ability.CursedBody)
         {
             MegaEvolutions =
             {

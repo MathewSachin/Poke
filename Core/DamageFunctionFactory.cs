@@ -582,6 +582,16 @@ namespace Poke
 
                     await StatChange(Opponent, Stats.Attack, 12, Battle);
                 }
+
+                // Cursed Body
+                if (Opponent.Ability == Ability.CursedBody && BattleViewModel.Random.Next(100) < 30)
+                {
+                    await Battle.ShowAbility(Opponent);
+
+                    Move.Disabled = true;
+
+                    await Battle.WriteStatus($"{Battle.GetStatusName(Attacker)}'s {Move} was disabled");
+                }
             }
 
             // Justified

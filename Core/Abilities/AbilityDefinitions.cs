@@ -72,6 +72,11 @@
             Description = "With the Corrosion Ability, it becomes possible to inflict the Poisoned status condition even on Steel and Poison type Pokemon."
         };
 
+        public static Ability CursedBody { get; } = new Ability(nameof(CursedBody))
+        {
+            Description = "Has a 30% chance of disabling any move that hits the Pokemon."
+        };
+
         public static Ability Defeatist { get; } = new Ability(nameof(Defeatist))
         {
             Description = "Halves Attack and Special Attack at 50% max HP or less."
