@@ -1,7 +1,8 @@
 ﻿<UserControl x:Class="Poke.PokemonTooltip"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Poke">
+             xmlns:local="clr-namespace:Poke"
+             Width="200">
     <StackPanel Background="White">
         <TextBlock>
             <Run Text="{Binding Name, Mode=OneWay}"/>
@@ -33,12 +34,20 @@
             <Run Text="Ability:" FontWeight="Bold"/>
             <Run Text="{Binding Ability, Mode=OneWay, TargetNullValue='None'}"/>
         </TextBlock>
+        
+        <TextBlock Text="{Binding Ability.Description}"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,3"/>
 
         <TextBlock Margin="0,3,0,5">
             <Run Text="Held Item:" FontWeight="Bold"/>
             <Run Text="{Binding HeldItem, Mode=OneWay, TargetNullValue='None'}"/>
         </TextBlock>
 
+        <TextBlock Text="{Binding HeldItem.Description}"
+                   TextWrapping="Wrap"
+                   Margin="0,0,0,3"/>
+        
         <TextBlock Text="Moves:"
                    FontWeight="Bold"/>
         <Grid>

@@ -5,6 +5,8 @@
         MegaStone(string Name) : base(Name)
         {
             Lists.MegaStones.Add(this);
+
+            Description = "Allows a specific Pokemon to Mega Evolve during battle.";
         }
 
         public static MegaStone Abomasite { get; } = new MegaStone(nameof(Abomasite));

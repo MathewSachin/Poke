@@ -211,6 +211,8 @@ namespace Poke
                 _continueEvent.Reset();
 
                 await Task.Factory.StartNew(() => _continueEvent.WaitOne(5000));
+
+                await Task.Delay(100);
             }
         }
         #endregion
@@ -283,6 +285,8 @@ namespace Poke
             if (playerTurn)
                 AbilityPlayer = null;
             else AbilityOpponent = null;
+
+            await Task.Delay(100);
         }
         #endregion
     }

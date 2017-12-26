@@ -10,6 +10,8 @@ namespace Poke
         TypeZCrystal(string Name, Types Type, string MoveName, Func<Move, MoveInfo> Upgrader) : base(Name, Type, MoveName)
         {
             _upgrader = Upgrader;
+
+            Description = $"Upgrades a {Type} type move to {MoveName}";
         }
         
         public override bool Supports(Pokemon Pokemon, Move Move)
