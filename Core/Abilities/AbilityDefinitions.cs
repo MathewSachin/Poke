@@ -241,6 +241,11 @@
         {
             Description = "Protects against major status ailments during strong sunlight."
         };
+
+        public static Ability Levitate { get; } = new Ability(nameof(Levitate))
+        {
+            Description = "Evades ground moves."
+        };
         
         public static Ability Limber { get; } = new Ability(nameof(Limber))
         {

@@ -1053,6 +1053,10 @@ namespace Poke
         {
             var typeEffect = Poke.TypeEffectiveness.Get(Move.Type, Opponent.PrimaryType, Opponent.SecondaryType);
             
+            // Levitate
+            if (Move.Type == Types.Ground && Opponent.Ability == Ability.Levitate)
+                typeEffect = 0;
+
             // Bulletproof
             if (Move.Info.Flags.HasFlag(MoveFlags.Bullet) && Opponent.Ability == Ability.BulletProof)
                 typeEffect = 0;

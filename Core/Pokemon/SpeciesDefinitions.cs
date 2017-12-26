@@ -118,7 +118,7 @@
 
         public static PokemonSpecies Flygon { get; } = new PokemonSpecies(330, nameof(Flygon), Types.Ground, Types.Dragon,
             80, 100, 80, 80, 80, 100,
-            null);
+            Ability.Levitate);
         
         public static PokemonSpecies Gardevoir { get; } = new PokemonSpecies(282, nameof(Gardevoir), Types.Psychic, Types.Fairy,
             68, 65, 65, 125, 115, 80,
@@ -133,7 +133,7 @@
 
         public static PokemonSpecies Gengar { get; } = new PokemonSpecies(94, nameof(Gengar), Types.Ghost, Types.Poison,
             60, 65, 60, 130, 75, 110,
-            null)
+            Ability.Levitate)
         {
             MegaEvolutions =
             {
