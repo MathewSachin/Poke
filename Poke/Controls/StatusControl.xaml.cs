@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media.Animation;
 
 namespace Poke
@@ -25,7 +26,7 @@ namespace Poke
 
                 _animation.Completed += (s, e) => _animation = null;
 
-                progressBar.BeginAnimation(ProgressBar.ValueProperty, _animation);
+                progressBar.BeginAnimation(RangeBase.ValueProperty, _animation);
 
                 E.Handled = true;
             }

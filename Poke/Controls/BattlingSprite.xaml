@@ -3,6 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Poke">
     <Grid>
+        <FrameworkElement DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}}"
+                          DataContextChanged="FrameworkElement_OnDataContextChanged"/>
+        
         <Image Source="{Binding AsyncValue}"
                Width="150">
             <Image.RenderTransform>
