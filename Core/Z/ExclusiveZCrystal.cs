@@ -12,7 +12,7 @@ namespace Poke
             this.ZMove = ZMove;
             _supportedSpecies = SupportedSpecies;
 
-            Description = $"Upgrades {SupportedSpecies[0]}'s {BaseMove} to {MoveName}";
+            Description = $"Upgrades {SupportedSpecies[0].Name}'s {BaseMove.Name} to {MoveName}";
         }
 
         public override bool Supports(Pokemon Pokemon, Move Move)

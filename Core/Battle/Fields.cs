@@ -193,7 +193,16 @@ namespace Poke
         #region Status
         string _status;
 
-        public string Status => _status;
+        public string Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+                
+                OnPropertyChanged();
+            }
+        }
 
         public string GetStatusName(Pokemon Pokemon)
         {
@@ -202,17 +211,20 @@ namespace Poke
 
         public async Task WriteStatus(string Text, bool Wait = true)
         {
-            _status = Text;
+            Status = "";
 
-            OnPropertyChanged(nameof(Status));
+            foreach (var c in Text)
+            {
+                Status += c;
+
+                await Task.Delay(1);
+            }
 
             if (Wait)
             {
                 _continueEvent.Reset();
 
-                await Task.Factory.StartNew(() => _continueEvent.WaitOne(5000));
-
-                await Task.Delay(100);
+                await Task.Factory.StartNew(() => _continueEvent.WaitOne(2000));
             }
         }
         #endregion

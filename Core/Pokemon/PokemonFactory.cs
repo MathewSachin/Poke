@@ -856,7 +856,7 @@ namespace Poke
             {
                 var pokemon = new Pokemon(PokemonSpecies.Sylveon, 56)
                 {
-                    HeldItem = Plate.Plates[Types.Dragon]
+                    HeldItem = Plate.Plates[Types.Fairy]
                 };
 
                 pokemon.Moves.Assign(MoveInfo.Swift,

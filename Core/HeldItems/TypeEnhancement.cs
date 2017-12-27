@@ -1,3 +1,5 @@
+using System;
+
 namespace Poke
 {
     public class TypeEnhancement : HeldItem
@@ -7,7 +9,7 @@ namespace Poke
             this.Type = Type;
             this.Multiplier = Multiplier;
 
-            Description = $"Increases the power of the holder's {Type} moves by {(int)((Multiplier - 1) * 100)}%.";
+            Description = $"Increases the power of the holder's {Type} moves by {Math.Ceiling((Multiplier - 1) * 100)}%.";
         }
 
         public Types Type { get; }
