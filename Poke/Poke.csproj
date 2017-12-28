@@ -50,6 +50,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AbilitiesWindow.xaml.cs">
+      <DependentUpon>AbilitiesWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\BattlingSprite.xaml.cs">
       <DependentUpon>BattlingSprite.xaml</DependentUpon>
     </Compile>
@@ -109,6 +112,10 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
+    <Page Include="AbilitiesWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BattleSimulatorWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

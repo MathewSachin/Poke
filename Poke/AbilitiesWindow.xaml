@@ -1,0 +1,26 @@
+﻿<Window x:Class="Poke.AbilitiesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:Poke"
+        xmlns:poke="clr-namespace:Poke;assembly=Core"
+        Title="Abilities"
+        Height="600"
+        Width="300">
+    <Grid>
+        <ScrollViewer>
+            <ItemsControl ItemsSource="{x:Static poke:Lists.Abilities}"
+                          Margin="5">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,7">
+                            <TextBlock Text="{Binding Name}"
+                                       FontWeight="Light"/>
+                            <TextBlock Text="{Binding Description}"
+                                       TextWrapping="Wrap"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

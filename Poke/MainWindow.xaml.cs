@@ -33,5 +33,10 @@ namespace Poke
         {
             new BattleSimulatorWindow(3).Show();
         }
+
+        void OpenAbilities(object Sender, RoutedEventArgs E)
+        {
+            new AbilitiesWindow().Show();
+        }
     }
 }
