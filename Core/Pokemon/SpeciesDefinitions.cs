@@ -287,6 +287,10 @@
             95, 60, 79, 100, 125, 81,
             Ability.MarvelScale);
 
+        public static PokemonSpecies Mimikyu { get; } = new PokemonSpecies(778, nameof(Mimikyu), Types.Ghost, Types.Fairy,
+            55, 90, 80, 50, 105, 96,
+            Ability.Disguise);
+
         public static PokemonSpecies Ninetales { get; } = new PokemonSpecies(38, nameof(Ninetales), Types.Fire, null,
             73, 76, 75, 81, 100, 100,
             Ability.FlashFire, HiddenAbility: Ability.Drought)

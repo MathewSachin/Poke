@@ -95,6 +95,7 @@ namespace Poke
             () => PokemonFactory.Mawile,
             () => PokemonFactory.Meganium,
             () => PokemonFactory.Milotic,
+            () => PokemonFactory.Mimikyu,
             () => PokemonFactory.Ninetales,
             () => PokemonFactory.NinetalesAlolan,
             () => PokemonFactory.Noivern,

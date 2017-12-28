@@ -456,7 +456,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Kommo, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Kommo, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Dragon]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.ClangingScales,
                     MoveInfo.PoisonJab,
@@ -471,7 +474,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Leafeon, 56);
+                var pokemon = new Pokemon(PokemonSpecies.Leafeon, 56)
+                {
+                    HeldItem = Gem.Gems[Types.Grass]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.RazorLeaf,
                     MoveInfo.AerialAce,
@@ -486,7 +492,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Lilligant, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Lilligant, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Grass]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.PetalBlizzard,
                     MoveInfo.HyperBeam,
@@ -519,7 +528,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.LycanrocMidday, 55);
+                var pokemon = new Pokemon(PokemonSpecies.LycanrocMidday, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Rock]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.Accelerock,
                     MoveInfo.Crunch,
@@ -534,7 +546,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.LycanrocMidnight, 55);
+                var pokemon = new Pokemon(PokemonSpecies.LycanrocMidnight, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Rock]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.RockSlide,
                     MoveInfo.Crunch,
@@ -549,7 +564,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Magmortar, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Magmortar, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Fire]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.Thunderbolt,
                     MoveInfo.Flamethrower,
@@ -582,7 +600,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Meganium, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Meganium, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Grass]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.PetalBlizzard,
                     MoveInfo.BodySlam,
@@ -597,12 +618,33 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Milotic, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Milotic, 55)
+                {
+                    HeldItem = Gem.Gems[Types.Water]
+                };
 
                 pokemon.Moves.Assign(MoveInfo.WaterPulse,
                     MoveInfo.DragonPulse,
                     MoveInfo.IceBeam,
                     MoveInfo.BrutalSwing);
+
+                return pokemon;
+            }
+        }
+
+        public static Pokemon Mimikyu
+        {
+            get
+            {
+                var pokemon = new Pokemon(PokemonSpecies.Mimikyu, 55)
+                {
+                    HeldItem = new[] { Gem.Gems[Types.Fairy], Gem.Gems[Types.Ghost] }.Random()
+                };
+
+                pokemon.Moves.Assign(MoveInfo.PlayRough,
+                    MoveInfo.ShadowClaw,
+                    MoveInfo.WoodHammer,
+                    MoveInfo.Thunderbolt);
 
                 return pokemon;
             }
@@ -648,7 +690,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Noivern, 55);
+                var pokemon = new Pokemon(PokemonSpecies.Noivern, 55)
+                {
+                    HeldItem = new[] { Gem.Gems[Types.Dragon], Gem.Gems[Types.Flying] }.Random()
+                };
 
                 pokemon.Moves.Assign(MoveInfo.Acrobatics,
                     MoveInfo.DragonClaw,
@@ -678,10 +723,10 @@ namespace Poke
         {
             get
             {
-                var pokemon = new Pokemon(PokemonSpecies.Pelipper, 55)
-                {
-                    HeldItem = HeldItem.DampRock
-                };
+                var pokemon = new Pokemon(PokemonSpecies.Pelipper, 55);
+
+                pokemon.HeldItem = pokemon.Ability == Ability.Drizzle ? HeldItem.DampRock
+                    : new[] { Gem.Gems[Types.Water], Gem.Gems[Types.Flying] }.Random();
 
                 pokemon.Moves.Assign(MoveInfo.Scald,
                     MoveInfo.WingAttack,
