@@ -56,11 +56,17 @@
     <Compile Include="Controls\BattlingSprite.xaml.cs">
       <DependentUpon>BattlingSprite.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MoveInfoControl.xaml.cs">
+      <DependentUpon>MoveInfoControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MovesWindow.xaml.cs">
+      <DependentUpon>MovesWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="Controls\ZMoveSelector.xaml.cs">
@@ -132,6 +138,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\MoveInfoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -145,6 +155,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controls\MoveSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MovesWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -213,6 +227,10 @@
   <ItemGroup>
     <Resource Include="Images\UltraBurst.png" />
     <Resource Include="Images\Z.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Alpha.png" />
+    <Resource Include="Images\Omega.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

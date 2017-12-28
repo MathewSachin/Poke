@@ -22,5 +22,8 @@
         <Button Content="Abilities"
                 Click="OpenAbilities"
                 Margin="5"/>
+        <Button Content="Moves"
+                Click="OpenMoves"
+                Margin="5"/>
     </StackPanel>
 </Window>

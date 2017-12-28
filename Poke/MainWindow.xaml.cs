@@ -38,5 +38,10 @@ namespace Poke
         {
             new AbilitiesWindow().Show();
         }
+
+        void OpenMoves(object Sender, RoutedEventArgs E)
+        {
+            new MovesWindow().Show();
+        }
     }
 }
