@@ -5,6 +5,7 @@ namespace Poke
         Default,
         OneHigher,
         Never,
-        Always
+        Always,
+        TwoHigher
     }
 }

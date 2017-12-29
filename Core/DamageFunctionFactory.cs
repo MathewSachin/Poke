@@ -256,7 +256,8 @@ namespace Poke
                 && Opponent.NonVolatileStatus.Is(NonVolatileStatus.Poison, NonVolatileStatus.BadPoison))
                 return true;
 
-            switch (Move.Info.CriticalHit) {
+            switch (Move.Info.CriticalHit)
+            {
                 case CriticalHit.Never:
                     return false;
 
@@ -265,6 +266,10 @@ namespace Poke
 
                 case CriticalHit.OneHigher:
                     ++stage;
+                    break;
+
+                case CriticalHit.TwoHigher:
+                    stage += 2;
                     break;
             }
 
@@ -1055,22 +1060,10 @@ namespace Poke
 
         static double SameTypeAttackBoost(Pokemon Attacker, Types MoveType)
         {
-            var baseMultiplier = 1.0;
-
-            /*
-            if (MoveType == Types.Normal && Attacker.Ability == Ability.Aerilate)
-            {
-                MoveType = Types.Flying;
-
-                baseMultiplier *= 1.3;
-            }
-            // Also need to consider type effectiveness
-            */
-
             if (Attacker.Is(MoveType))
-                return baseMultiplier * (Attacker.Ability == Ability.Adaptability ? 2 : 1.5);
+                return Attacker.Ability == Ability.Adaptability ? 2 : 1.5;
 
-            return baseMultiplier;
+            return 1;
         }
 
         static double TypeEffectiveness(Pokemon Attacker, Move Move, Pokemon Opponent, BattleViewModel Battle, List<string> TextsToDisplay)
@@ -1113,8 +1106,6 @@ namespace Poke
                 // Prism Armor, Filter, Solid Rock
                 if (Opponent.Ability.Is(Ability.PrismArmor, Ability.Filter, Ability.SolidRock))
                     typeEffect *= 0.75;
-                
-                TextsToDisplay.Add($"It is super effective on{opposing} {Opponent}");
 
                 // Damage Reduction Berries
                 if (Opponent.HeldItem is DamageReductionBerry berry && berry.Type == Move.Type)
@@ -1125,6 +1116,8 @@ namespace Poke
 
                     Opponent.HeldItem = null;
                 }
+
+                TextsToDisplay.Add($"It is super effective on{opposing} {Opponent}");
             }
 
             return typeEffect;

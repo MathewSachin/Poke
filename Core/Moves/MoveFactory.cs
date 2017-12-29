@@ -1796,7 +1796,8 @@ namespace Poke
 
         public static MoveInfo WaterPulse { get; } = new MoveInfo("Water Pulse", Types.Water, MoveKind.Special, 60, 100, 20)
         {
-            ConfuseTarget = 0.2
+            ConfuseTarget = 0.2,
+            Flags = MoveFlags.Pulse | MoveFlags.Protect | MoveFlags.Mirror
         };
 
         public static MoveInfo WildCharge { get; } = new MoveInfo("Wild Charge", Types.Electric, MoveKind.Physical, 90, 100, 15)

@@ -18,6 +18,9 @@ namespace Poke
                     new [] { MoveInfo.WingAttack, MoveInfo.AerialAce }.Random(),
                     new [] { MoveInfo.IronHead, MoveInfo.Crunch, MoveInfo.Earthquake, MoveInfo.DragonClaw }.Random());
 
+                if (pokemon.Ability == Ability.RockHead)
+                    pokemon.Moves.Assign(3, MoveInfo.GigaImpact);
+
                 return pokemon;
             }
         }
@@ -35,6 +38,9 @@ namespace Poke
                     MoveInfo.IronHead,
                     MoveInfo.DragonClaw,
                     MoveInfo.Surf);
+
+                if (pokemon.Ability == Ability.RockHead)
+                    pokemon.Moves.Assign(3, MoveInfo.GigaImpact);
 
                 return pokemon;
             }
@@ -86,7 +92,7 @@ namespace Poke
                 };
 
                 pokemon.Moves.Assign(new [] { MoveInfo.BrickBreak, MoveInfo.BrutalSwing }.Random(),
-                    new [] { MoveInfo.Venoshock, MoveInfo.PoisonJab, MoveInfo.SludgeBomb }.Random(),
+                    MoveInfo.PoisonJab,
                     MoveInfo.XScissor,
                     new [] { MoveInfo.AerialAce, MoveInfo.Acrobatics }.Random());
 
@@ -103,7 +109,7 @@ namespace Poke
                     HeldItem = MegaStone.Blastoisinite
                 };
 
-                pokemon.Moves.Assign(new [] { MoveInfo.IceBeam }.Random(),
+                pokemon.Moves.Assign(new [] { MoveInfo.IceBeam, MoveInfo.DragonPulse }.Random(),
                     new [] { MoveInfo.Waterfall, MoveInfo.Surf, MoveInfo.HydroPump, MoveInfo.Scald, MoveInfo.WaterPulse }.Random(),
                     new [] { MoveInfo.Earthquake, MoveInfo.Bulldoze, MoveInfo.BrickBreak }.Random(),
                     new [] { MoveInfo.FlashCannon, MoveInfo.Bite, MoveInfo.DarkPulse }.Random());
