@@ -828,7 +828,7 @@ namespace Poke
         };
 
         // TODO: Can hit pokemon under the effect of bounce, fly or sky drop
-        public static MoveInfo Hurricane { get; } = new MoveInfo(nameof(Hurricane), Types.Water, MoveKind.Special, 110, 70, 10)
+        public static MoveInfo Hurricane { get; } = new MoveInfo(nameof(Hurricane), Types.Flying, MoveKind.Special, 110, 70, 10)
         {
             Flags = MoveFlags.Protect | MoveFlags.Mirror,
             ConfuseTarget = 0.3,
