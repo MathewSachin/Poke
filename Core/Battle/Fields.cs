@@ -61,6 +61,7 @@ namespace Poke
         static readonly Func<Pokemon>[] PokemonGenerators =
         {
             () => PokemonFactory.Aerodactyl,
+            () => PokemonFactory.Aggron,
             () => PokemonFactory.Arcanine,
             () => PokemonFactory.Alakazam,
             () => PokemonFactory.Beedrill,

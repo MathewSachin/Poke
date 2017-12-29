@@ -15,6 +15,17 @@
             GenderRatio = new GenderRatio(87.5, 12.5)
         };
 
+        public static PokemonSpecies Aggron { get; } = new PokemonSpecies(306, nameof(Aggron), Types.Steel, Types.Rock,
+            70, 110, 180, 60, 60, 50,
+            Ability.Sturdy, Ability.RockHead)
+        {
+            MegaEvolutions =
+            {
+                new MegaEvolution(new PokemonSpecies(306, "Mega Aggron", Types.Steel, null,
+                    70, 140, 230, 60, 80, 50, Ability.Filter), MegaStone.Aggronite)
+            }
+        };
+
         public static PokemonSpecies Arcanine { get; } = new PokemonSpecies(59, nameof(Arcanine), Types.Fire, null,
             90, 110, 80, 100, 80, 95,
             Ability.Intimidate, Ability.FlashFire, Ability.Justified)

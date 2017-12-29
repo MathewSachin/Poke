@@ -827,6 +827,32 @@ namespace Poke
             Description = $"{RegularDamage} Drains half of the damage inflicted to heal the user."
         };
 
+        // TODO: Can hit pokemon under the effect of bounce, fly or sky drop
+        public static MoveInfo Hurricane { get; } = new MoveInfo(nameof(Hurricane), Types.Water, MoveKind.Special, 110, 70, 10)
+        {
+            Flags = MoveFlags.Protect | MoveFlags.Mirror,
+            ConfuseTarget = 0.3,
+            AccuracyFunction = (A, M, O, B) =>
+            {
+                if (B.SuppressWeather != 0)
+                    return M.Info.Accuracy;
+
+                switch (B.Weather)
+                {
+                    case Weather.Rain:
+                    case Weather.HeavyRain:
+                        return 100;
+
+                    case Weather.HarshSunlight:
+                    case Weather.ExtremelyHarshSunlight:
+                        return 50;
+
+                    default:
+                        return M.Info.Accuracy;
+                }
+            }
+        };
+
         public static MoveInfo HydroCannon { get; } = new MoveInfo("Hydro Cannon", Types.Water, MoveKind.Special, 150, 90, 5)
         {
             Flags = MoveFlags.Recharge | MoveFlags.Protect | MoveFlags.Mirror,
