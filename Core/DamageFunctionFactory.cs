@@ -641,7 +641,7 @@ namespace Poke
             }
 
             // Water Compaction
-            else if (Opponent.Ability == Ability.WaterCompaction)
+            else if (Move.Type == Types.Water && Opponent.Ability == Ability.WaterCompaction)
             {
                 await Battle.ShowAbility(Opponent);
 
