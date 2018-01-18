@@ -7,20 +7,19 @@
         Height="600"
         Width="300">
     <Grid>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{x:Static poke:Lists.Abilities}"
-                          Margin="5">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="0,7">
-                            <TextBlock Text="{Binding Name}"
-                                       FontWeight="Light"/>
-                            <TextBlock Text="{Binding Description}"
-                                       TextWrapping="Wrap"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+        <ItemsControl ItemsSource="{x:Static poke:Lists.Abilities}"
+                      Margin="5"
+                      Style="{StaticResource VirtualizingItemsControl}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,7">
+                        <TextBlock Text="{Binding Name}"
+                                   FontWeight="Light"/>
+                        <TextBlock Text="{Binding Description}"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

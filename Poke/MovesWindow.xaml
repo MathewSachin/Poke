@@ -7,28 +7,13 @@
         Height="300"
         Width="300">
     <Grid>
-        <ItemsControl VirtualizingStackPanel.IsVirtualizing="True"
-                      VirtualizingPanel.ScrollUnit="Pixel"
-                      ScrollViewer.CanContentScroll="True"
+        <ItemsControl Style="{StaticResource VirtualizingItemsControl}"
                       ItemsSource="{x:Static poke:Lists.Moves}"
-                      Margin="5"
-                      Padding="5">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <VirtualizingStackPanel/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.Template>
-                <ControlTemplate>
-                    <ScrollViewer Padding="{TemplateBinding Control.Padding}"
-                                  Focusable="False">
-                        <ItemsPresenter/>
-                    </ScrollViewer>
-                </ControlTemplate>
-            </ItemsControl.Template>
+                      Margin="5">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel LastChildFill="False">
+                    <DockPanel LastChildFill="False"
+                               Margin="5">
                         <Label Content="{Binding Name}"
                                DockPanel.Dock="Top"/>
 
