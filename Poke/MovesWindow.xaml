@@ -7,71 +7,85 @@
         Height="300"
         Width="300">
     <Grid>
-        <ScrollViewer>
-            <ItemsControl ItemsSource="{x:Static poke:Lists.Moves}"
-                          Margin="5"
-                          AlternationCount="1">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <DockPanel LastChildFill="False">
-                            <Label Content="{Binding Name}"
-                                   DockPanel.Dock="Top"/>
+        <ItemsControl VirtualizingStackPanel.IsVirtualizing="True"
+                      VirtualizingPanel.ScrollUnit="Pixel"
+                      ScrollViewer.CanContentScroll="True"
+                      ItemsSource="{x:Static poke:Lists.Moves}"
+                      Margin="5"
+                      Padding="5">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.Template>
+                <ControlTemplate>
+                    <ScrollViewer Padding="{TemplateBinding Control.Padding}"
+                                  Focusable="False">
+                        <ItemsPresenter/>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <DockPanel LastChildFill="False">
+                        <Label Content="{Binding Name}"
+                               DockPanel.Dock="Top"/>
 
-                            <TextBlock Text="{Binding Description}"
-                                       TextWrapping="Wrap"
-                                       Margin="5,15"
-                                       DockPanel.Dock="Bottom"/>
+                        <TextBlock Text="{Binding Description}"
+                                   TextWrapping="Wrap"
+                                   Margin="5,15"
+                                   DockPanel.Dock="Bottom"/>
 
-                            <Grid ShowGridLines="True"
-                                  DockPanel.Dock="Bottom"
-                                  Margin="0,5,0,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
+                        <Grid ShowGridLines="True"
+                              DockPanel.Dock="Bottom"
+                              Margin="0,5,0,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                                <Label Content="Power"/>
-                                <Label Content="Accuracy"
-                                       Grid.Column="1"/>
-                                <Label Content="PP"
-                                       Grid.Column="2"/>
+                            <Label Content="Power"/>
+                            <Label Content="Accuracy"
+                                   Grid.Column="1"/>
+                            <Label Content="PP"
+                                   Grid.Column="2"/>
 
-                                <Label Content="{Binding Power, TargetNullValue='--'}"
-                                       Grid.Row="1"/>
+                            <Label Content="{Binding Power, TargetNullValue='--'}"
+                                   Grid.Row="1"/>
 
-                                <Label Content="{Binding Accuracy, TargetNullValue='--'}"
-                                       Grid.Row="1"
-                                       Grid.Column="1"/>
+                            <Label Content="{Binding Accuracy, TargetNullValue='--'}"
+                                   Grid.Row="1"
+                                   Grid.Column="1"/>
 
-                                <Label Content="{Binding PP}"
-                                       Grid.Row="1"
-                                       Grid.Column="2"/>
-                            </Grid>
+                            <Label Content="{Binding PP}"
+                                   Grid.Row="1"
+                                   Grid.Column="2"/>
+                        </Grid>
 
-                            <Label Content="{Binding Kind}"
-                                   Foreground="White"
-                                   Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
-                                   DockPanel.Dock="Right"
-                                   Margin="3"
-                                   FontSize="10"
-                                   Padding="2"/>
+                        <Label Content="{Binding Kind}"
+                               Foreground="White"
+                               Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
+                               DockPanel.Dock="Right"
+                               Margin="3"
+                               FontSize="10"
+                               Padding="2"/>
 
-                            <Label Content="{Binding Type}"
-                                   FontSize="10"
-                                   Margin="3"
-                                   Padding="2"
-                                   HorizontalAlignment="Left"
-                                   Foreground="White"
-                                   Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                        <Label Content="{Binding Type}"
+                               FontSize="10"
+                               Margin="3"
+                               Padding="2"
+                               HorizontalAlignment="Left"
+                               Foreground="White"
+                               Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
+                    </DockPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

@@ -852,7 +852,7 @@ namespace Poke
                 pokemon.Moves.Assign(MoveInfo.Flamethrower,
                     MoveInfo.Venoshock,
                     MoveInfo.DragonPulse,
-                    MoveInfo.Acrobatics);
+                    MoveInfo.PoisonGas);
 
                 return pokemon;
             }
