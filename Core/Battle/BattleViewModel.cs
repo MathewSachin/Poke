@@ -170,7 +170,7 @@ namespace Poke
             }
 
             // Air Lock, Cloud Nine
-            else if (Pokemon.Ability.Is(Ability.AirLock, Ability.CloudNine))
+            else if (Pokemon.Ability is WeatherEffectNegatorAbility)
             {
                 await ShowAbility(Pokemon);
 
@@ -202,7 +202,7 @@ namespace Poke
             }
 
             // Air Lock, Cloud Nine
-            if (Pokemon.Ability.Is(Ability.AirLock, Ability.CloudNine))
+            if (Pokemon.Ability is WeatherEffectNegatorAbility)
             {
                 --SuppressWeather;
             }

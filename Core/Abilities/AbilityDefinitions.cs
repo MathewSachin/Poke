@@ -9,10 +9,7 @@
 
         public static NormalizingAbility Aerilate { get; } = new NormalizingAbility(nameof(Aerilate), Types.Flying);
 
-        public static Ability AirLock { get; } = new Ability("Air Lock")
-        {
-            Description = "Negates all effects of weather, but does not prevent the weather itself."
-        };
+        public static WeatherEffectNegatorAbility AirLock { get; } = new WeatherEffectNegatorAbility("Air Lock");
 
         public static Ability AngerPoint { get; } = new Ability(nameof(AngerPoint))
         {
@@ -49,10 +46,7 @@
             Description = "Prevents stats from being lowered by other Pokemon."
         };
 
-        public static Ability CloudNine { get; } = new Ability("Cloud Nine")
-        {
-            Description = "Negates all effects of weather, but does not prevent the weather itself."
-        };
+        public static WeatherEffectNegatorAbility CloudNine { get; } = new WeatherEffectNegatorAbility("Cloud Nine");
 
         public static Ability CompoundEyes { get; } = new Ability("Compound Eyes")
         {
