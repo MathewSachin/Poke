@@ -46,6 +46,7 @@
     <Compile Include="Battle\BattleState.cs" />
     <Compile Include="Battle\BattleViewModel.cs" />
     <Compile Include="Battle\Weather.cs" />
+    <Compile Include="MovesViewModel.cs" />
     <Compile Include="TypeEffect.cs" />
     <Compile Include="TypeEffectivenessViewModel.cs" />
     <Compile Include="Z\ExclusiveZCrystalFactory.cs" />

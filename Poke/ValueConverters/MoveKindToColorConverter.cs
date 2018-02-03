@@ -20,7 +20,7 @@ namespace Poke
                     return Types.Steel.GetColorHex();
                     
                 default:
-                    return "#00000000";
+                    return parameter ?? "#00000000";
             }
         }
 

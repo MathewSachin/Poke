@@ -4,11 +4,65 @@
         xmlns:local="clr-namespace:Poke"
         xmlns:poke="clr-namespace:Poke;assembly=Core"
         Title="Moves"
-        Height="300"
-        Width="300">
-    <Grid>
+        Height="600"
+        Width="500">
+    <Window.DataContext>
+        <poke:MovesViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top"
+                   Margin="5">
+            <Path Data="{StaticResource Icon_Search}"
+                  Fill="#333333"
+                  Width="15"
+                  Height="15"
+                  Margin="5,0"
+                  Stretch="Uniform"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
+            
+            <!-- Kind -->
+            <ComboBox ItemsSource="{Binding AllKinds}"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedKind, Mode=TwoWay}"
+                      HorizontalContentAlignment="Stretch"
+                      DockPanel.Dock="Right"
+                      Width="70">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="{Binding Key, Converter={StaticResource MoveKindToColorConverter}, ConverterParameter='#777777'}"
+                                   Text="{Binding Value}"
+                                   Foreground="White"
+                                   Margin="-5,-2,-21,-2"
+                                   Padding="1"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <!-- Type -->
+            <ComboBox ItemsSource="{Binding AllTypes}"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedType, Mode=TwoWay}"
+                      HorizontalContentAlignment="Stretch"
+                      DockPanel.Dock="Right"
+                      Margin="5,0"
+                      Width="70">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="{Binding Key, Converter={StaticResource TypeToColorConverter}, ConverterParameter='#777777'}"
+                                   Text="{Binding Value}"
+                                   Foreground="White"
+                                   Margin="-5,-2,-21,-2"
+                                   Padding="1"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+        
         <ItemsControl Style="{StaticResource VirtualizingItemsControl}"
-                      ItemsSource="{x:Static poke:Lists.Moves}"
+                      ItemsSource="{Binding Moves}"
                       Margin="5">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
@@ -72,5 +126,5 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-    </Grid>
+    </DockPanel>
 </Window>
