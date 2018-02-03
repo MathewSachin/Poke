@@ -25,11 +25,8 @@
         {
             Description = "Protects against Defense drops."
         };
-        
-        public static Ability Blaze { get; } = new Ability(nameof(Blaze))
-        {
-            Description = "Strengthens fire moves to inflict 1.5x damage at 1/3 max HP or less."
-        };
+
+        public static PinchAbility Blaze { get; } = new PinchAbility(nameof(Blaze), Types.Fire);
 
         public static Ability BulletProof { get; } = new Ability("Bullet Proof")
         {
@@ -290,10 +287,7 @@
             Description = "Ensures all moves used by and against the Pokemon hit."
         };
 
-        public static Ability Overgrow { get; } = new Ability(nameof(Overgrow))
-        {
-            Description = "Strengthens grass moves to inflict 1.5x damage at 1/3 max HP or less."
-        };
+        public static PinchAbility Overgrow { get; } = new PinchAbility(nameof(Overgrow), Types.Grass);
 
         public static Ability Overcoat { get; } = new Ability(nameof(Overcoat))
         {
@@ -498,10 +492,7 @@
             Description = "Raises moves' critical hit rates one stage."
         };
 
-        public static Ability Swarm { get; } = new Ability(nameof(Swarm))
-        {
-            Description = "Strengthens bug moves to inflict 1.5x damage at 1/3 max HP or less."
-        };
+        public static PinchAbility Swarm { get; } = new PinchAbility(nameof(Swarm), Types.Bug);
 
         public static Ability SwiftSwim { get; } = new Ability("Swift Swim")
         {
@@ -543,10 +534,7 @@
             Description = "Doubles damage inflicted with not very effective moves."
         };
         
-        public static Ability Torrent { get; } = new Ability(nameof(Torrent))
-        {
-            Description = "Strengthens water moves to inflict 1.5x damage at 1/3 max HP or less."
-        };
+        public static PinchAbility Torrent { get; } = new PinchAbility(nameof(Torrent), Types.Water);
 
         public static Ability ToughClaws { get; } = new Ability("Tough Claws")
         {

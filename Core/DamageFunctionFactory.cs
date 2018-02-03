@@ -491,20 +491,7 @@ namespace Poke
 
                 if (Attacker.Stats.CurrentHP <= Attacker.Stats.MaxHP / 3)
                 {
-                    // Blaze
-                    if (Attacker.Ability == Ability.Blaze && Move.Type == Types.Fire)
-                        damage *= 1.5;
-
-                    // Overgrow
-                    if (Attacker.Ability == Ability.Overgrow && Move.Type == Types.Grass)
-                        damage *= 1.5;
-
-                    // Torrent
-                    if (Attacker.Ability == Ability.Torrent && Move.Type == Types.Water)
-                        damage *= 1.5;
-
-                    // Swarm
-                    if (Attacker.Ability == Ability.Swarm && Move.Type == Types.Bug)
+                    if (Attacker.Ability is PinchAbility pinchAbility && pinchAbility.Type == Move.Type)
                         damage *= 1.5;
                 }
 

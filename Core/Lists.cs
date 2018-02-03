@@ -6,11 +6,14 @@ namespace Poke
     {
         static Lists()
         {
+            // ReSharper disable once NotAccessedVariable
             object a = MoveInfo.AerialAce;
+            // ReSharper disable RedundantAssignment
             a = Ability.Overgrow;
             a = Poke.PokemonSpecies.Arcanine;
             a = MegaStone.Blastoisinite;
             a = Nature.Brave;
+            // ReSharper restore RedundantAssignment
         }
 
         public static List<MoveInfo> Moves { get; } = new List<MoveInfo>();
