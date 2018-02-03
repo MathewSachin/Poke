@@ -90,6 +90,7 @@
             </StackPanel>
 
             <ItemsControl ItemsSource="{Binding OpponentSide.Battling}"
+                          Name="OpponentSideControl"
                           Grid.Column="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -126,6 +127,7 @@
             </ItemsControl>
 
             <ItemsControl ItemsSource="{Binding PlayerSide.Battling}"
+                          Name="PlayerSideControl"
                           Grid.Row="1">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>

@@ -23,6 +23,8 @@ namespace Poke
 
             TargetCommand = new DelegateCommand(OnTargetExecute, M => BattleState == BattleState.Target);
         }
+
+        public event DamageFunction DoAnimation;
         
         async Task Reset()
         {
@@ -357,7 +359,13 @@ namespace Poke
 
                 Attacker.Transforming = false;
             }
-            else await WriteStatus($"{GetStatusName(Attacker)} used {Move}{(Format != 1 && Opponent != null ? $" on {Opponent}" : "")}");
+            else
+            {
+                await WriteStatus($"{GetStatusName(Attacker)} used {Move}{(Format != 1 && Opponent != null ? $" on {Opponent}" : "")}");
+
+                if (DoAnimation != null)
+                    await DoAnimation.Invoke(Attacker, Move, Opponent, this);
+            }
             
             Move.Multitargets = false;
 

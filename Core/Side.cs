@@ -65,5 +65,16 @@ namespace Poke
         }
         
         public Side OpposingSide { get; set; }
+
+        public int IndexOf(Pokemon Pokemon)
+        {
+            for (var i = 0; i < Format; ++i)
+            {
+                if (Battling[i] == Pokemon)
+                    return i;
+            }
+
+            return -1;
+        }
     }
 }
