@@ -114,25 +114,14 @@ namespace Poke
         
         async Task SwitchInEffects(Pokemon Pokemon)
         {
-            foreach (var move in Pokemon.Moves)
+            if (Pokemon.Ability is NormalizingAbility normalizingAbility)
             {
-                if (move.Type == Types.Normal)
+                foreach (var move in Pokemon.Moves)
                 {
-                    // Aerilate
-                    if (Pokemon.Ability == Ability.Aerilate)
-                        move.Type = Types.Flying;
-
-                    // Pixilate
-                    else if (Pokemon.Ability == Ability.Pixilate)
-                        move.Type = Types.Fairy;
-
-                    // Refrigerate
-                    else if (Pokemon.Ability == Ability.Refrigerate)
-                        move.Type = Types.Ice;
-
-                    // Galvanize
-                    else if (Pokemon.Ability == Ability.Galvanize)
-                        move.Type = Types.Electric;
+                    if (move.Type == Types.Normal)
+                    {
+                        move.Type = normalizingAbility.Type;
+                    }
                 }
             }
 

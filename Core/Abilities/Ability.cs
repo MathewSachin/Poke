@@ -2,7 +2,7 @@
 {
     public partial class Ability
     {
-        Ability(string Name)
+        protected Ability(string Name)
         {
             this.Name = Name;
 
@@ -11,7 +11,7 @@
 
         public string Name { get; }
 
-        public string Description { get; private set; }
+        public string Description { get; protected set; }
         
         public override string ToString() => Name;
     }

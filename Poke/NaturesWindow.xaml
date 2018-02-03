@@ -4,12 +4,13 @@
         xmlns:local="clr-namespace:Poke"
         xmlns:poke="clr-namespace:Poke;assembly=Core"
         Title="Natures"
-        Height="700"
+        SizeToContent="Height"
         Width="400"
         DataContext="{x:Static poke:Lists.Natures}">
-    <DockPanel>
+    <DockPanel Margin="5">
         <ListView ItemsSource="{Binding}"
                   Name="NaturesList"
+                  SelectedIndex="0"
                   Width="100"
                   Padding="5,0"
                   BorderThickness="0,0,0.6,0"/>
@@ -38,14 +39,16 @@
 
                 <Label Content="{Binding IncreasedStat, TargetNullValue='--'}"
                        Grid.Row="1"
-                       Grid.Column="1"/>
+                       Grid.Column="1"
+                       Foreground="DarkRed"/>
 
                 <Label Content="Decreased Stat:"
                        Grid.Row="2"/>
 
                 <Label Content="{Binding DecreasedStat, TargetNullValue='--'}"
                        Grid.Row="2"
-                       Grid.Column="1"/>
+                       Grid.Column="1"
+                       Foreground="DarkBlue"/>
 
                 <Label Content="Favourite Flavour:"
                        Grid.Row="3"/>

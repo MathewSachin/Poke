@@ -754,20 +754,7 @@ namespace Poke
             if (power <= 60 && Attacker.Ability == Ability.Technician)
                 power *= 1.5;
 
-            // Aerilate
-            else if (Attacker.Ability == Ability.Aerilate && Move.Info.Type == Types.Normal)
-                power *= 1.2;
-
-            // Pixilate
-            else if (Attacker.Ability == Ability.Pixilate && Move.Info.Type == Types.Normal)
-                power *= 1.2;
-
-            // Refrigerate
-            else if (Attacker.Ability == Ability.Refrigerate && Move.Info.Type == Types.Normal)
-                power *= 1.2;
-
-            // Galvanize
-            else if (Attacker.Ability == Ability.Galvanize && Move.Info.Type == Types.Normal)
+            else if (Attacker.Ability is NormalizingAbility && Move.Info.Type == Types.Normal)
                 power *= 1.2;
 
             // Strong Jaws

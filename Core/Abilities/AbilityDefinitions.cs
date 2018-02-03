@@ -7,10 +7,7 @@
             Description = "Increases the same-type attack boost from 1.5x to 2x."
         };
 
-        public static Ability Aerilate { get; } = new Ability(nameof(Aerilate))
-        {
-            Description = "Turns the bearer's normal moves into flying moves and strengthens them to 1.2x their power."
-        };
+        public static NormalizingAbility Aerilate { get; } = new NormalizingAbility(nameof(Aerilate), Types.Flying);
 
         public static Ability AirLock { get; } = new Ability("Air Lock")
         {
@@ -162,10 +159,7 @@
             Description = "Raises flying moves' priority by one stage."
         };
 
-        public static Ability Galvanize { get; } = new Ability(nameof(Galvanize))
-        {
-            Description = "Turns the bearer's normal moves into electric moves and strengthens them to 1.2x their power."
-        };
+        public static NormalizingAbility Galvanize { get; } = new NormalizingAbility(nameof(Galvanize), Types.Electric);
 
         public static Ability Gooey { get; } = new Ability(nameof(Gooey))
         {
@@ -317,10 +311,7 @@
             Description = "Prevents confusion."
         };
 
-        public static Ability Pixilate { get; } = new Ability(nameof(Pixilate))
-        {
-            Description = "Turns the bearer's normal moves into fairy moves and strengthens them to 1.2x their power."
-        };
+        public static NormalizingAbility Pixilate { get; } = new NormalizingAbility(nameof(Pixilate), Types.Fairy);
 
         public static Ability PoisonHeal { get; } = new Ability("Poison Heal")
         {
@@ -378,10 +369,7 @@
             Description = "Strengthens recoil moves to 1.2x their power."
         };
 
-        public static Ability Refrigerate { get; } = new Ability(nameof(Refrigerate))
-        {
-            Description = "Turns the bearer's normal moves into ice moves and strengthens them to 1.2x their power."
-        };
+        public static NormalizingAbility Refrigerate { get; } = new NormalizingAbility(nameof(Refrigerate), Types.Ice);
 
         public static Ability Regenerator { get; } = new Ability(nameof(Regenerator))
         {

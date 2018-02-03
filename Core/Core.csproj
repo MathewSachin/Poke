@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Abilities\Ability.cs" />
     <Compile Include="Abilities\AbilityDefinitions.cs" />
+    <Compile Include="Abilities\NormalizingAbility.cs" />
     <Compile Include="Battle\Commands.cs" />
     <Compile Include="Battle\Fields.cs" />
     <Compile Include="Battle\BattleState.cs" />
