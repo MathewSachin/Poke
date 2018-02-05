@@ -53,7 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AbilitiesPage.xaml.cs">
+    <Compile Include="Pages\AbilitiesPage.xaml.cs">
       <DependentUpon>AbilitiesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BattlingSprite.xaml.cs">
@@ -74,7 +74,7 @@
     <Compile Include="Controls\MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MovesPage.xaml.cs">
+    <Compile Include="Pages\MovesPage.xaml.cs">
       <DependentUpon>MovesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\SpaceAtCapitalsConverter.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Controls\MoveSelector.xaml.cs">
       <DependentUpon>MoveSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NaturesPage.xaml.cs">
+    <Compile Include="Pages\NaturesPage.xaml.cs">
       <DependentUpon>NaturesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OpponentButtonContent.xaml.cs">
@@ -112,7 +112,7 @@
     <Compile Include="Controls\TextDisplay.xaml.cs">
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeEffectivenessPage.xaml.cs">
+    <Compile Include="Pages\TypeEffectivenessPage.xaml.cs">
       <DependentUpon>TypeEffectivenessPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\FaintedToColorConverter.cs" />
@@ -128,7 +128,19 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
-    <Page Include="AbilitiesPage.xaml">
+    <Page Include="Controls\ActionButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\Icons.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\VirtualizingItemsControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\AbilitiesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -176,11 +188,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MovesPage.xaml">
+    <Page Include="Pages\MovesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NaturesPage.xaml">
+    <Page Include="Pages\NaturesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,7 +228,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TypeEffectivenessPage.xaml">
+    <Page Include="Pages\TypeEffectivenessPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ValueConverters\ValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

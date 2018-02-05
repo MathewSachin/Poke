@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mui="http://firstfloorsoftware.com/ModernUI">
+    <Style x:Key="ActionButton"
+           TargetType="mui:ModernButton">
+        <Style.Setters>
+            <Setter Property="EllipseDiameter" Value="40"/>
+            <Setter Property="IconHeight" Value="15"/>
+            <Setter Property="IconWidth" Value="15"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="#616161" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="mui:ModernButton">
+                        <Grid Width="{TemplateBinding EllipseDiameter}"
+                              Height="{TemplateBinding EllipseDiameter}">
+                            <Ellipse x:Name="ellipse"
+                                     Fill="White"
+                                     Stroke="{DynamicResource ModernButtonBorder}"
+                                     StrokeThickness="{TemplateBinding EllipseStrokeThickness}"
+                                     VerticalAlignment="Stretch">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect Opacity="0.2"
+                                                      Color="#B7000000"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                            <Path x:Name="icon"
+                                  Data="{TemplateBinding IconData}" 
+                                  Width="{TemplateBinding IconWidth}"
+                                  Height="{TemplateBinding IconHeight}"
+                                  Fill="{TemplateBinding Foreground}"
+                                  Stretch="Uniform"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource ModernButtonTextHover}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="{DynamicResource ModernButtonTextPressed}" />
+                                <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource ModernButtonBorderPressed}" />
+                                <Setter TargetName="ellipse" Property="Fill" Value="{DynamicResource ModernButtonIconBackgroundPressed}" />
+                                <Setter TargetName="icon" Property="Fill" Value="{DynamicResource ModernButtonIconForegroundPressed}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Foreground" Value="{DynamicResource ModernButtonTextDisabled}" />
+                                <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource ModernButtonBorderDisabled}" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="true">
+                                <Setter TargetName="ellipse" Property="Stroke" Value="{DynamicResource Accent}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>
