@@ -1,19 +1,40 @@
 ﻿<Window x:Class="Poke.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Poke" Height="300" Width="300">
-    <StackPanel VerticalAlignment="Center">
-        <Button Content="Battle Simulator"
-                Click="OpenBattleSimulator"
-                Margin="5"/>
-        <Button Content="Double Battle Simulator"
-                Click="OpenDoubleSimulator"
-                Margin="5"/>
-        <Button Content="Triple Battle Simulator"
-                Click="OpenTripleSimulator"
-                Margin="5"/>
+        Title="Poke"
+        Height="230"
+        Width="320"
+        ResizeMode="NoResize">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel>
+            <TextBlock Text="Battle Simulator"
+                       Style="{StaticResource Title}"
+                       Margin="5"/>
+
+            <Button Content="Singles"
+                    Click="OpenBattleSimulator"
+                    Margin="5"/>
+            <Button Content="Doubles"
+                    Click="OpenDoubleSimulator"
+                    Margin="5"/>
+            <Button Content="Triples"
+                    Click="OpenTripleSimulator"
+                    Margin="5"/>
+        </StackPanel>
+
+        <GridSplitter Grid.Column="1"
+                      Width="1"
+                      Margin="10,0"/>
+
         <Button Content="Dex"
                 Click="OpenDex"
-                Margin="5"/>
-    </StackPanel>
+                Margin="5"
+                Grid.Column="2"/>
+    </Grid>
 </Window>
