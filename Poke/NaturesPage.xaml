@@ -51,7 +51,7 @@
                        Grid.Row="1"
                        Margin="5"/>
 
-                <Label Content="{Binding IncreasedStat, TargetNullValue='--'}"
+                <Label Content="{Binding IncreasedStat, Converter={StaticResource SpaceAtCaptitalsConverter}, ConverterParameter='--'}"
                        Grid.Row="1"
                        Grid.Column="1"
                        Foreground="DarkRed"
@@ -61,7 +61,7 @@
                        Grid.Row="2"
                        Margin="5"/>
 
-                <Label Content="{Binding DecreasedStat, TargetNullValue='--'}"
+                <Label Content="{Binding DecreasedStat, Converter={StaticResource SpaceAtCaptitalsConverter}, ConverterParameter='--'}"
                        Grid.Row="2"
                        Grid.Column="1"
                        Foreground="DarkBlue"

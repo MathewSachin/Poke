@@ -25,6 +25,7 @@
             <local:MoveKindToColorConverter x:Key="MoveKindToColorConverter"/>
             <local:PokeballColorConverter x:Key="PokeballColorConverter"/>
             <local:TransformSpriteConverter x:Key="TransformSpriteConverter"/>
+            <local:SpaceAtCaptitalsConverter x:Key="SpaceAtCaptitalsConverter"/>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 

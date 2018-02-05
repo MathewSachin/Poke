@@ -77,6 +77,7 @@
     <Compile Include="MovesPage.xaml.cs">
       <DependentUpon>MovesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ValueConverters\SpaceAtCapitalsConverter.cs" />
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="Controls\ZMoveSelector.xaml.cs">
       <DependentUpon>ZMoveSelector.xaml</DependentUpon>
