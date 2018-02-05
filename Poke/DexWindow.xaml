@@ -2,10 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Dex"
-        Height="600"
+        Height="650"
         Width="400">
     <Grid>
         <Frame Source="DexPage.xaml"
+               NavigationUIVisibility="Hidden"
                Navigating="Frame_OnNavigating"/>
     </Grid>
 </Window>

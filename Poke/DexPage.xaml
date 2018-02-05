@@ -2,7 +2,17 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       Title="Dex">
-    <Grid>
+    <DockPanel>
+        <DockPanel DockPanel.Dock="Top"
+                   Background="{StaticResource Accent}"
+                   Margin="0,0,0,20">
+            <TextBlock Text="Dex"
+                       Margin="10"
+                       VerticalAlignment="Center"
+                       Foreground="White"
+                       Style="{StaticResource Heading1}"/>
+        </DockPanel>
+
         <StackPanel>
             <Button Content="Natures"
                     Click="GoToNatures"
@@ -17,5 +27,5 @@
                     Click="GoToTypeEffectiveness"
                     Margin="5"/>
         </StackPanel>
-    </Grid>
+    </DockPanel>
 </Page>
