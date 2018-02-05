@@ -1,7 +1,6 @@
 ﻿<Window x:Class="Poke.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:local="clr-namespace:Poke"
         Title="Poke" Height="300" Width="300">
     <StackPanel VerticalAlignment="Center">
         <Button Content="Battle Simulator"

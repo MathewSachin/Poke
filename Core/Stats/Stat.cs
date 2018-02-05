@@ -104,8 +104,15 @@ namespace Poke
 
             _stages[Stat] = _stages[Stat].Clip(-6, 6);
 
-            return _stages[Stat] - initialValue;
+            var val = _stages[Stat] - initialValue;
+
+            if (val != 0)
+                StatStageChanged?.Invoke(val);
+
+            return val;
         }
+        
+        public event Action<int> StatStageChanged;
 
         double GetNatureMultiplier(Stats Stat)
         {

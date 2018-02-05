@@ -13,6 +13,9 @@ namespace Poke
 
         public override string ToString() => Name;
 
+        public static HeldItem BlueOrb { get; } = new HeldItem("Blue Orb");
+        public static HeldItem RedOrb { get; } = new HeldItem("Red Orb");
+
         public static HeldItem BrightPowder { get; } = new HeldItem("Bright Powder")
         {
             Description = "Moves targetting the holder have 0.9x chance to hit."

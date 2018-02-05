@@ -453,7 +453,7 @@
 
         public static Ability Stamina { get; } = new Ability(nameof(Stamina))
         {
-            Description = "The Pokemon's Defense goes up by 1 stage when it's hot by an attack."
+            Description = "The Pokemon's Defense goes up by 1 stage when it's hit by an attack."
         };
 
         public static Ability Static { get; } = new Ability(nameof(Static))

@@ -1,4 +1,6 @@
-﻿namespace Poke
+﻿using System;
+
+namespace Poke
 {
     public class Pokemon : NotifyPropertyChanged
     {
@@ -190,6 +192,13 @@
         public override string ToString() => Name;
 
         public bool IsFainted => Stats.CurrentHP == 0;
+
+        public void RaiseShowNonVolativeStatusAnimation()
+        {
+            ShowNonVolativeStatusAnimation?.Invoke();
+        }
+
+        public event Action ShowNonVolativeStatusAnimation;
 
         bool _transforming;
 

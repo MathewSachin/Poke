@@ -228,6 +228,8 @@ namespace Poke
 
                     await Pokemon.Stats.Damage(damage, this);
 
+                    Pokemon.RaiseShowNonVolativeStatusAnimation();
+
                     await WriteStatus($"{GetStatusName(Pokemon)} is hurt by burn");
                     break;
 
@@ -237,10 +239,20 @@ namespace Poke
                     var posion = Pokemon.Stats.MaxHP / 8;
 
                     if (Pokemon.Ability == Ability.PoisonHeal)
+                    {
                         Pokemon.Stats.Heal(posion);
-                    else await Pokemon.Stats.Damage(posion, this);
 
-                    await WriteStatus($"{GetStatusName(Pokemon)} is hurt by poison");
+                        await WriteStatus($"{GetStatusName(Pokemon)} healed due to Poison Heal");
+                    }
+                    else
+                    {
+                        await Pokemon.Stats.Damage(posion, this);
+
+                        Pokemon.RaiseShowNonVolativeStatusAnimation();
+
+                        await WriteStatus($"{GetStatusName(Pokemon)} is hurt by poison");
+                    }
+                    
                     break;
             }
 
@@ -284,6 +296,8 @@ namespace Poke
                     }
                     else
                     {
+                        Attacker.RaiseShowNonVolativeStatusAnimation();
+
                         await WriteStatus($"{GetStatusName(Attacker)} is frozen. It is unable to move.");
 
                         return;
@@ -293,6 +307,8 @@ namespace Poke
                 case NonVolatileStatus.Paralysis:
                     if (Random.NextDouble() < 0.25)
                     {
+                        Attacker.RaiseShowNonVolativeStatusAnimation();
+
                         await WriteStatus($"{GetStatusName(Attacker)} is paralysed. It is unable to move.");
                         
                         return;

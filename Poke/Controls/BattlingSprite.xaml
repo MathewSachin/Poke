@@ -1,14 +1,25 @@
 ﻿<UserControl x:Class="Poke.BattlingSprite"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Poke">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Grid>
         <FrameworkElement DataContext="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}}"
                           DataContextChanged="FrameworkElement_OnDataContextChanged"/>
-        
-        <Image Source="{Binding AsyncValue}"
-               Width="150">
-            <Image.RenderTransform>
+
+        <Grid>
+            <Image Source="{Binding AsyncValue}"
+                   Width="150"/>
+
+            <Rectangle Width="150"
+                       Height="150">
+                <Rectangle.Fill>
+                    <SolidColorBrush x:Name="TintColor"/>
+                </Rectangle.Fill>
+                <Rectangle.OpacityMask>
+                    <ImageBrush ImageSource="{Binding AsyncValue}"/>
+                </Rectangle.OpacityMask>
+            </Rectangle>
+
+            <Grid.RenderTransform>
                 <TransformGroup>
                     <RotateTransform CenterX="75"
                                      CenterY="75"
@@ -19,8 +30,8 @@
                                     CenterX="75"
                                     CenterY="75"/>
                 </TransformGroup>
-            </Image.RenderTransform>
-            <Image.Triggers>
+            </Grid.RenderTransform>
+            <Grid.Triggers>
                 <EventTrigger RoutedEvent="Image.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
@@ -34,8 +45,8 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
-            </Image.Triggers>
-        </Image>
+            </Grid.Triggers>    
+        </Grid>
 
         <Image Source="{Binding DataContext.HeldItem, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DockPanel}}, Converter={StaticResource TransformSpriteConverter}}"
                VerticalAlignment="Center"
