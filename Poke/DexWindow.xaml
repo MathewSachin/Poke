@@ -6,6 +6,6 @@
         Width="400">
     <Grid>
         <Frame Source="DexPage.xaml"
-               NavigationUIVisibility="Automatic"/>
+               Navigating="Frame_OnNavigating"/>
     </Grid>
 </Window>
