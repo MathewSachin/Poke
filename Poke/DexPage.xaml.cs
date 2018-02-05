@@ -28,5 +28,10 @@ namespace Poke
         {
             NavigationService?.Navigate(new TypeEffectivenessPage());
         }
+
+        void GoToPokemonList(object Sender, RoutedEventArgs E)
+        {
+            NavigationService?.Navigate(new PokemonListPage());
+        }
     }
 }

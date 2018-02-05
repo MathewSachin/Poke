@@ -77,6 +77,9 @@
     <Compile Include="Pages\MovesPage.xaml.cs">
       <DependentUpon>MovesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PokemonListPage.xaml.cs">
+      <DependentUpon>PokemonListPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\SpaceAtCapitalsConverter.cs" />
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="Controls\ZMoveSelector.xaml.cs">
@@ -229,6 +232,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\TypeEffectivenessPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PokemonListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

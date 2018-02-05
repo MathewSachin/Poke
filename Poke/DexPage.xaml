@@ -14,6 +14,9 @@
         </DockPanel>
 
         <StackPanel>
+            <Button Content="Pokemons"
+                    Click="GoToPokemonList"
+                    Margin="5"/>
             <Button Content="Natures"
                     Click="GoToNatures"
                     Margin="5"/>

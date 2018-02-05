@@ -38,10 +38,10 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <StackPanel Margin="5">
+    <StackPanel Margin="10">
         <DockPanel Background="{StaticResource Accent}"
                    DockPanel.Dock="Top"
-                   Margin="-5,-5,-5,10">
+                   Margin="-10,-10,-10,10">
             <mui:ModernButton IconData="{StaticResource Icon_Back}"
                               Style="{StaticResource ActionButton}"
                               ToolTip="Back"

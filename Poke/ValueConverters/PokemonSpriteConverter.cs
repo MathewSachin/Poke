@@ -26,6 +26,21 @@ namespace Poke
                 });
             }
 
+            if (Value[0] is PokemonSpecies species && Parameter is string x)
+            {
+                return new AsyncTask(Default, async () =>
+                {
+                    try
+                    {
+                        return await SpriteManager.GetSpriteLink(new Pokemon(species, 55), x == "Back");
+                    }
+                    catch
+                    {
+                        return Default;
+                    }
+                });
+            }
+
             return Default;
         }
 

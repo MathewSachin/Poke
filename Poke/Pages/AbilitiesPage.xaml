@@ -42,7 +42,7 @@
                       Style="{StaticResource VirtualizingItemsControl}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="0,7">
+                    <StackPanel Margin="5,7">
                         <TextBlock Text="{Binding Name}"
                                    Style="{StaticResource Title}"/>
                         <TextBlock Text="{Binding Description}"
