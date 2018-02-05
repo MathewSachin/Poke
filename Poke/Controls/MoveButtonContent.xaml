@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Poke"
              Background="#B7FFFFFF">
-    <StackPanel>
-        <Label Content="{Binding Name}"/>
+    <StackPanel Margin="2">
+        <Label Content="{Binding Name}"
+               Margin="3,0"/>
         <DockPanel>
             <TextBlock DockPanel.Dock="Right"
                        Margin="5,0">

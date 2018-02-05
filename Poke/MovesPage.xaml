@@ -30,8 +30,8 @@
                         <TextBlock Background="{Binding Key, Converter={StaticResource MoveKindToColorConverter}, ConverterParameter='#777777'}"
                                    Text="{Binding Value}"
                                    Foreground="White"
-                                   Margin="-5,-2,-21,-2"
-                                   Padding="1"/>
+                                   Margin="-7,-2,-25,-5"
+                                   Padding="2.5"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
@@ -49,8 +49,8 @@
                         <TextBlock Background="{Binding Key, Converter={StaticResource TypeToColorConverter}, ConverterParameter='#777777'}"
                                    Text="{Binding Value}"
                                    Foreground="White"
-                                   Margin="-5,-2,-21,-2"
-                                   Padding="1"/>
+                                   Margin="-7,-2,-25,-5"
+                                   Padding="2.5"/>
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
@@ -66,7 +66,8 @@
                     <DockPanel LastChildFill="False"
                                Margin="5">
                         <Label Content="{Binding Name}"
-                               DockPanel.Dock="Top"/>
+                               DockPanel.Dock="Top"
+                               Margin="3"/>
 
                         <TextBlock Text="{Binding Description}"
                                    TextWrapping="Wrap"
@@ -86,22 +87,34 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
 
-                            <Label Content="Power"/>
+                            <Label Content="Power"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
                             <Label Content="Accuracy"
-                                   Grid.Column="1"/>
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
                             <Label Content="PP"
-                                   Grid.Column="2"/>
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
 
                             <Label Content="{Binding Power, TargetNullValue='--'}"
-                                   Grid.Row="1"/>
+                                   Grid.Row="1"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
 
                             <Label Content="{Binding Accuracy, TargetNullValue='--'}"
                                    Grid.Row="1"
-                                   Grid.Column="1"/>
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
 
                             <Label Content="{Binding PP}"
                                    Grid.Row="1"
-                                   Grid.Column="2"/>
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   Margin="5"/>
                         </Grid>
 
                         <Label Content="{Binding Kind}"

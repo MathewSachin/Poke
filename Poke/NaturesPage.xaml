@@ -26,40 +26,48 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Label Content="{Binding TargetNullValue='Title'}"
-                       FontWeight="Light"
-                       FontSize="15"
-                       Grid.ColumnSpan="2"/>
+                <TextBlock Text="{Binding TargetNullValue='Title'}"
+                           Grid.ColumnSpan="2"
+                           Style="{StaticResource Title}"
+                           Margin="5,0,0,5"/>
 
                 <Label Content="Increased Stat:"
-                       Grid.Row="1"/>
+                       Grid.Row="1"
+                       Margin="5"/>
 
                 <Label Content="{Binding IncreasedStat, TargetNullValue='--'}"
                        Grid.Row="1"
                        Grid.Column="1"
-                       Foreground="DarkRed"/>
+                       Foreground="DarkRed"
+                       Margin="5"/>
 
                 <Label Content="Decreased Stat:"
-                       Grid.Row="2"/>
+                       Grid.Row="2"
+                       Margin="5"/>
 
                 <Label Content="{Binding DecreasedStat, TargetNullValue='--'}"
                        Grid.Row="2"
                        Grid.Column="1"
-                       Foreground="DarkBlue"/>
+                       Foreground="DarkBlue"
+                       Margin="5"/>
 
                 <Label Content="Favourite Flavour:"
-                       Grid.Row="3"/>
+                       Grid.Row="3"
+                       Margin="5"/>
 
                 <Label Content="{Binding FavouriteFlavour, TargetNullValue='--'}"
                        Grid.Row="3"
-                       Grid.Column="1"/>
+                       Grid.Column="1"
+                       Margin="5"/>
 
                 <Label Content="Disliked Flavour"
-                       Grid.Row="4"/>
+                       Grid.Row="4"
+                       Margin="5"/>
 
                 <Label Content="{Binding DislikedFlavour, TargetNullValue='--'}"
                        Grid.Row="4"
-                       Grid.Column="1"/>
+                       Grid.Column="1"
+                       Margin="5"/>
             </Grid>
         </Border>
     </DockPanel>

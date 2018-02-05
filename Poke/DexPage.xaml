@@ -5,13 +5,17 @@
     <Grid>
         <StackPanel>
             <Button Content="Natures"
-                    Click="GoToNatures"/>
+                    Click="GoToNatures"
+                    Margin="5"/>
             <Button Content="Abilities"
-                    Click="GoToAbilities"/>
+                    Click="GoToAbilities"
+                    Margin="5"/>
             <Button Content="Moves"
-                    Click="GoToMoves"/>
+                    Click="GoToMoves"
+                    Margin="5"/>
             <Button Content="Type Effectiveness"
-                    Click="GoToTypeEffectiveness"/>
+                    Click="GoToTypeEffectiveness"
+                    Margin="5"/>
         </StackPanel>
     </Grid>
 </Page>
