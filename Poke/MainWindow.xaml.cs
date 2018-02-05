@@ -19,29 +19,14 @@ namespace Poke
             new BattleSimulatorWindow(2).Show();
         }
 
-        void OpenTypeEffectiveness(object Sender, RoutedEventArgs E)
+        void OpenDex(object Sender, RoutedEventArgs E)
         {
-            new TypeEffectivenessWindow().Show();
-        }
-
-        void OpenNatures(object Sender, RoutedEventArgs E)
-        {
-            new NaturesWindow().Show();
+            new DexWindow().Show();
         }
 
         void OpenTripleSimulator(object Sender, RoutedEventArgs E)
         {
             new BattleSimulatorWindow(3).Show();
-        }
-
-        void OpenAbilities(object Sender, RoutedEventArgs E)
-        {
-            new AbilitiesWindow().Show();
-        }
-
-        void OpenMoves(object Sender, RoutedEventArgs E)
-        {
-            new MovesWindow().Show();
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿namespace Poke
 {
-    public partial class NaturesWindow
+    public partial class AbilitiesPage
     {
-        public NaturesWindow()
+        public AbilitiesPage()
         {
             InitializeComponent();
         }

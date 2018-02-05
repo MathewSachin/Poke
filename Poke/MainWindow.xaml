@@ -12,17 +12,8 @@
         <Button Content="Triple Battle Simulator"
                 Click="OpenTripleSimulator"
                 Margin="5"/>
-        <Button Content="Type Effectiveness"
-                Click="OpenTypeEffectiveness"
-                Margin="5"/>
-        <Button Content="Natures"
-                Click="OpenNatures"
-                Margin="5"/>
-        <Button Content="Abilities"
-                Click="OpenAbilities"
-                Margin="5"/>
-        <Button Content="Moves"
-                Click="OpenMoves"
+        <Button Content="Dex"
+                Click="OpenDex"
                 Margin="5"/>
     </StackPanel>
 </Window>

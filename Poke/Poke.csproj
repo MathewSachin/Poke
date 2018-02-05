@@ -50,8 +50,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AbilitiesWindow.xaml.cs">
-      <DependentUpon>AbilitiesWindow.xaml</DependentUpon>
+    <Compile Include="AbilitiesPage.xaml.cs">
+      <DependentUpon>AbilitiesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BattlingSprite.xaml.cs">
       <DependentUpon>BattlingSprite.xaml</DependentUpon>
@@ -59,14 +59,20 @@
     <Compile Include="Controls\MoveInfoControl.xaml.cs">
       <DependentUpon>MoveInfoControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DexPage.xaml.cs">
+      <DependentUpon>DexPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DexWindow.xaml.cs">
+      <DependentUpon>DexWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MovesWindow.xaml.cs">
-      <DependentUpon>MovesWindow.xaml</DependentUpon>
+    <Compile Include="MovesPage.xaml.cs">
+      <DependentUpon>MovesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="Controls\ZMoveSelector.xaml.cs">
@@ -75,8 +81,8 @@
     <Compile Include="Controls\MoveSelector.xaml.cs">
       <DependentUpon>MoveSelector.xaml</DependentUpon>
     </Compile>
-    <Compile Include="NaturesWindow.xaml.cs">
-      <DependentUpon>NaturesWindow.xaml</DependentUpon>
+    <Compile Include="NaturesPage.xaml.cs">
+      <DependentUpon>NaturesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\OpponentButtonContent.xaml.cs">
       <DependentUpon>OpponentButtonContent.xaml</DependentUpon>
@@ -102,8 +108,8 @@
     <Compile Include="Controls\TextDisplay.xaml.cs">
       <DependentUpon>TextDisplay.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TypeEffectivenessWindow.xaml.cs">
-      <DependentUpon>TypeEffectivenessWindow.xaml</DependentUpon>
+    <Compile Include="TypeEffectivenessPage.xaml.cs">
+      <DependentUpon>TypeEffectivenessPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\FaintedToColorConverter.cs" />
     <Compile Include="ValueConverters\GenderToColorConverter.cs" />
@@ -118,7 +124,7 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
-    <Page Include="AbilitiesWindow.xaml">
+    <Page Include="AbilitiesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,6 +148,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="DexPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DexWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -158,11 +172,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MovesWindow.xaml">
+    <Page Include="MovesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="NaturesWindow.xaml">
+    <Page Include="NaturesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,7 +212,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="TypeEffectivenessWindow.xaml">
+    <Page Include="TypeEffectivenessPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
