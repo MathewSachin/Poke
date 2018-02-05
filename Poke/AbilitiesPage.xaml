@@ -4,6 +4,9 @@
       xmlns:poke="clr-namespace:Poke;assembly=Core"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
       Title="Abilities">
+    <Page.DataContext>
+        <poke:AbilitiesViewModel/>
+    </Page.DataContext>
     <DockPanel>
         <DockPanel Background="{StaticResource Accent}"
                    DockPanel.Dock="Top"
@@ -20,7 +23,21 @@
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
 
-        <ItemsControl ItemsSource="{x:Static poke:Lists.Abilities}"
+        <DockPanel DockPanel.Dock="Top"
+                   Margin="5">
+            <Path Data="{StaticResource Icon_Search}"
+                  Fill="#333333"
+                  Width="15"
+                  Height="15"
+                  Margin="5,0"
+                  Stretch="Uniform"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
+
+            <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+
+        <ItemsControl ItemsSource="{Binding Abilities}"
                       Margin="5"
                       Style="{StaticResource VirtualizingItemsControl}">
             <ItemsControl.ItemTemplate>

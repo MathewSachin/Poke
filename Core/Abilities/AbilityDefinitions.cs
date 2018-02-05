@@ -1,4 +1,6 @@
-﻿namespace Poke
+﻿using System.Linq;
+
+namespace Poke
 {
     public partial class Ability
     {
@@ -9,26 +11,26 @@
 
         public static NormalizingAbility Aerilate { get; } = new NormalizingAbility(nameof(Aerilate), Types.Flying);
 
-        public static WeatherEffectNegatorAbility AirLock { get; } = new WeatherEffectNegatorAbility("Air Lock");
+        public static WeatherEffectNegatorAbility AirLock { get; } = new WeatherEffectNegatorAbility(nameof(AirLock).SpaceAtCapitals());
 
-        public static Ability AngerPoint { get; } = new Ability(nameof(AngerPoint))
+        public static Ability AngerPoint { get; } = new Ability(nameof(AngerPoint).SpaceAtCapitals())
         {
             Description = "Raises Attack to the maximum of six stages upon receiving a critical hit."
         };
 
-        public static Ability BattleArmor { get; } = new Ability("Battle Armor")
+        public static Ability BattleArmor { get; } = new Ability(nameof(BattleArmor).SpaceAtCapitals())
         {
             Description = "Protects against critical hits."
         };
 
-        public static Ability BigPecks { get; } = new Ability("Big Pecks")
+        public static Ability BigPecks { get; } = new Ability(nameof(BigPecks).SpaceAtCapitals())
         {
             Description = "Protects against Defense drops."
         };
 
         public static PinchAbility Blaze { get; } = new PinchAbility(nameof(Blaze), Types.Fire);
 
-        public static Ability BulletProof { get; } = new Ability("Bullet Proof")
+        public static Ability BulletProof { get; } = new Ability(nameof(BulletProof).SpaceAtCapitals())
         {
             Description = "Protects against bullet, ball and bomb based moves."
         };
@@ -38,14 +40,14 @@
             Description = "Doubles Speed during strong sunlight."
         };
 
-        public static Ability ClearBody { get; } = new Ability("Clear Body")
+        public static Ability ClearBody { get; } = new Ability(nameof(ClearBody).SpaceAtCapitals())
         {
             Description = "Prevents stats from being lowered by other Pokemon."
         };
 
-        public static WeatherEffectNegatorAbility CloudNine { get; } = new WeatherEffectNegatorAbility("Cloud Nine");
+        public static WeatherEffectNegatorAbility CloudNine { get; } = new WeatherEffectNegatorAbility(nameof(CloudNine).SpaceAtCapitals());
 
-        public static Ability CompoundEyes { get; } = new Ability("Compound Eyes")
+        public static Ability CompoundEyes { get; } = new Ability(nameof(CompoundEyes).SpaceAtCapitals())
         {
             Description = "Increases moves' accuracy to 1.3x."
         };
@@ -70,7 +72,7 @@
             Description = "Halves Attack and Special Attack at 50% max HP or less."
         };
 
-        public static Ability DesolateLand { get; } = new Ability("Desolate Land")
+        public static Ability DesolateLand { get; } = new Ability(nameof(DesolateLand).SpaceAtCapitals())
         {
             Description = "Affects weather and nullifies any Water-type attacks."
         };
@@ -95,17 +97,17 @@
             Description = "Summons strong sunlight that lasts for 5 turns upon entering battle."
         };
 
-        public static Ability DrySkin { get; } = new Ability("Dry Skin")
+        public static Ability DrySkin { get; } = new Ability(nameof(DrySkin).SpaceAtCapitals())
         {
             Description = "Causes 1/8 max HP damage each turn during strong sunlight, but heals for 1/8 max HP during rain. Increases damage from fire moves to 1.25x but absorbs water moves healing for 1/4 max HP."
         };
 
-        public static Ability EarlyBird { get; } = new Ability("Early Bird")
+        public static Ability EarlyBird { get; } = new Ability(nameof(EarlyBird).SpaceAtCapitals())
         {
             Description = "Makes sleep pass twice as quickly."
         };
 
-        public static Ability EffectSpore { get; } = new Ability("Effect Spore")
+        public static Ability EffectSpore { get; } = new Ability(nameof(EffectSpore).SpaceAtCapitals())
         {
             Description = "Has a 30% chance of inflicting either paralysis, poison or sleep on attacking Pokemon on contact."
         };
@@ -115,17 +117,17 @@
             Description = "Decreases damage taken from super-effective moves by 1/4."
         };
 
-        public static Ability FlameBody { get; } = new Ability("Flame Body")
+        public static Ability FlameBody { get; } = new Ability(nameof(FlameBody).SpaceAtCapitals())
         {
             Description = "Has a 30% chance of burning attacking Pokemon on contact."
         };
 
-        public static Ability FlareBoost { get; } = new Ability("Flare Boost")
+        public static Ability FlareBoost { get; } = new Ability(nameof(FlareBoost).SpaceAtCapitals())
         {
             Description = "Increases Special Attack to 1.5x when burned."
         };
 
-        public static Ability FlashFire { get; } = new Ability("Flash Fire")
+        public static Ability FlashFire { get; } = new Ability(nameof(FlashFire).SpaceAtCapitals())
         {
             Description = "Protects against fire moves. Once one has been blocked, the Pokemon's own Fire moves inflict 1.5x damage until it leaves battle."
         };
@@ -135,17 +137,17 @@
             Description = "Reveals an opponent's held item upon entering battle."
         };
 
-        public static Ability FullMetalBody { get; } = new Ability("Full Metal Body")
+        public static Ability FullMetalBody { get; } = new Ability(nameof(FullMetalBody).SpaceAtCapitals())
         {
             Description = "The Pokemon's stats will not be lowered by the effects of an opponents moves or Ability."
         };
 
-        public static Ability FurCoat { get; } = new Ability("Fur Coat")
+        public static Ability FurCoat { get; } = new Ability(nameof(FurCoat).SpaceAtCapitals())
         {
             Description = "Halves damage from physical attacks."
         };
 
-        public static Ability GaleWings { get; } = new Ability("Gale Wings")
+        public static Ability GaleWings { get; } = new Ability(nameof(GaleWings).SpaceAtCapitals())
         {
             Description = "Raises flying moves' priority by one stage."
         };
@@ -167,7 +169,7 @@
             Description = "Halves damage from fire moves and burns."
         };
 
-        public static Ability HugePower { get; } = new Ability("Huge Power")
+        public static Ability HugePower { get; } = new Ability(nameof(HugePower).SpaceAtCapitals())
         {
             Description = "Doubles Attack in battle."
         };
@@ -177,7 +179,7 @@
             Description = "Cures any major status ailment after each turn during rain."
         };
 
-        public static Ability HyperCutter { get; } = new Ability("Hyper Cutter")
+        public static Ability HyperCutter { get; } = new Ability(nameof(HyperCutter).SpaceAtCapitals())
         {
             Description = "Prevents Attack from being lowered by other Pokemon."
         };
@@ -187,7 +189,7 @@
             Description = "Strengthens physical moves to inflict 1.5x damage, but decreases their accuracy to 0.8x."
         };
 
-        public static Ability IceBody { get; } = new Ability("Ice Body")
+        public static Ability IceBody { get; } = new Ability(nameof(IceBody).SpaceAtCapitals())
         {
             Description = "Heals for 1/16 max HP after each turn during hail. Protects against hail damage."
         };
@@ -197,7 +199,7 @@
             Description = "Prevents Poison."
         };
 
-        public static Ability InnerFocus { get; } = new Ability("Inner Focus")
+        public static Ability InnerFocus { get; } = new Ability(nameof(InnerFocus).SpaceAtCapitals())
         {
             Description = "Prevents flinching."
         };
@@ -212,12 +214,12 @@
             Description = "Lowers opponents' Attack one stage upon entering battle."
         };
 
-        public static Ability IronBarbs { get; } = new Ability("Iron Barbs")
+        public static Ability IronBarbs { get; } = new Ability(nameof(IronBarbs).SpaceAtCapitals())
         {
             Description = "Damages attacking Pokemon for 1/8 their max HP on contact."
         };
 
-        public static Ability IronFist { get; } = new Ability("Iron Fist")
+        public static Ability IronFist { get; } = new Ability(nameof(IronFist).SpaceAtCapitals())
         {
             Description = "Strengthens punch-based moves to 1.2x their power."
         };
@@ -227,12 +229,12 @@
             Description = "Raises Attack one stage upon taking damage from a dark move."
         };
 
-        public static Ability KeenEye { get; } = new Ability("Keen Eye")
+        public static Ability KeenEye { get; } = new Ability(nameof(KeenEye).SpaceAtCapitals())
         {
             Description = "Prevents Accuracy from being lowered."
         };
 
-        public static Ability LeafGuard { get; } = new Ability("Leaf Guard")
+        public static Ability LeafGuard { get; } = new Ability(nameof(LeafGuard).SpaceAtCapitals())
         {
             Description = "Protects against major status ailments during strong sunlight."
         };
@@ -247,22 +249,22 @@
             Description = "Prevents paralysis."
         };
 
-        public static Ability LongReach { get; } = new Ability("Long Reach")
+        public static Ability LongReach { get; } = new Ability(nameof(LongReach).SpaceAtCapitals())
         {
             Description = "When a Pokemon with this ability uses a move that makes contact, it will not trigger any effects caused by contact."
         };
 
-        public static Ability MagmaArmor { get; } = new Ability("Magma Armor")
+        public static Ability MagmaArmor { get; } = new Ability(nameof(MagmaArmor).SpaceAtCapitals())
         {
             Description = "Prevents freezing."
         };
 
-        public static Ability MarvelScale { get; } = new Ability("Marvel Scale")
+        public static Ability MarvelScale { get; } = new Ability(nameof(MarvelScale).SpaceAtCapitals())
         {
             Description = "Increases Defense to 1.5x with a major status ailment."
         };
 
-        public static Ability MegaLauncher { get; } = new Ability("Mega Launcher")
+        public static Ability MegaLauncher { get; } = new Ability(nameof(MegaLauncher).SpaceAtCapitals())
         {
             Description = "Strengthens aura and pulse moves to 1.5x their power."
         };
@@ -272,7 +274,7 @@
             Description = "The Pokemon's attacks become critical hits if the target is poisoned."
         };
 
-        public static Ability MotorDrive { get; } = new Ability("Motor Drive")
+        public static Ability MotorDrive { get; } = new Ability(nameof(MotorDrive).SpaceAtCapitals())
         {
             Description = "Absorbs electric moves, raising Speed one stage."
         };
@@ -282,7 +284,7 @@
             Description = "Halves damage taken from full HP."
         };
 
-        public static Ability NoGuard { get; } = new Ability("No Guard")
+        public static Ability NoGuard { get; } = new Ability(nameof(NoGuard).SpaceAtCapitals())
         {
             Description = "Ensures all moves used by and against the Pokemon hit."
         };
@@ -294,24 +296,24 @@
             Description = "Protects against damage from weather and powder moves."
         };
 
-        public static Ability OwnTempo { get; } = new Ability("Own Tempo")
+        public static Ability OwnTempo { get; } = new Ability(nameof(OwnTempo).SpaceAtCapitals())
         {
             Description = "Prevents confusion."
         };
 
         public static NormalizingAbility Pixilate { get; } = new NormalizingAbility(nameof(Pixilate), Types.Fairy);
 
-        public static Ability PoisonHeal { get; } = new Ability("Poison Heal")
+        public static Ability PoisonHeal { get; } = new Ability(nameof(PoisonHeal).SpaceAtCapitals())
         {
             Description = "Heals for 1/8 max HP after each turn when poisoned in place of damage."
         };
 
-        public static Ability PoisonPoint { get; } = new Ability("Poison Point")
+        public static Ability PoisonPoint { get; } = new Ability(nameof(PoisonPoint).SpaceAtCapitals())
         {
             Description = "Has a 30% chance of poisoning attacking Pokemon on contact."
         };
 
-        public static Ability PoisonTouch { get; } = new Ability("Poison Touch")
+        public static Ability PoisonTouch { get; } = new Ability(nameof(PoisonTouch).SpaceAtCapitals())
         {
             Description = "Has a 30% chance of poisoning target Pokemon upon contact."
         };
@@ -321,27 +323,27 @@
             Description = "Increases the PP cost of moves targetting the Pokemon by one."
         };
 
-        public static Ability PrimordialSea { get; } = new Ability("Primordial Sea")
+        public static Ability PrimordialSea { get; } = new Ability(nameof(PrimordialSea).SpaceAtCapitals())
         {
             Description = "Affects weather and nullifies any Fire-type attacks."
         };
         
-        public static Ability PrismArmor { get; } = new Ability("Prism Armor")
+        public static Ability PrismArmor { get; } = new Ability(nameof(PrismArmor).SpaceAtCapitals())
         {
             Description = "Reduces super effective damage by 25%"
         };
 
-        public static Ability PurePower { get; } = new Ability("Pure Power")
+        public static Ability PurePower { get; } = new Ability(nameof(PurePower).SpaceAtCapitals())
         {
             Description = "Doubles Attack in battle."
         };
 
-        public static Ability QuickFeet { get; } = new Ability("Quick Feet")
+        public static Ability QuickFeet { get; } = new Ability(nameof(QuickFeet).SpaceAtCapitals())
         {
             Description = "Increases Speed to 1.5x with a major status ailment."
         };
 
-        public static Ability RainDish { get; } = new Ability("Rain Dish")
+        public static Ability RainDish { get; } = new Ability(nameof(RainDish).SpaceAtCapitals())
         {
             Description = "Heals for 1/16 max HP after each turn during rain."
         };
@@ -371,32 +373,32 @@
 
         // TODO: Does not affect Struggle recoil
         // TODO: Crash damage is unaffected
-        public static Ability RockHead { get; } = new Ability("Rock Head")
+        public static Ability RockHead { get; } = new Ability(nameof(RockHead).SpaceAtCapitals())
         {
             Description = "Protects against recoil damage."
         };
 
-        public static Ability RoughSkin { get; } = new Ability("Rough Skin")
+        public static Ability RoughSkin { get; } = new Ability(nameof(RoughSkin).SpaceAtCapitals())
         {
             Description = "Damages attacking Pokemon for 1/8 their max HP on contact."
         };
 
-        public static Ability SandForce { get; } = new Ability("Sand Force")
+        public static Ability SandForce { get; } = new Ability(nameof(SandForce).SpaceAtCapitals())
         {
             Description = "Strengthens rock, ground and steel moves to 1.3x their power during a sandstorm. Protects against sandstorm damage."
         };
 
-        public static Ability SandRush { get; } = new Ability("Sand Rush")
+        public static Ability SandRush { get; } = new Ability(nameof(SandRush).SpaceAtCapitals())
         {
             Description = "Doubles Speed during a sandstorm. Protects against sandstorm damage."
         };
 
-        public static Ability SandStream { get; } = new Ability("Sand Stream")
+        public static Ability SandStream { get; } = new Ability(nameof(SandStream).SpaceAtCapitals())
         {
             Description = "Summons a sandstorm that lasts for 5 turns upon entering battle."
         };
 
-        public static Ability SapSipper { get; } = new Ability("Sap Sipper")
+        public static Ability SapSipper { get; } = new Ability(nameof(SapSipper).SpaceAtCapitals())
         {
             Description = "Absorbs grass moves, raising Attack one stage."
         };
@@ -406,7 +408,7 @@
             Description = "Let's the Pokemon's normal and fighting moves hit ghost Pokemon."
         };
 
-        public static Ability ShellArmor { get; } = new Ability("Shell Armor")
+        public static Ability ShellArmor { get; } = new Ability(nameof(ShellArmor).SpaceAtCapitals())
         {
             Description = "Protects against critical hits."
         };
@@ -421,22 +423,22 @@
             Description = "Strengthens critical hits to inflict 2.25x damage rather than 1.5x."
         };
 
-        public static Ability SnowCloak { get; } = new Ability("Snow Cloak")
+        public static Ability SnowCloak { get; } = new Ability(nameof(SnowCloak).SpaceAtCapitals())
         {
             Description = "Increases evasion to 1.25x during hail. Protects against hail damage."
         };
 
-        public static Ability SnowWarning { get; } = new Ability("Snow Warning")
+        public static Ability SnowWarning { get; } = new Ability(nameof(SnowWarning).SpaceAtCapitals())
         {
             Description = "Summons hail that lasts for 5 turns upon entering battle."
         };
 
-        public static Ability SolarPower { get; } = new Ability("Solar Power")
+        public static Ability SolarPower { get; } = new Ability(nameof(SolarPower).SpaceAtCapitals())
         {
             Description = "Increases Special Attack to 1.5x but costs 1/8 max HP after each turn during strong sunlight."
         };
 
-        public static Ability SolidRock { get; } = new Ability("Solid Rock")
+        public static Ability SolidRock { get; } = new Ability(nameof(SolidRock).SpaceAtCapitals())
         {
             Description = "Decreases damage taken from super-effective moves by 1/4."
         };
@@ -446,7 +448,7 @@
             Description = "Protects against sound based moves."
         };
 
-        public static Ability SpeedBoost { get; } = new Ability("Speed Boost")
+        public static Ability SpeedBoost { get; } = new Ability(nameof(SpeedBoost).SpaceAtCapitals())
         {
             Description = "Raises Speed one stage after each turn."
         };
@@ -476,7 +478,7 @@
             Description = "Has a 10% chance of making target Pokemon flinch with each hit."
         };
 
-        public static Ability StrongJaws { get; } = new Ability("Strong Jaws")
+        public static Ability StrongJaws { get; } = new Ability(nameof(StrongJaws).SpaceAtCapitals())
         {
             Description = "Strengthens biting moves to 1.5x their power."
         };
@@ -487,14 +489,14 @@
             Description = "Prevents being KOed from full HP, leaving 1 HP instead."
         };
 
-        public static Ability SuperLuck { get; } = new Ability("Super Luck")
+        public static Ability SuperLuck { get; } = new Ability(nameof(SuperLuck).SpaceAtCapitals())
         {
             Description = "Raises moves' critical hit rates one stage."
         };
 
         public static PinchAbility Swarm { get; } = new PinchAbility(nameof(Swarm), Types.Bug);
 
-        public static Ability SwiftSwim { get; } = new Ability("Swift Swim")
+        public static Ability SwiftSwim { get; } = new Ability(nameof(SwiftSwim).SpaceAtCapitals())
         {
             Description = "Doubles Speed during rain."
         };
@@ -504,12 +506,12 @@
             Description = "Copies burn, paralysis and poison received onto the Pokemon that inflicted them."
         };
 
-        public static Ability TangledFeet { get; } = new Ability("Tangled Feet")
+        public static Ability TangledFeet { get; } = new Ability(nameof(TangledFeet).SpaceAtCapitals())
         {
             Description = "Doubles evasion when confused."
         };
 
-        public static Ability TanglingHair { get; } = new Ability("Tangling Hair")
+        public static Ability TanglingHair { get; } = new Ability(nameof(TanglingHair).SpaceAtCapitals())
         {
             Description = "Lowers attacking Pokemon's Speed by one stage on contact."
         };
@@ -524,69 +526,69 @@
             Description = "Anticipates an ally's attack and dodges it."
         };
 
-        public static Ability ThickFat { get; } = new Ability("Thick Fat")
+        public static Ability ThickFat { get; } = new Ability(nameof(ThickFat).SpaceAtCapitals())
         {
             Description = "Halves damage from fire and ice moves."
         };
 
-        public static Ability TintedLens { get; } = new Ability("Tinted Lens")
+        public static Ability TintedLens { get; } = new Ability(nameof(TintedLens).SpaceAtCapitals())
         {
             Description = "Doubles damage inflicted with not very effective moves."
         };
         
         public static PinchAbility Torrent { get; } = new PinchAbility(nameof(Torrent), Types.Water);
 
-        public static Ability ToughClaws { get; } = new Ability("Tough Claws")
+        public static Ability ToughClaws { get; } = new Ability(nameof(ToughClaws).SpaceAtCapitals())
         {
             Description = "Strengthens moves that make conact to 1.33x their power."
         };
 
-        public static Ability ToxicBoost { get; } = new Ability("Toxic Boost")
+        public static Ability ToxicBoost { get; } = new Ability(nameof(ToxicBoost).SpaceAtCapitals())
         {
             Description = "Increases Attack to 1.5x when poisoned."
         };
 
-        public static Ability VitalSpirit { get; } = new Ability("Vital Spirit")
+        public static Ability VitalSpirit { get; } = new Ability(nameof(VitalSpirit).SpaceAtCapitals())
         {
             Description = "Prevents sleep."
         };
 
-        public static Ability VoltAbsorb { get; } = new Ability("Volt Absorb")
+        public static Ability VoltAbsorb { get; } = new Ability(nameof(VoltAbsorb).SpaceAtCapitals())
         {
             Description = "Absorbs electric moves, healing for 1/4 max HP."
         };
 
-        public static Ability WaterAbsorb { get; } = new Ability("Water Absorb")
+        public static Ability WaterAbsorb { get; } = new Ability(nameof(WaterAbsorb).SpaceAtCapitals())
         {
             Description = "Absorbs water moves, healing for 1/4 max HP."
         };
 
-        public static Ability WaterBubble { get; } = new Ability("Water Bubble")
+        public static Ability WaterBubble { get; } = new Ability(nameof(WaterBubble).SpaceAtCapitals())
         {
             Description = "Halves the damage dealt to the Pokémon with this Ability by Fire-type attacks and doubles the power of Water-type moves used by the Pokémon with this Ability. It also prevents the Pokémon with the Ability from being burned."
         };
 
-        public static Ability WaterCompaction { get; } = new Ability("Water Compaction")
+        public static Ability WaterCompaction { get; } = new Ability(nameof(WaterCompaction).SpaceAtCapitals())
         {
             Description = "The Pokemon's Defense stat will go up by 2 if it is hit with a Water-type move."
         };
 
-        public static Ability WaterVeil { get; } = new Ability("Water Veil")
+        public static Ability WaterVeil { get; } = new Ability(nameof(WaterVeil).SpaceAtCapitals())
         {
             Description = "Prevents burns."
         };
 
-        public static Ability WeakArmor { get; } = new Ability("Weak Armor")
+        public static Ability WeakArmor { get; } = new Ability(nameof(WeakArmor).SpaceAtCapitals())
         {
             Description = "Raises Speed and lowers Defense by one stage each upon being hit by a physical move."
         };
 
-        public static Ability WhiteSmoke { get; } = new Ability("White Smoke")
+        public static Ability WhiteSmoke { get; } = new Ability(nameof(WhiteSmoke).SpaceAtCapitals())
         {
             Description = "Prevents stats from being lowered by other Pokemon."
         };
 
-        public static Ability WonderSkin { get; } = new Ability("Wonder Skin")
+        public static Ability WonderSkin { get; } = new Ability(nameof(WonderSkin).SpaceAtCapitals())
         {
             Description = "Lowers incoming non-damaging moves' base accuracy to exactly 50%."
         };
