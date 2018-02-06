@@ -53,8 +53,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Pages\AbilitiesPage.xaml.cs">
-      <DependentUpon>AbilitiesPage.xaml</DependentUpon>
+    <Compile Include="Pages\AbilityPage.xaml.cs">
+      <DependentUpon>AbilityPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\AbilitiesListPage.xaml.cs">
+      <DependentUpon>AbilitiesListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\BattlingSprite.xaml.cs">
       <DependentUpon>BattlingSprite.xaml</DependentUpon>
@@ -79,6 +82,12 @@
     </Compile>
     <Compile Include="Pages\PokemonListPage.xaml.cs">
       <DependentUpon>PokemonListPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\PokemonPage.xaml.cs">
+      <DependentUpon>PokemonPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PokemonButtonContent.xaml.cs">
+      <DependentUpon>PokemonButtonContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\SpaceAtCapitalsConverter.cs" />
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
@@ -131,6 +140,18 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
+    <Page Include="Pages\AbilityPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\PokemonPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PokemonButtonContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\ActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -143,7 +164,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\AbilitiesPage.xaml">
+    <Page Include="Pages\AbilitiesListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

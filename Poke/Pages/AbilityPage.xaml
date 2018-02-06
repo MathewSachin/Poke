@@ -1,14 +1,13 @@
-﻿<Page x:Class="Poke.PokemonListPage"
+﻿<Page x:Class="Poke.AbilityPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-      xmlns:poke="clr-namespace:Poke;assembly=Core"
-      xmlns:local="clr-namespace:Poke"
+      xmlns:poke="clr-namespace:Poke"
       mc:Ignorable="d" 
-      d:DesignHeight="400" d:DesignWidth="500"
-      Title="Pokemons">
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="AbilityPage">
     <DockPanel>
         <DockPanel Background="{StaticResource Accent}"
                    DockPanel.Dock="Top"
@@ -19,21 +18,31 @@
                               Click="GoBack"
                               Margin="10"/>
 
-            <TextBlock Text="Pokemons"
+            <TextBlock Text="{Binding Ability.Name}"
                        VerticalAlignment="Center"
                        Foreground="White"
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
         
-        <ItemsControl Margin="5"
-                      ItemsSource="{x:Static poke:Lists.PokemonSpecies}"
-                      Style="{StaticResource VirtualizingItemsControl}">
+        <Label Margin="10"
+               Content="{Binding Ability.Description}"
+               DockPanel.Dock="Top"/>
+        
+        <TextBlock Text="Pokemon with this Ability"
+                   Style="{StaticResource Title}"
+                   FontSize="15"
+                   Margin="10"
+                   DockPanel.Dock="Top"/>
+        
+        <ItemsControl Margin="5,0"
+                      Style="{StaticResource VirtualizingItemsControl}"
+                      ItemsSource="{Binding Pokemon}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <Button Margin="5"
                             HorizontalContentAlignment="Stretch"
                             Click="GoToPokemon">
-                        <local:PokemonButtonContent/>
+                        <poke:PokemonButtonContent/>
                     </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

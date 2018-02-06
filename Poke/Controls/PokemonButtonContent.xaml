@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Poke.PokemonButtonContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <DockPanel>
+        <Image Source="{Binding AsyncValue}"
+               Width="50">
+            <Image.DataContext>
+                <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
+                              ConverterParameter="Front">
+                    <MultiBinding.Bindings>
+                        <Binding/>
+                    </MultiBinding.Bindings>
+                </MultiBinding>
+            </Image.DataContext>
+        </Image>
+
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock Text="{Binding Name}"
+                       VerticalAlignment="Center"
+                       Margin="0,5"/>
+
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding PrimaryType}"
+                       FontSize="10"
+                       Padding="2"
+                       Foreground="White"
+                       Background="{Binding PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
+                <Label Content="{Binding SecondaryType}"
+                       FontSize="10"
+                       Padding="2"
+                       Foreground="White"
+                       Background="{Binding SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
+            </StackPanel>
+        </StackPanel>
+    </DockPanel>
+</UserControl>

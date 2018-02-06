@@ -2,9 +2,9 @@
 
 namespace Poke
 {
-    public partial class PokemonListPage
+    public partial class AbilityPage
     {
-        public PokemonListPage()
+        public AbilityPage()
         {
             InitializeComponent();
         }

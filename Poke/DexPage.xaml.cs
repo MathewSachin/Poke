@@ -16,7 +16,7 @@ namespace Poke
 
         void GoToAbilities(object Sender, RoutedEventArgs E)
         {
-            NavigationService?.Navigate(new AbilitiesPage());
+            NavigationService?.Navigate(new AbilitiesListPage());
         }
 
         void GoToMoves(object Sender, RoutedEventArgs E)
