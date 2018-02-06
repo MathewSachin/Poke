@@ -2,9 +2,9 @@
 
 namespace Poke
 {
-    public partial class MovesPage
+    public partial class MovePage
     {
-        public MovesPage()
+        public MovePage()
         {
             InitializeComponent();
         }

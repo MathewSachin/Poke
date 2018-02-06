@@ -53,6 +53,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Pages\MovePage.xaml.cs">
+      <DependentUpon>MovePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\AbilityPage.xaml.cs">
       <DependentUpon>AbilityPage.xaml</DependentUpon>
     </Compile>
@@ -77,8 +80,8 @@
     <Compile Include="Controls\MoveButtonContent.xaml.cs">
       <DependentUpon>MoveButtonContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MovesPage.xaml.cs">
-      <DependentUpon>MovesPage.xaml</DependentUpon>
+    <Compile Include="Pages\MovesListPage.xaml.cs">
+      <DependentUpon>MovesListPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PokemonListPage.xaml.cs">
       <DependentUpon>PokemonListPage.xaml</DependentUpon>
@@ -140,6 +143,10 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
+    <Page Include="Pages\MovePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AbilityPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -212,7 +219,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MovesPage.xaml">
+    <Page Include="Pages\MovesListPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,4 +1,4 @@
-﻿<Page x:Class="Poke.MovesPage"
+﻿<Page x:Class="Poke.MovesListPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:poke="clr-namespace:Poke;assembly=Core"
@@ -79,75 +79,28 @@
                       Margin="5">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <DockPanel LastChildFill="False"
-                               Margin="5">
-                        <Label Content="{Binding Name}"
-                               DockPanel.Dock="Top"
-                               Margin="3"/>
-
-                        <TextBlock Text="{Binding Description}"
-                                   TextWrapping="Wrap"
-                                   Margin="5,15"
-                                   DockPanel.Dock="Bottom"/>
-
-                        <Grid ShowGridLines="True"
-                              DockPanel.Dock="Bottom"
-                              Margin="0,5,0,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-
-                            <Label Content="Power"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-                            <Label Content="Accuracy"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-                            <Label Content="PP"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-
-                            <Label Content="{Binding Power, TargetNullValue='--'}"
-                                   Grid.Row="1"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-
-                            <Label Content="{Binding Accuracy, TargetNullValue='--'}"
-                                   Grid.Row="1"
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-
-                            <Label Content="{Binding PP}"
-                                   Grid.Row="1"
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   Margin="5"/>
-                        </Grid>
-
+                    <DockPanel Margin="5">
                         <Label Content="{Binding Kind}"
                                Foreground="White"
                                Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
                                DockPanel.Dock="Right"
-                               Margin="3"
-                               FontSize="10"
-                               Padding="2"/>
+                               Padding="5,0"
+                               VerticalContentAlignment="Center"
+                               Width="60"/>
 
                         <Label Content="{Binding Type}"
-                               FontSize="10"
-                               Margin="3"
-                               Padding="2"
-                               HorizontalAlignment="Left"
+                               DockPanel.Dock="Right"
+                               Width="60"
+                               Padding="5,0"
+                               Margin="5,0"
                                Foreground="White"
+                               VerticalContentAlignment="Center"
                                Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
+
+                        <Button Click="GoToMove"
+                                Content="{Binding Name}"
+                                HorizontalContentAlignment="Left"
+                                Padding="10,2"/>
                     </DockPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

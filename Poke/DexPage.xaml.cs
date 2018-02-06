@@ -21,7 +21,7 @@ namespace Poke
 
         void GoToMoves(object Sender, RoutedEventArgs E)
         {
-            NavigationService?.Navigate(new MovesPage());
+            NavigationService?.Navigate(new MovesListPage());
         }
 
         void GoToTypeEffectiveness(object Sender, RoutedEventArgs E)
