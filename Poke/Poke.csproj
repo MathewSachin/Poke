@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>pokeball.ico</ApplicationIcon>
+    <ApplicationIcon>Images\pokeball.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.9.0, Culture=neutral, PublicKeyToken=bc9b0c37bf06c6a9, processorArchitecture=MSIL">
@@ -131,15 +131,15 @@
     <Compile Include="ValueConverters\NullToVisibleConverter.cs" />
     <Compile Include="ValueConverters\StatusToDisplayConverter.cs" />
     <Compile Include="ValueConverters\TypeToColorConverter.cs" />
-    <Page Include="Controls\ActionButton.xaml">
+    <Page Include="Resources\ActionButton.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Icons.xaml">
+    <Page Include="Resources\Icons.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\VirtualizingItemsControl.xaml">
+    <Page Include="Resources\VirtualizingItemsControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -239,7 +239,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ValueConverters\ValueConverters.xaml">
+    <Page Include="Resources\ValueConverters.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,7 +258,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="pokeball.ico" />
+    <Resource Include="Images\pokeball.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Mega.png" />

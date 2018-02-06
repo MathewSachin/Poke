@@ -11,7 +11,7 @@ namespace Poke
         //AdjacentAlly,
         //AdjacentFoe,
         //AllySide,
-        AllAdjacent,
+        AllAdjacent
         //All,
         //FoeSide,
         //RandomNormal

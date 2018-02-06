@@ -1536,7 +1536,7 @@ namespace Poke
 
         public static MoveInfo ShadowPunch { get; } = new MoveInfo("Shadow Punch", Types.Ghost, MoveKind.Physical, 60, null, 20)
         {
-            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror | MoveFlags.Punch,
+            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror | MoveFlags.Punch
         };
 
         public static MoveInfo ShadowSneak { get; } = new MoveInfo("Shadow Sneak", Types.Ghost, MoveKind.Physical, 40, 100, 30)
@@ -1547,7 +1547,7 @@ namespace Poke
 
         public static MoveInfo ShockWave { get; } = new MoveInfo("Shock Wave", Types.Electric, MoveKind.Special, 60, null, 20)
         {
-            Flags = MoveFlags.Protect | MoveFlags.Mirror,
+            Flags = MoveFlags.Protect | MoveFlags.Mirror
         };
 
         // TODO: Can hit Pokemon under effect of Bounce, Fly or Sky Drop
@@ -1559,7 +1559,7 @@ namespace Poke
 
         public static MoveInfo Slam { get; } = new MoveInfo(nameof(Slam), Types.Normal, MoveKind.Physical, 80, 75, 20)
         {
-            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror | MoveFlags.NonSky,
+            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror | MoveFlags.NonSky
         };
 
         public static MoveInfo Slash { get; } = new MoveInfo(nameof(Slash), Types.Normal, MoveKind.Physical, 70, 100, 20)
@@ -1590,7 +1590,7 @@ namespace Poke
 
         public static MoveInfo SmartStrike { get; } = new MoveInfo("Smart Strike", Types.Steel, MoveKind.Physical, 70, null, 10)
         {
-            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror,
+            Flags = MoveFlags.Contact | MoveFlags.Protect | MoveFlags.Mirror
         };
 
         public static MoveInfo Smog { get; } = new MoveInfo(nameof(Smog), Types.Poison, MoveKind.Special, 30, 70, 20)

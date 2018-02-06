@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="Poke.PokeballCounter"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Poke">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ItemsControl ItemsSource="{Binding}"
                   Margin="5">
         <ItemsControl.ItemsPanel>

@@ -7,10 +7,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.xaml" />
                 <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Light.xaml"/>
-                <ResourceDictionary Source="ValueConverters/ValueConverters.xaml"/>
-                <ResourceDictionary Source="Controls/VirtualizingItemsControl.xaml"/>
-                <ResourceDictionary Source="Controls/ActionButton.xaml"/>
-                <ResourceDictionary Source="Controls/Icons.xaml"/>
+                <ResourceDictionary Source="Resources/ValueConverters.xaml"/>
+                <ResourceDictionary Source="Resources/VirtualizingItemsControl.xaml"/>
+                <ResourceDictionary Source="Resources/ActionButton.xaml"/>
+                <ResourceDictionary Source="Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

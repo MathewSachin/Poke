@@ -6,21 +6,22 @@ namespace Poke
 {
     public class GenderToSymbolConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            switch (value)
+            switch (Value)
             {
                 case Gender.Male:
                     return "♂";
 
                 case Gender.Female:
                     return "♀";
-            }
 
-            return "";
+                default:
+                    return "";
+            }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             return Binding.DoNothing;
         }

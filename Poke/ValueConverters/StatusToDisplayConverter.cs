@@ -6,9 +6,9 @@ namespace Poke
 {
     public class StatusToDisplayConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            switch (value)
+            switch (Value)
             {
                 case NonVolatileStatus.BadPoison:
                 case NonVolatileStatus.Poison:
@@ -31,7 +31,7 @@ namespace Poke
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             return Binding.DoNothing;
         }

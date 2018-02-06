@@ -6,9 +6,9 @@ namespace Poke
 {
     public class MoveKindToColorConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            switch (value)
+            switch (Value)
             {
                 case MoveKind.Physical:
                     return Types.Fighting.GetColorHex();
@@ -20,11 +20,11 @@ namespace Poke
                     return Types.Steel.GetColorHex();
                     
                 default:
-                    return parameter ?? "#00000000";
+                    return Parameter ?? "#00000000";
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             return Binding.DoNothing;
         }

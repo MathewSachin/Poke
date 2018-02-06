@@ -7,12 +7,12 @@ namespace Poke
 {
     public class EqualityToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            return value?.ToString() == parameter?.ToString() ? Visibility.Visible : Visibility.Collapsed;
+            return Value?.ToString() == Parameter?.ToString() ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             return Binding.DoNothing;
         }

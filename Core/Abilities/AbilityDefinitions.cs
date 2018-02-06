@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Poke
+﻿namespace Poke
 {
     public partial class Ability
     {
@@ -62,7 +60,7 @@ namespace Poke
             Description = "With the Corrosion Ability, it becomes possible to inflict the Poisoned status condition even on Steel and Poison type Pokemon."
         };
 
-        public static Ability CursedBody { get; } = new Ability(nameof(CursedBody))
+        public static Ability CursedBody { get; } = new Ability(nameof(CursedBody).SpaceAtCapitals())
         {
             Description = "Has a 30% chance of disabling any move that hits the Pokemon."
         };

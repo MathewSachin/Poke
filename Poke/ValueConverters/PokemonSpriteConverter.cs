@@ -11,34 +11,33 @@ namespace Poke
 
         public object Convert(object[] Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            if (Value[0] is Pokemon pokemon && Parameter is string s)
+            switch (Value[0])
             {
-                return new AsyncTask(Default, async () =>
-                {
-                    try
+                case Pokemon pokemon when Parameter is string s:
+                    return new AsyncTask(Default, async () =>
                     {
-                        return await SpriteManager.GetSpriteLink(pokemon, s == "Back");
-                    }
-                    catch
-                    {
-                        return Default;
-                    }
-                });
-            }
+                        try
+                        {
+                            return await SpriteManager.GetSpriteLink(pokemon, s == "Back");
+                        }
+                        catch
+                        {
+                            return Default;
+                        }
+                    });
 
-            if (Value[0] is PokemonSpecies species && Parameter is string x)
-            {
-                return new AsyncTask(Default, async () =>
-                {
-                    try
+                case PokemonSpecies species when Parameter is string s:
+                    return new AsyncTask(Default, async () =>
                     {
-                        return await SpriteManager.GetSpriteLink(new Pokemon(species, 55), x == "Back");
-                    }
-                    catch
-                    {
-                        return Default;
-                    }
-                });
+                        try
+                        {
+                            return await SpriteManager.GetSpriteLink(new Pokemon(species, 55), s == "Back");
+                        }
+                        catch
+                        {
+                            return Default;
+                        }
+                    });
             }
 
             return Default;

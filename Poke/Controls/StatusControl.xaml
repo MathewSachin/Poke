@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="Poke.StatusControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Poke"
              HorizontalAlignment="Stretch"
              Margin="5"
              Visibility="{Binding Converter={StaticResource NullToVisibleConverter}}">

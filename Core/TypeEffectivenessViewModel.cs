@@ -53,7 +53,7 @@ namespace Poke
                 if (toRemove != null)
                     SecondaryTypesAvailable.Remove(toRemove.Value);
 
-                for (int i = 0; i < SecondaryTypesAvailable.Count; ++i)
+                for (var i = 0; i < SecondaryTypesAvailable.Count; ++i)
                 {
                     if (SecondaryTypesAvailable[i].Key > _primaryType)
                     {
@@ -86,7 +86,7 @@ namespace Poke
                 {
                     var added = false;
 
-                    for (int i = 0; i < PrimaryTypesAvailable.Count; ++i)
+                    for (var i = 0; i < PrimaryTypesAvailable.Count; ++i)
                     {
                         if (PrimaryTypesAvailable[i] > _secondaryType.Value)
                         {

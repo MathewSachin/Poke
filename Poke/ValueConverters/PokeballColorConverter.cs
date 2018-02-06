@@ -19,9 +19,9 @@ namespace Poke
         static readonly Brush FaintedBrush = GetBrush("#B7000000");
         static readonly Brush StatusConditionBrush = GetBrush("#B7FF7700");
 
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] Values, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            if (values[0] is Pokemon pokemon)
+            if (Values[0] is Pokemon pokemon)
             {
                 if (pokemon.Stats.CurrentHP == 0)
                     return FaintedBrush;
@@ -35,7 +35,7 @@ namespace Poke
             return Binding.DoNothing;
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object Value, Type[] TargetTypes, object Parameter, CultureInfo Culture)
         {
             throw new NotImplementedException();
         }

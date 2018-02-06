@@ -7,17 +7,17 @@ namespace Poke
 {
     public class NotFaintedToVisibilityConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
-            var hide = parameter?.ToString() == "Collapse" ? Visibility.Collapsed : Visibility.Hidden;
+            var hide = Parameter?.ToString() == "Collapse" ? Visibility.Collapsed : Visibility.Hidden;
 
-            if (value is int hp)
+            if (Value is int hp)
                 return hp == 0 ? hide : Visibility.Visible;
 
             return hide;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object Value, Type TargetType, object Parameter, CultureInfo Culture)
         {
             return Binding.DoNothing;
         }

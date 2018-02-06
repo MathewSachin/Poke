@@ -428,11 +428,16 @@ namespace Poke
 
                 if (Battle.SuppressWeather == 0)
                 {
-                    if (Battle.Weather == Weather.HeavyRain && Move.Type == Types.Fire)
-                        damage = 0;
+                    switch (Battle.Weather)
+                    {
+                        case Weather.HeavyRain when Move.Type == Types.Fire:
+                            damage = 0;
+                            break;
 
-                    else if (Battle.Weather == Weather.ExtremelyHarshSunlight && Move.Type == Types.Water)
-                        damage = 0;
+                        case Weather.ExtremelyHarshSunlight when Move.Type == Types.Water:
+                            damage = 0;
+                            break;
+                    }
                 }
 
                 // Weather can nullify damage
@@ -781,15 +786,17 @@ namespace Poke
                 power *= WeatherPowerMultiplier(Move, Battle.Weather);
 
             // Type Enhancement
-            if (Attacker.HeldItem is TypeEnhancement enhancement && enhancement.Type == Move.Type)
-                power *= enhancement.Multiplier;
-
-            // Type Gems
-            else if (Attacker.HeldItem is Gem gem && Move.Type == gem.Type)
+            switch (Attacker.HeldItem)
             {
-                power *= 1.3;
+                case TypeEnhancement enhancement when enhancement.Type == Move.Type:
+                    power *= enhancement.Multiplier;
+                    break;
 
-                Attacker.HeldItem = null;
+                case Gem gem when Move.Type == gem.Type:
+                    power *= 1.3;
+
+                    Attacker.HeldItem = null;
+                    break;
             }
 
             return power;
