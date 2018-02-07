@@ -9,6 +9,9 @@
       mc:Ignorable="d" 
       d:DesignHeight="400" d:DesignWidth="500"
       Title="Pokemons">
+    <Page.DataContext>
+        <poke:PokemonListViewModel/>
+    </Page.DataContext>
     <DockPanel>
         <DockPanel Background="{StaticResource Accent}"
                    DockPanel.Dock="Top"
@@ -24,9 +27,42 @@
                        Foreground="White"
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
-        
+
+        <DockPanel DockPanel.Dock="Top"
+                   Margin="5">
+            <Path Data="{StaticResource Icon_Search}"
+                  Fill="#333333"
+                  Width="15"
+                  Height="15"
+                  Margin="5,0"
+                  Stretch="Uniform"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
+
+            <!-- Type -->
+            <ComboBox ItemsSource="{Binding AllTypes}"
+                      SelectedValuePath="Key"
+                      SelectedValue="{Binding SelectedType, Mode=TwoWay}"
+                      HorizontalContentAlignment="Stretch"
+                      DockPanel.Dock="Right"
+                      Margin="5,0"
+                      Width="70">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Background="{Binding Key, Converter={StaticResource TypeToColorConverter}, ConverterParameter='#777777'}"
+                                   Text="{Binding Value}"
+                                   Foreground="White"
+                                   Margin="-7,-2,-25,-5"
+                                   Padding="2.5"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
+            <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+
         <ItemsControl Margin="5"
-                      ItemsSource="{x:Static poke:Lists.PokemonSpecies}"
+                      ItemsSource="{Binding Pokemons}"
                       Style="{StaticResource VirtualizingItemsControl}">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
