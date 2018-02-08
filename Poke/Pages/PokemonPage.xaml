@@ -38,14 +38,16 @@
                 </Image.DataContext>
             </Image>
 
+            <TextBlock Margin="0,28,30,0"
+                       DockPanel.Dock="Right"
+                       VerticalAlignment="Top">
+                #<Run Text="{Binding Species.Number, Mode=OneWay}"/>
+            </TextBlock>
+
             <StackPanel Margin="0,20">
                 <StackPanel Orientation="Horizontal"
                             Margin="0,5"
                             VerticalAlignment="Center">
-                    <TextBlock Margin="0,0,5,0">
-                        #<Run Text="{Binding Species.Number, Mode=OneWay}"/>
-                    </TextBlock>
-                    
                     <TextBlock Text="{Binding Species.Name}"/>
                 </StackPanel>
 

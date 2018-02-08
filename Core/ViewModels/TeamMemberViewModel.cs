@@ -30,6 +30,9 @@ namespace Poke
             set
             {
                 _species = value;
+
+                if (Species.MegaEvolutions.Count > 0)
+                    HeldItem = Species.MegaEvolutions[0].MegaStone;
                 
                 OnPropertyChanged();
             }

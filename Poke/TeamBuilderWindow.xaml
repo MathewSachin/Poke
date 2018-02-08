@@ -20,7 +20,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0.2"
+                        <Border BorderThickness="0.1"
                                 BorderBrush="#333333"
                                 Margin="10"
                                 Padding="10">
@@ -40,53 +40,49 @@
                                 </Image>
                                 
                                 <StackPanel>
-                                    <Label Content="Species"
-                                           Margin="5"/>
+                                    <Label Content="Species"/>
 
                                     <ComboBox DisplayMemberPath="Name"
                                               ItemsSource="{Binding AvailablePokemon}"
                                               SelectedValue="{Binding Species}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
 
-                                    <Label Content="Nickname"
-                                           Margin="5"/>
+                                    <Label Content="Nickname"/>
 
                                     <TextBox Text="{Binding Name}"
-                                             Margin="5"/>
+                                             Margin="0,2"/>
 
-                                    <Label Content="Held Item"
-                                           Margin="5"/>
+                                    <Label Content="Held Item"/>
 
                                     <ComboBox DisplayMemberPath="Name"
                                               ItemsSource="{x:Static poke:Lists.MegaStones}"
                                               SelectedValue="{Binding HeldItem}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
 
                                     <TextBlock Text="Moves"
                                                Style="{StaticResource Title}"
                                                FontSize="15"
-                                               DockPanel.Dock="Top"
-                                               Margin="5"/>
+                                               DockPanel.Dock="Top"/>
 
                                     <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
                                               DisplayMemberPath="Name"
                                               SelectedValue="{Binding Move1}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
 
                                     <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
                                               DisplayMemberPath="Name"
                                               SelectedValue="{Binding Move2}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
 
                                     <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
                                               DisplayMemberPath="Name"
                                               SelectedValue="{Binding Move3}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
 
                                     <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
                                               DisplayMemberPath="Name"
                                               SelectedValue="{Binding Move4}"
-                                              Margin="5"/>
+                                              Margin="0,2"/>
                                 </StackPanel>
                             </DockPanel>
                         </Border>
