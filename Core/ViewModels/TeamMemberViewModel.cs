@@ -1,7 +1,14 @@
-﻿namespace Poke
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+
+namespace Poke
 {
     public class TeamMemberViewModel : NotifyPropertyChanged
     {
+        static readonly ObservableCollection<PokemonSpecies> Filtered = new ObservableCollection<PokemonSpecies>(Lists.PokemonSpecies.Where(M => !M.Name.StartsWith("Mega ")));
+
+        public ObservableCollection<PokemonSpecies> AvailablePokemon => Filtered;
+        
         string _name;
 
         public string Name

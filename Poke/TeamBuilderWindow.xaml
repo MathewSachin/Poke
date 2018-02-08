@@ -44,7 +44,7 @@
                                            Margin="5"/>
 
                                     <ComboBox DisplayMemberPath="Name"
-                                              ItemsSource="{x:Static poke:Lists.PokemonSpecies}"
+                                              ItemsSource="{Binding AvailablePokemon}"
                                               SelectedValue="{Binding Species}"
                                               Margin="5"/>
 
