@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Poke"
         Height="230"
-        Width="320"
+        Width="370"
         ResizeMode="NoResize">
     <Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         
         <StackPanel>
@@ -17,14 +17,30 @@
                        Style="{StaticResource Title}"
                        Margin="5"/>
 
-            <Button Content="Singles"
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox Name="FormatBox"
+                          SelectedIndex="0"
+                          Margin="0,0,5,0">
+                    <ComboBoxItem>Regular Battle</ComboBoxItem>
+                    <ComboBoxItem>Double Battle</ComboBoxItem>
+                    <ComboBoxItem>Triple Battle</ComboBoxItem>
+                </ComboBox>
+                
+                <ComboBox Grid.Column="1"
+                          SelectedIndex="0"
+                          Name="TeamTypeBox">
+                    <ComboBoxItem>Random Team</ComboBoxItem>
+                    <ComboBoxItem>Custom Team</ComboBoxItem>
+                </ComboBox>
+            </Grid>
+
+            <Button Content="Start"
                     Click="OpenBattleSimulator"
-                    Margin="5"/>
-            <Button Content="Doubles"
-                    Click="OpenDoubleSimulator"
-                    Margin="5"/>
-            <Button Content="Triples"
-                    Click="OpenTripleSimulator"
                     Margin="5"/>
         </StackPanel>
 

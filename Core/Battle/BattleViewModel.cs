@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -49,9 +50,24 @@ namespace Poke
             }
             
             await WriteStatus(text);
-            
-            PlayerSide = new Side(Format, arr[6].Invoke(), arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
 
+            try
+            {
+                if (_playerSideGenerator == null)
+                    throw new ArgumentNullException();
+
+                var side = _playerSideGenerator.Invoke();
+
+                if (side.Party.Count == 6)
+                {
+                    PlayerSide = side;
+                }
+            }
+            catch
+            {
+                PlayerSide = new Side(Format, arr[6].Invoke(), arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
+            }
+            
             // Assign a single Z Crystal
             var zIndex = Random.Next(6);
 

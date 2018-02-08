@@ -9,7 +9,7 @@ namespace Poke
 {
     public partial class BattleSimulatorWindow
     {
-        public BattleSimulatorWindow(int Format)
+        public BattleSimulatorWindow(int Format, Func<Side> PlayerSideGenerator = null)
         {
             InitializeComponent();
 
@@ -28,7 +28,7 @@ namespace Poke
                         break;
                 }
 
-                battle.Format = Format;
+                battle.Start(Format, PlayerSideGenerator);
 
                 battle.DoAnimation += BattleOnDoAnimation;
             }

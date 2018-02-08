@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace Poke
 {
@@ -11,22 +12,35 @@ namespace Poke
 
         void OpenBattleSimulator(object Sender, RoutedEventArgs E)
         {
-            new BattleSimulatorWindow(1).Show();
-        }
+            var format = FormatBox.SelectedIndex + 1;
 
-        void OpenDoubleSimulator(object Sender, RoutedEventArgs E)
-        {
-            new BattleSimulatorWindow(2).Show();
-        }
+            Func<Side> sideGen = null;
 
+            if (TeamTypeBox.SelectedIndex == 1)
+            {
+                var vm = new TeamBuilderViewModel();
+
+                new TeamBuilderWindow
+                {
+                    DataContext = vm
+                }.ShowDialog();
+
+                try
+                {
+                    sideGen = () => vm.GetSide(format);
+                }
+                catch
+                {
+                    // Ignore errors
+                }
+            }
+
+            new BattleSimulatorWindow(format, sideGen).Show();
+        }
+        
         void OpenDex(object Sender, RoutedEventArgs E)
         {
             new DexWindow().Show();
-        }
-
-        void OpenTripleSimulator(object Sender, RoutedEventArgs E)
-        {
-            new BattleSimulatorWindow(3).Show();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Poke
         public int Format
         {
             get => _format ?? 0;
-            set
+            private set
             {
                 if (_format != null)
                     return;
@@ -19,9 +19,18 @@ namespace Poke
                 _format = value;
 
                 OnPropertyChanged();
-
-                BattleLoop();
             }
+        }
+
+        Func<Side> _playerSideGenerator;
+
+        public void Start(int BattleFormat, Func<Side> PlayerSideGenerator = null)
+        {
+            _playerSideGenerator = PlayerSideGenerator;
+
+            Format = BattleFormat;
+
+            BattleLoop();
         }
 
         Pokemon _movingPokemon;
