@@ -39,9 +39,15 @@
             </Image>
 
             <StackPanel Margin="0,20">
-                <TextBlock Text="{Binding Species.Name}"
-                           VerticalAlignment="Center"
-                           Margin="0,5"/>
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,5"
+                            VerticalAlignment="Center">
+                    <TextBlock Margin="0,0,5,0">
+                        #<Run Text="{Binding Species.Number, Mode=OneWay}"/>
+                    </TextBlock>
+                    
+                    <TextBlock Text="{Binding Species.Name}"/>
+                </StackPanel>
 
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Species.PrimaryType}"
@@ -58,7 +64,7 @@
             </StackPanel>
         </DockPanel>
 
-        <ScrollViewer Margin="10">
+        <ScrollViewer Margin="10,0">
             <StackPanel>
                 <TextBlock Text="Abilities"
                            Margin="5"
@@ -91,11 +97,47 @@
                             Foreground="#c62828"/>
                 </Grid>
 
+                <TextBlock Text="Base Stats"
+                           Margin="5,20,0,5"
+                           Style="{StaticResource Title}"
+                           FontSize="15"/>
+
+                <ItemsControl ItemsSource="{Binding Species.BaseStats}"
+                              Margin="5">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <DockPanel Margin="5">
+                                <Label Content="{Binding Value}"
+                                       DockPanel.Dock="Right"
+                                       Margin="5,0,0,0"
+                                       HorizontalContentAlignment="Right"    
+                                       Width="25"/>
+
+                                <TextBlock Text="{Binding Key, Converter={StaticResource SpaceAtCaptitalsConverter}}"
+                                           MinWidth="100"/>
+
+                                <ProgressBar Maximum="200"
+                                             Height="5"
+                                             Value="{Binding Value, Mode=OneWay}"
+                                             Margin="10,0,0,0"/>
+                            </DockPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <DockPanel Margin="10,5">
+                    <TextBlock Text="Total"
+                               MinWidth="100"/>
+
+                    <TextBlock Text="{Binding BaseStatTotal}"
+                               Margin="10,0,0,0"/>
+                </DockPanel>
+
                 <TextBlock Text="Type Effectiveness"
                            Margin="5,20,0,5"
                            Style="{StaticResource Title}"
                            FontSize="15"/>
-                
+
                 <poke:TypeEffectivenessControl DataContext="{Binding TypeEffectiveness}"
                                                Margin="5"/>
             </StackPanel>
