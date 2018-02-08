@@ -54,6 +54,7 @@
     <Compile Include="ViewModels\PokemonListViewModel.cs" />
     <Compile Include="ViewModels\MovesViewModel.cs" />
     <Compile Include="TypeEffect.cs" />
+    <Compile Include="ViewModels\PokemonViewModel.cs" />
     <Compile Include="ViewModels\TypeEffectivenessViewModel.cs" />
     <Compile Include="Z\ExclusiveZCrystalFactory.cs" />
     <Compile Include="Z\ZMoveSelectionViewModel.cs" />

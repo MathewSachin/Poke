@@ -20,7 +20,7 @@ namespace Poke
             {
                 NavigationService?.Navigate(new PokemonPage
                 {
-                    DataContext = species
+                    DataContext = new PokemonViewModel(species)
                 });
             }
         }

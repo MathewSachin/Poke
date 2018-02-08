@@ -88,5 +88,7 @@ namespace Poke
 
             return GetAbility(Slot);
         }
+
+        public List<MoveInfo> LearnSet { get; } = new List<MoveInfo>();
     }
 }

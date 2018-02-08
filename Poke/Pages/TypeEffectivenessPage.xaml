@@ -3,40 +3,13 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:poke="clr-namespace:Poke;assembly=Core"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+      xmlns:poke1="clr-namespace:Poke"
       Title="Type Effectiveness">
     <Page.DataContext>
         <poke:TypeEffectivenessViewModel/>
     </Page.DataContext>
     <Page.Resources>
-        <Style TargetType="ItemsControl" x:Key="TypeEffects">
-            <Setter Property="ItemTemplate">
-                <Setter.Value>
-                    <DataTemplate>
-                        <DockPanel Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"
-                                   Margin="3"
-                                   Width="100">
-                            <Label DockPanel.Dock="Right"
-                                   Content="{Binding Effectiveness}"
-                                   ContentStringFormat="{}x {0}"
-                                   Foreground="#B7000000"
-                                   Background="#27FFFFFF"
-                                   Padding="5"
-                                   Margin="5,0,0,0"/>
-                            <Label Content="{Binding Type}"
-                                   Foreground="White"
-                                   Padding="5"/>
-                        </DockPanel>
-                    </DataTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="ItemsPanel">
-                <Setter.Value>
-                    <ItemsPanelTemplate>
-                        <WrapPanel/>
-                    </ItemsPanelTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        
     </Page.Resources>
     <StackPanel Margin="10">
         <DockPanel Background="{StaticResource Accent}"
@@ -107,28 +80,6 @@
             </ComboBox>
         </Grid>
         
-        <Label Content="Weak against"
-               FontWeight="Bold"
-               Margin="0,5"/>
-        
-        <ItemsControl ItemsSource="{Binding WeakAgainst}"
-                      Style="{StaticResource TypeEffects}"
-                      Margin="2,0,0,0"/>
-        
-        <Label Content="Resistant against"
-               FontWeight="Bold"
-               Margin="0,5"/>
-
-        <ItemsControl ItemsSource="{Binding ResistantAgainst}"
-                      Style="{StaticResource TypeEffects}"
-                      Margin="2,0,0,0"/>
-
-        <Label Content="Normal damage from"
-               FontWeight="Bold"
-               Margin="0,5"/>
-        
-        <ItemsControl ItemsSource="{Binding NormalDamage}"
-                      Style="{StaticResource TypeEffects}"
-                      Margin="2,0,0,0"/>
+        <poke1:TypeEffectivenessControl/>
     </StackPanel>
 </Page>

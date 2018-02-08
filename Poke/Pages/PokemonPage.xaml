@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+      xmlns:poke="clr-namespace:Poke"
       mc:Ignorable="d" 
       d:DesignHeight="400"
       d:DesignWidth="500"
@@ -18,7 +19,7 @@
                               Click="GoBack"
                               Margin="10"/>
 
-            <TextBlock Text="{Binding Name, FallbackValue='Pokemon'}"
+            <TextBlock Text="{Binding Species.Name, FallbackValue='Pokemon'}"
                        VerticalAlignment="Center"
                        Foreground="White"
                        Style="{StaticResource Heading1}"/>
@@ -31,28 +32,28 @@
                     <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
                                   ConverterParameter="Front">
                         <MultiBinding.Bindings>
-                            <Binding/>
+                            <Binding Path="Species"/>
                         </MultiBinding.Bindings>
                     </MultiBinding>
                 </Image.DataContext>
             </Image>
 
             <StackPanel Margin="0,20">
-                <TextBlock Text="{Binding Name}"
+                <TextBlock Text="{Binding Species.Name}"
                            VerticalAlignment="Center"
                            Margin="0,5"/>
 
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding PrimaryType}"
+                    <Label Content="{Binding Species.PrimaryType}"
                            FontSize="10"
                            Padding="2"
                            Foreground="White"
-                           Background="{Binding PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
-                    <Label Content="{Binding SecondaryType}"
+                           Background="{Binding Species.PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
+                    <Label Content="{Binding Species.SecondaryType}"
                            FontSize="10"
                            Padding="2"
                            Foreground="White"
-                           Background="{Binding SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
+                           Background="{Binding Species.SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
                 </StackPanel>
             </StackPanel>
         </DockPanel>
@@ -71,24 +72,32 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <Button Content="{Binding AbilitySlot1.Name}"
-                            CommandParameter="{Binding AbilitySlot1}"
+                    <Button Content="{Binding Species.AbilitySlot1.Name}"
+                            CommandParameter="{Binding Species.AbilitySlot1}"
                             Click="GoToAbility"
                             Margin="5"/>
-                    
-                    <Button Content="{Binding AbilitySlot2.Name}"
-                            CommandParameter="{Binding AbilitySlot2}"
+
+                    <Button Content="{Binding Species.AbilitySlot2.Name}"
+                            CommandParameter="{Binding Species.AbilitySlot2}"
                             Click="GoToAbility"
                             Margin="5"
                             Grid.Column="1"/>
-                    
-                    <Button Content="{Binding HiddenAbility.Name}"
-                            CommandParameter="{Binding HiddenAbility}"
+
+                    <Button Content="{Binding Species.HiddenAbility.Name}"
+                            CommandParameter="{Binding Species.HiddenAbility}"
                             Click="GoToAbility"
                             Margin="5"
                             Grid.Column="2"
                             Foreground="#c62828"/>
                 </Grid>
+
+                <TextBlock Text="Type Effectiveness"
+                           Margin="5,20,0,5"
+                           Style="{StaticResource Title}"
+                           FontSize="15"/>
+                
+                <poke:TypeEffectivenessControl DataContext="{Binding TypeEffectiveness}"
+                                               Margin="5"/>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

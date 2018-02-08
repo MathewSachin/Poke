@@ -12,7 +12,39 @@
                 new MegaEvolution(new PokemonSpecies(142, "Mega Aerodactyl", Types.Rock, Types.Flying,
                     80, 135, 85, 70, 95, 150, Ability.ToughClaws), MegaStone.Aerodactylite)
             },
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.Agility,
+                MoveInfo.Bite,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.Crunch,
+                MoveInfo.DoubleTeam,
+                MoveInfo.DragonBreath,
+                MoveInfo.DragonClaw,
+                MoveInfo.Earthquake,
+                MoveInfo.FireBlast,
+                MoveInfo.FireFang,
+                MoveInfo.Flamethrower,
+                MoveInfo.GigaImpact,
+                MoveInfo.HyperBeam,
+                MoveInfo.IceFang,
+                MoveInfo.IronHead,
+                MoveInfo.RainDance,
+                MoveInfo.RockPolish,
+                MoveInfo.RockSlide,
+                MoveInfo.RockTomb,
+                MoveInfo.Sandstorm,
+                MoveInfo.ScaryFace,
+                MoveInfo.SteelWing,
+                MoveInfo.StoneEdge,
+                MoveInfo.SunnyDay,
+                MoveInfo.TakeDown,
+                MoveInfo.ThunderFang,
+                MoveInfo.WingAttack
+            }
         };
 
         public static PokemonSpecies Aggron { get; } = new PokemonSpecies(306, nameof(Aggron), Types.Steel, Types.Rock,

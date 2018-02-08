@@ -24,9 +24,10 @@
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
         
-        <Label Margin="10"
-               Content="{Binding Ability.Description}"
-               DockPanel.Dock="Top"/>
+        <TextBlock Margin="10"
+                   Text="{Binding Ability.Description}"
+                   DockPanel.Dock="Top"
+                   TextWrapping="Wrap"/>
         
         <TextBlock Text="Pokemon with this Ability"
                    Style="{StaticResource Title}"

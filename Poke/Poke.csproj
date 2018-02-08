@@ -92,6 +92,9 @@
     <Compile Include="Controls\PokemonButtonContent.xaml.cs">
       <DependentUpon>PokemonButtonContent.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TypeEffectivenessControl.xaml.cs">
+      <DependentUpon>TypeEffectivenessControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\SpaceAtCapitalsConverter.cs" />
     <Compile Include="ValueConverters\TransformSpriteConverter.cs" />
     <Compile Include="Controls\ZMoveSelector.xaml.cs">
@@ -268,6 +271,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Resources\ValueConverters.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TypeEffectivenessControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
