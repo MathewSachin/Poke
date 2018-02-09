@@ -110,7 +110,14 @@ namespace Poke
         {
             return Types.Any(Type => Pokemon.PrimaryType == Type || Pokemon.SecondaryType == Type);
         }
-        
+
+        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> Enumerable)
+        {
+            var random = new Random(DateTime.Now.Millisecond);
+
+            return Enumerable.OrderBy(M => random.Next());
+        }
+
         public static T[] Shuffle<T>(this T[] Arr)
         {
             var random = new Random(DateTime.Now.Millisecond);

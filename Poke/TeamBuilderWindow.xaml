@@ -20,11 +20,51 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Border BorderThickness="0.1"
-                                BorderBrush="#333333"
+                        <Border BorderThickness="0.3"
+                                BorderBrush="#77333333"
                                 Margin="10"
                                 Padding="10">
                             <DockPanel>
+                                <Grid DockPanel.Dock="Bottom">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    
+                                    <ComboBox ItemsSource="{Binding AvailableMoves}"
+                                              DisplayMemberPath="Name"
+                                              SelectedValue="{Binding Move1}"
+                                              Margin="2"/>
+
+                                    <ComboBox ItemsSource="{Binding AvailableMoves}"
+                                              DisplayMemberPath="Name"
+                                              SelectedValue="{Binding Move2}"
+                                              Margin="2"
+                                              Grid.Column="1"/>
+
+                                    <ComboBox ItemsSource="{Binding AvailableMoves}"
+                                              DisplayMemberPath="Name"
+                                              SelectedValue="{Binding Move3}"
+                                              Margin="2"
+                                              Grid.Row="1"/>
+
+                                    <ComboBox ItemsSource="{Binding AvailableMoves}"
+                                              DisplayMemberPath="Name"
+                                              SelectedValue="{Binding Move4}"
+                                              Margin="2"
+                                              Grid.Row="1"
+                                              Grid.Column="1"/>
+                                </Grid>
+
+                                <TextBlock Text="Moves"
+                                           Style="{StaticResource Title}"
+                                           FontSize="15"
+                                           DockPanel.Dock="Bottom"/>
+
                                 <Image Source="{Binding AsyncValue}"
                                        Width="70"
                                        VerticalAlignment="Top"
@@ -38,7 +78,7 @@
                                         </MultiBinding>
                                     </Image.DataContext>
                                 </Image>
-                                
+
                                 <StackPanel>
                                     <Label Content="Species"/>
 
@@ -57,31 +97,6 @@
                                     <ComboBox DisplayMemberPath="Name"
                                               ItemsSource="{x:Static poke:Lists.MegaStones}"
                                               SelectedValue="{Binding HeldItem}"
-                                              Margin="0,2"/>
-
-                                    <TextBlock Text="Moves"
-                                               Style="{StaticResource Title}"
-                                               FontSize="15"
-                                               DockPanel.Dock="Top"/>
-
-                                    <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
-                                              DisplayMemberPath="Name"
-                                              SelectedValue="{Binding Move1}"
-                                              Margin="0,2"/>
-
-                                    <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
-                                              DisplayMemberPath="Name"
-                                              SelectedValue="{Binding Move2}"
-                                              Margin="0,2"/>
-
-                                    <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
-                                              DisplayMemberPath="Name"
-                                              SelectedValue="{Binding Move3}"
-                                              Margin="0,2"/>
-
-                                    <ComboBox ItemsSource="{x:Static poke:Lists.Moves}"
-                                              DisplayMemberPath="Name"
-                                              SelectedValue="{Binding Move4}"
                                               Margin="0,2"/>
                                 </StackPanel>
                             </DockPanel>

@@ -1,14 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Poke
 {
     public class TeamMemberViewModel : NotifyPropertyChanged
     {
-        static readonly ObservableCollection<PokemonSpecies> Filtered = new ObservableCollection<PokemonSpecies>(Lists.PokemonSpecies.Where(M => !M.Name.StartsWith("Mega ")));
+        public IEnumerable<PokemonSpecies> AvailablePokemon => TeamBuilderViewModel.Filtered;
 
-        public ObservableCollection<PokemonSpecies> AvailablePokemon => Filtered;
-        
+        public IEnumerable<MoveInfo> AvailableMoves => _species?.LearnSet.Count >= 4 ? _species.LearnSet : Lists.Moves;
+
         string _name;
 
         public string Name
@@ -29,10 +29,22 @@ namespace Poke
             get => _species;
             set
             {
+                if (_species == value)
+                    return;
+
                 _species = value;
 
                 if (Species.MegaEvolutions.Count > 0)
                     HeldItem = Species.MegaEvolutions[0].MegaStone;
+
+                OnPropertyChanged(nameof(AvailableMoves));
+                
+                var shuffle = AvailableMoves.Shuffle().Take(4).ToArray();
+
+                Move1 = shuffle[0];
+                Move2 = shuffle[1];
+                Move3 = shuffle[2];
+                Move4 = shuffle[3];
                 
                 OnPropertyChanged();
             }

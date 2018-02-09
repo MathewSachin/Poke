@@ -62,6 +62,7 @@ namespace Poke
                 {
                     PlayerSide = side;
                 }
+                else throw new ArgumentOutOfRangeException();
             }
             catch
             {

@@ -55,6 +55,14 @@
             {
                 new MegaEvolution(new PokemonSpecies(306, "Mega Aggron", Types.Steel, null,
                     70, 140, 230, 60, 80, 50, Ability.Filter), MegaStone.Aggronite)
+            },
+            LearnSet =
+            {
+                MoveInfo.DragonClaw,
+                MoveInfo.Headbutt,
+                MoveInfo.IronHead,
+                MoveInfo.Surf,
+                MoveInfo.GigaImpact
             }
         };
 
@@ -62,7 +70,20 @@
             90, 110, 80, 100, 80, 95,
             Ability.Intimidate, Ability.FlashFire, Ability.Justified)
         {
-            GenderRatio = new GenderRatio(75, 25)
+            GenderRatio = new GenderRatio(75, 25),
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.Bite,
+                MoveInfo.Bulldoze,
+                MoveInfo.ExtremeSpeed,
+                MoveInfo.FireBlast,
+                MoveInfo.FireFang,
+                MoveInfo.FlameCharge,
+                MoveInfo.Flamethrower,
+                MoveInfo.ThunderPunch,
+                MoveInfo.WildCharge
+            }
         };
 
         public static PokemonSpecies Alakazam { get; } = new PokemonSpecies(65, nameof(Alakazam), Types.Psychic, null,
@@ -74,7 +95,21 @@
                 new MegaEvolution(new PokemonSpecies(65, "Mega Alakazam", Types.Psychic, null,
                     55, 50, 65, 175, 105, 150, null), MegaStone.Alakazite)
             },
-            GenderRatio = new GenderRatio(75, 25)
+            GenderRatio = new GenderRatio(75, 25),
+            LearnSet =
+            {
+                MoveInfo.ChargeBeam,
+                MoveInfo.DazzlingGleam,
+                MoveInfo.EnergyBall,
+                MoveInfo.FirePunch,
+                MoveInfo.FocusBlast,
+                MoveInfo.IcePunch,
+                MoveInfo.Psybeam,
+                MoveInfo.Psychic,
+                MoveInfo.PsychoCut,
+                MoveInfo.ShadowBall,
+                MoveInfo.ThunderPunch
+            }
         };
 
         public static PokemonSpecies Beedrill { get; } = new PokemonSpecies(15, nameof(Beedrill), Types.Bug, Types.Poison,

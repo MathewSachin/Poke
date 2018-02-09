@@ -5,44 +5,6 @@ using System.Threading.Tasks;
 
 namespace Poke
 {
-    public class EV : NotifyPropertyChanged
-    {
-        readonly Dictionary<Stats, int> _stats = new Dictionary<Stats, int>
-        {
-            [Stats.HP] = 0,
-            [Stats.Attack] = 0,
-            [Stats.Defense] = 0,
-            [Stats.SpecialAttack] = 0,
-            [Stats.SpecialDefense] = 0,
-            [Stats.Speed] = 0
-        };
-
-        const int MaxTotal = 510;
-        const int MaxIndividual = 252;
-
-        int _total;
-
-        public int this[Stats Stat]
-        {
-            get => _stats[Stat];
-            set
-            {
-                value = value.Clip(0, MaxIndividual);
-
-                var newTotal = _total - _stats[Stat] + value;
-
-                if (newTotal <= MaxTotal)
-                {
-                    _stats[Stat] = value;
-
-                    _total = newTotal;
-                }
-
-                OnPropertyChanged();
-            }
-        }
-    }
-    
     public class PokemonStats : NotifyPropertyChanged
     {
         readonly Pokemon _pokemon;
@@ -56,17 +18,20 @@ namespace Poke
 
         public void OnMegaEvolve(PokemonStats Previous)
         {
-            CurrentHP = Previous.CurrentHP;
-
             foreach (var key in _stages.Keys.ToArray())
             {
                 _stages[key] = Previous.GetStage(key);
             }
+
+            IV = Previous.IV;
+            EV = Previous.EV;
+
+            CurrentHP = Previous.CurrentHP;
         }
 
         static int GenerateIV() => BattleViewModel.Random.Next(32);
 
-        public IReadOnlyDictionary<Stats, int> IV { get; } = new Dictionary<Stats, int>
+        public IReadOnlyDictionary<Stats, int> IV { get; private set; } = new Dictionary<Stats, int>
         {
             [Stats.HP] = GenerateIV(),
             [Stats.Attack] = GenerateIV(),
@@ -76,7 +41,7 @@ namespace Poke
             [Stats.Speed] = GenerateIV()
         };
 
-        public EV EV { get; } = new EV();
+        public EV EV { get; private set; } = new EV();
 
         readonly Dictionary<Stats, int> _stages = new Dictionary<Stats, int>
         {

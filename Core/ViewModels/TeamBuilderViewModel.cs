@@ -5,15 +5,15 @@ namespace Poke
 {
     public class TeamBuilderViewModel : NotifyPropertyChanged
     {
-        public IEnumerable<TeamMemberViewModel> Members { get; } = new[]
-        {
-            new TeamMemberViewModel(),
-            new TeamMemberViewModel(),
-            new TeamMemberViewModel(),
-            new TeamMemberViewModel(),
-            new TeamMemberViewModel(),
-            new TeamMemberViewModel(),
-        };
+        public static readonly IReadOnlyList<PokemonSpecies> Filtered = new List<PokemonSpecies>(Lists.PokemonSpecies.Where(M => !M.Name.StartsWith("Mega ")));
+
+        public IEnumerable<TeamMemberViewModel> Members { get; } = Filtered
+            .Shuffle()
+            .Take(6)
+            .Select(M => new TeamMemberViewModel
+            {
+                Species = M
+            }).ToArray();
 
         public Side GetSide(int Format)
         {
