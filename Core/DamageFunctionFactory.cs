@@ -106,43 +106,16 @@ namespace Poke
                     stageChange = -stageChange;
                 }
 
-                switch (statChange.Stat)
+                if (!statChange.Self
+                    && victim.Ability is StatFallPreventionAbility statFallPreventionAbility
+                    && statFallPreventionAbility.Stat == statChange.Stat
+                    && stageChange < 0)
                 {
-                    case Stats.Attack:
-                        if (stageChange < 0 && victim.Ability == Ability.HyperCutter)
-                        {
-                            await Battle.ShowAbility(victim);
+                    await Battle.ShowAbility(victim);
+                    
+                    await Battle.WriteStatus($"{Battle.GetStatusName(victim)} {statChange.Stat.SpaceAtCapitals()} was not lowered");
 
-                            await Battle.WriteStatus($"{Battle.GetStatusName(victim)} Attack was not lowered");
-
-                            continue;
-                        }
-
-                        break;
-
-                    case Stats.Defense:
-                        if (stageChange < 0 && victim.Ability == Ability.BigPecks)
-                        {
-                            await Battle.ShowAbility(victim);
-
-                            await Battle.WriteStatus($"{Battle.GetStatusName(victim)} Defense was not lowered");
-
-                            continue;
-                        }
-
-                        break;
-
-                    case Stats.Accuracy:
-                        if (stageChange < 0 && victim.Ability == Ability.KeenEye)
-                        {
-                            await Battle.ShowAbility(victim);
-
-                            await Battle.WriteStatus($"{Battle.GetStatusName(victim)} Accuracy was not lowered");
-
-                            continue;
-                        }
-
-                        break;
+                    continue;
                 }
 
                 stageChange = victim.Stats.ChangeStage(statChange.Stat, stageChange);

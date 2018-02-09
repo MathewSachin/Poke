@@ -21,10 +21,7 @@
             Description = "Protects against critical hits."
         };
 
-        public static Ability BigPecks { get; } = new Ability(nameof(BigPecks).SpaceAtCapitals())
-        {
-            Description = "Protects against Defense drops."
-        };
+        public static StatFallPreventionAbility BigPecks { get; } = new StatFallPreventionAbility(nameof(BigPecks).SpaceAtCapitals(), Stats.Defense);
 
         public static PinchAbility Blaze { get; } = new PinchAbility(nameof(Blaze), Types.Fire);
 
@@ -177,10 +174,7 @@
             Description = "Cures any major status ailment after each turn during rain."
         };
 
-        public static Ability HyperCutter { get; } = new Ability(nameof(HyperCutter).SpaceAtCapitals())
-        {
-            Description = "Prevents Attack from being lowered by other Pokemon."
-        };
+        public static StatFallPreventionAbility HyperCutter { get; } = new StatFallPreventionAbility(nameof(HyperCutter).SpaceAtCapitals(), Stats.Attack);
 
         public static Ability Hustle { get; } = new Ability(nameof(Hustle))
         {
@@ -227,10 +221,7 @@
             Description = "Raises Attack one stage upon taking damage from a dark move."
         };
 
-        public static Ability KeenEye { get; } = new Ability(nameof(KeenEye).SpaceAtCapitals())
-        {
-            Description = "Prevents Accuracy from being lowered."
-        };
+        public static StatFallPreventionAbility KeenEye { get; } = new StatFallPreventionAbility(nameof(KeenEye).SpaceAtCapitals(), Stats.Accuracy);
 
         public static Ability LeafGuard { get; } = new Ability(nameof(LeafGuard).SpaceAtCapitals())
         {

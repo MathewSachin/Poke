@@ -43,6 +43,7 @@
     <Compile Include="Abilities\AbilityDefinitions.cs" />
     <Compile Include="Abilities\NormalizingAbility.cs" />
     <Compile Include="Abilities\PinchAbility.cs" />
+    <Compile Include="Abilities\StatFallPreventionAbility.cs" />
     <Compile Include="Abilities\WeatherEffectNegatorAbility.cs" />
     <Compile Include="Stats\EV.cs" />
     <Compile Include="ViewModels\AbilityViewModel.cs" />
