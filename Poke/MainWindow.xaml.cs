@@ -20,10 +20,13 @@ namespace Poke
             {
                 var vm = new TeamBuilderViewModel();
 
-                new TeamBuilderWindow
+                var result = new TeamBuilderWindow
                 {
                     DataContext = vm
                 }.ShowDialog();
+
+                if (!result.GetValueOrDefault())
+                    return;
 
                 try
                 {

@@ -39,7 +39,11 @@ namespace Poke
 
                 OnPropertyChanged(nameof(AvailableMoves));
                 
-                var shuffle = AvailableMoves.Shuffle().Take(4).ToArray();
+                var shuffle = AvailableMoves
+                    .Where(M => M.Kind != MoveKind.Status)
+                    .Shuffle()
+                    .Take(4)
+                    .ToArray();
 
                 Move1 = shuffle[0];
                 Move2 = shuffle[1];

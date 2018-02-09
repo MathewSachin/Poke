@@ -113,16 +113,12 @@ namespace Poke
 
         public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> Enumerable)
         {
-            var random = new Random(DateTime.Now.Millisecond);
-
-            return Enumerable.OrderBy(M => random.Next());
+            return Enumerable.OrderBy(M => BattleViewModel.Random.Next());
         }
 
         public static T[] Shuffle<T>(this T[] Arr)
         {
-            var random = new Random(DateTime.Now.Millisecond);
-
-            return Arr.OrderBy(S => random.Next()).ToArray();
+            return Arr.OrderBy(S => BattleViewModel.Random.Next()).ToArray();
         }
 
         public static int GetEffectiveSpeed(this Pokemon Pokemon, BattleViewModel Battle)
