@@ -112,5 +112,18 @@ namespace Poke
                 OnPropertyChanged();
             }
         }
+
+        Nature _nature;
+
+        public Nature Nature
+        {
+            get => _nature;
+            set
+            {
+                _nature = value;
+                
+                OnPropertyChanged();
+            }
+        }
     }
 }

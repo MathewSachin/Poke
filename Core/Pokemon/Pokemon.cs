@@ -4,11 +4,11 @@ namespace Poke
 {
     public class Pokemon : NotifyPropertyChanged
     {
-        public Pokemon(PokemonSpecies Species, int Level, string NickName = null)
+        public Pokemon(PokemonSpecies Species, int Level, string NickName = null, Nature Nature = null)
         {
             Name = NickName;
             this.Level = Level;
-            Nature = Lists.Natures.Random();
+            this.Nature = Nature ?? Lists.Natures.Random();
             
             if (Species.GenderRatio == GenderRatio.Genderless)
                 Gender = Gender.Genderless;

@@ -62,7 +62,9 @@
             Description = "Has a 30% chance of disabling any move that hits the Pokemon."
         };
 
-        public static Ability Defeatist { get; } = new Ability(nameof(Defeatist))
+        public static Ability Defeatist { get; } = new AttackMultiplierAbility(nameof(Defeatist),
+            (A, M, O, B) => A.Stats.CurrentHP <= A.Stats.MaxHP / 2,
+            0.5, true, true)
         {
             Description = "Halves Attack and Special Attack at 50% max HP or less."
         };
@@ -117,7 +119,9 @@
             Description = "Has a 30% chance of burning attacking Pokemon on contact."
         };
 
-        public static Ability FlareBoost { get; } = new Ability(nameof(FlareBoost).SpaceAtCapitals())
+        public static AttackMultiplierAbility FlareBoost { get; } = new AttackMultiplierAbility(nameof(FlareBoost).SpaceAtCapitals(),
+            (A, M, O, B) => A.NonVolatileStatus == NonVolatileStatus.Burn,
+            1.5, false, true)
         {
             Description = "Increases Special Attack to 1.5x when burned."
         };
@@ -154,7 +158,9 @@
             Description = "Lowers attacking Pokemon's Speed by one stage on contact."
         };
 
-        public static Ability Guts { get; } = new Ability(nameof(Guts))
+        public static AttackMultiplierAbility Guts { get; } = new AttackMultiplierAbility(nameof(Guts),
+            (A, M, O, B) => A.NonVolatileStatus != NonVolatileStatus.None,
+            1.5, true, false)
         {
             Description = "Increases Attack to 1.5x with a major status ailment."
         };
@@ -164,7 +170,8 @@
             Description = "Halves damage from fire moves and burns."
         };
 
-        public static Ability HugePower { get; } = new Ability(nameof(HugePower).SpaceAtCapitals())
+        public static AttackMultiplierAbility HugePower { get; } = new AttackMultiplierAbility(nameof(HugePower).SpaceAtCapitals(),
+            (A, M, O, B) => true, 2, true, false)
         {
             Description = "Doubles Attack in battle."
         };
@@ -322,7 +329,8 @@
             Description = "Reduces super effective damage by 25%"
         };
 
-        public static Ability PurePower { get; } = new Ability(nameof(PurePower).SpaceAtCapitals())
+        public static AttackMultiplierAbility PurePower { get; } = new AttackMultiplierAbility(nameof(PurePower).SpaceAtCapitals(),
+            (A, M, O, B) => true, 2, true, false)
         {
             Description = "Doubles Attack in battle."
         };
@@ -422,7 +430,9 @@
             Description = "Summons hail that lasts for 5 turns upon entering battle."
         };
 
-        public static Ability SolarPower { get; } = new Ability(nameof(SolarPower).SpaceAtCapitals())
+        public static AttackMultiplierAbility SolarPower { get; } = new AttackMultiplierAbility(nameof(SolarPower).SpaceAtCapitals(),
+            (A, M, O, B) => B.SuppressWeather == 0 && B.Weather.Is(Weather.HarshSunlight, Weather.ExtremelyHarshSunlight),
+            1.5, false, true)
         {
             Description = "Increases Special Attack to 1.5x but costs 1/8 max HP after each turn during strong sunlight."
         };
@@ -532,7 +542,9 @@
             Description = "Strengthens moves that make conact to 1.33x their power."
         };
 
-        public static Ability ToxicBoost { get; } = new Ability(nameof(ToxicBoost).SpaceAtCapitals())
+        public static AttackMultiplierAbility ToxicBoost { get; } = new AttackMultiplierAbility(nameof(ToxicBoost).SpaceAtCapitals(),
+            (A, M, O, B) => A.NonVolatileStatus.Is(NonVolatileStatus.Poison, NonVolatileStatus.BadPoison),
+            1.5, true, false)
         {
             Description = "Increases Attack to 1.5x when poisoned."
         };

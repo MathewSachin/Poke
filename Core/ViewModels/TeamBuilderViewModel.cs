@@ -12,7 +12,8 @@ namespace Poke
             .Take(6)
             .Select(M => new TeamMemberViewModel
             {
-                Species = M
+                Species = M,
+                Nature = Lists.Natures.Random()
             }).ToArray();
 
         public Side GetSide(int Format)
@@ -21,7 +22,7 @@ namespace Poke
                 .Where(M => M.Species != null && M.Move1 != null && M.Move2 != null && M.Move3 != null && M.Move4 != null)
                 .Select(M =>
                 {
-                    var pokemon = new Pokemon(M.Species, 55, M.Name)
+                    var pokemon = new Pokemon(M.Species, 55, M.Name, M.Nature)
                     {
                         HeldItem = M.HeldItem
                     };

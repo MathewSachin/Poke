@@ -290,19 +290,14 @@ namespace Poke
             if (MoveKind == MoveKind.Special)
             {
                 double special = Attacker.Stats.GetValue(Stats.SpecialAttack, CriticalHit);
+
+                if (Attacker.Ability is AttackMultiplierAbility attackMultiplierAbility
+                    && attackMultiplierAbility.Special
+                    && attackMultiplierAbility.Check(Attacker, null, null, Battle))
+                {
+                    special *= attackMultiplierAbility.Multiplier;
+                }
                 
-                // Flare Boost
-                if (Attacker.Ability == Ability.FlareBoost && Attacker.NonVolatileStatus == NonVolatileStatus.Burn)
-                    special *= 1.5;
-
-                // Defeatist
-                else if (Attacker.Ability == Ability.Defeatist && Attacker.Stats.CurrentHP <= Attacker.Stats.MaxHP / 2)
-                    special /= 2;
-
-                // Solar Power
-                else if (Battle.SuppressWeather == 0 && Attacker.Ability == Ability.SolarPower && Battle.Weather.Is(Weather.HarshSunlight, Weather.ExtremelyHarshSunlight))
-                    special *= 1.5;
-
                 // Light Ball
                 if (Attacker.HeldItem == HeldItem.LightBall && Attacker.Species == PokemonSpecies.Pikachu)
                     special *= 2;
@@ -311,25 +306,14 @@ namespace Poke
             }
             
             double physical = Attacker.Stats.GetValue(Stats.Attack, CriticalHit);
+
+            if (Attacker.Ability is AttackMultiplierAbility attackMultAbility
+                && attackMultAbility.Physical
+                && attackMultAbility.Check(Attacker, null, null, Battle))
+            {
+                physical *= attackMultAbility.Multiplier;
+            }
             
-            // Huge Power, Pure Power
-            if (Attacker.Ability.Is(Ability.HugePower, Ability.PurePower))
-                physical *= 2;
-
-            // Toxic Boost
-            else if (Attacker.Ability == Ability.ToxicBoost &&
-                     Attacker.NonVolatileStatus.Is(NonVolatileStatus.Poison, NonVolatileStatus.BadPoison))
-                physical *= 1.5;
-
-            // Guts
-            else if (Attacker.Ability == Ability.Guts
-                && Attacker.NonVolatileStatus != NonVolatileStatus.None)
-                physical *= 1.5;
-
-            // Defeatist
-            else if (Attacker.Ability == Ability.Defeatist && Attacker.Stats.CurrentHP <= Attacker.Stats.MaxHP / 2)
-                physical /= 2;
-
             // Light Ball
             if (Attacker.HeldItem == HeldItem.LightBall && Attacker.Species == PokemonSpecies.Pikachu)
                 physical *= 2;

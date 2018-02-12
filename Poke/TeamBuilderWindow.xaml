@@ -15,11 +15,32 @@
                 Click="OkClick"/>
         
         <TabControl ItemsSource="{Binding Members}">
-            <TabControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Species.Name}"/>
-                </DataTemplate>
-            </TabControl.ItemTemplate>
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Grid Name="Panel">
+                                    <Label Content="{Binding Species.Name}"
+                                           Name="HeaderLabel"
+                                           Margin="10,2"/>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsSelected" 
+                                             Value="True">
+                                        <Setter TargetName="Panel" 
+                                                Property="Background"
+                                                Value="{DynamicResource Accent}" />
+                                        <Setter TargetName="HeaderLabel"
+                                                Property="Foreground" 
+                                                Value="White"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TabControl.Resources>
             
             <TabControl.ContentTemplate>
                 <DataTemplate>
@@ -97,6 +118,13 @@
                                 <ComboBox DisplayMemberPath="Name"
                                           ItemsSource="{x:Static poke:Lists.MegaStones}"
                                           SelectedValue="{Binding HeldItem}"
+                                          Margin="0,2"/>
+
+                                <Label Content="Nature"/>
+
+                                <ComboBox DisplayMemberPath="Name"
+                                          ItemsSource="{x:Static poke:Lists.Natures}"
+                                          SelectedValue="{Binding Nature}"
                                           Margin="0,2"/>
                             </StackPanel>
                         </DockPanel>
