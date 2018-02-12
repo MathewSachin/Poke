@@ -71,22 +71,35 @@ namespace Poke
 
         public Ability GetAbility(out int Slot)
         {
-            if (AbilitySlot2 == null && HiddenAbility == null)
+            var available = new List<KeyValuePair<int, Ability>>();
+
+            if (AbilitySlot1 != null)
+            {
+                available.Add(new KeyValuePair<int, Ability>(1, AbilitySlot1));
+            }
+
+            if (AbilitySlot2 != null)
+            {
+                available.Add(new KeyValuePair<int, Ability>(2, AbilitySlot2));
+            }
+
+            if (HiddenAbility != null)
+            {
+                available.Add(new KeyValuePair<int, Ability>(3, HiddenAbility));
+            }
+
+            if (available.Count == 0)
             {
                 Slot = 1;
-            }
-            else if (AbilitySlot2 == null)
-            {
-                var r = new Random().Next(2);
 
-                Slot = r == 0 ? 1 : 3;
-            }
-            else
-            {
-                Slot = new Random().Next(1, 4);
+                return null;
             }
 
-            return GetAbility(Slot);
+            var selected = available.Random();
+
+            Slot = selected.Key;
+
+            return selected.Value;
         }
 
         public List<MoveInfo> LearnSet { get; } = new List<MoveInfo>();

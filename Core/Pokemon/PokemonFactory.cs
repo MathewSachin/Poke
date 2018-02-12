@@ -379,7 +379,7 @@ namespace Poke
                     HeldItem = MegaStone.Gyaradosite
                 };
 
-                pokemon.Moves.Assign(new [] { MoveInfo.Crunch, MoveInfo.BrutalSwing, MoveInfo.Surf }.Random(),
+                pokemon.Moves.Assign(new [] { MoveInfo.Crunch, MoveInfo.BrutalSwing }.Random(),
                     new [] { MoveInfo.Earthquake, MoveInfo.IceFang, MoveInfo.IceBeam, MoveInfo.Thunderbolt, MoveInfo.Flamethrower }.Random(),
                     new [] { MoveInfo.Waterfall, MoveInfo.HydroPump, MoveInfo.Scald, MoveInfo.Surf }.Random(),
                     new [] { MoveInfo.StoneEdge, MoveInfo.Bulldoze }.Random());

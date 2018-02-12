@@ -327,12 +327,46 @@
             85, 105, 100, 79, 83, 78,
             Ability.Torrent)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.BrickBreak,
+                MoveInfo.Bulldoze,
+                MoveInfo.Crunch,
+                MoveInfo.DragonClaw,
+                MoveInfo.Earthquake,
+                MoveInfo.IceBeam,
+                MoveInfo.IceFang,
+                MoveInfo.RockSlide,
+                MoveInfo.Scald,
+                MoveInfo.ShadowClaw,
+                MoveInfo.Slash,
+                MoveInfo.Surf,
+                MoveInfo.Waterfall
+            }
         };
 
         public static PokemonSpecies Flygon { get; } = new PokemonSpecies(330, nameof(Flygon), Types.Ground, Types.Dragon,
             80, 100, 80, 80, 80, 100,
-            Ability.Levitate);
+            Ability.Levitate)
+        {
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.DragonBreath,
+                MoveInfo.DragonClaw,
+                MoveInfo.DragonRush,
+                MoveInfo.EarthPower,
+                MoveInfo.Earthquake,
+                MoveInfo.Flamethrower,
+                MoveInfo.RockSlide,
+                MoveInfo.SteelWing,
+                MoveInfo.StoneEdge
+            }
+        };
         
         public static PokemonSpecies Gardevoir { get; } = new PokemonSpecies(282, nameof(Gardevoir), Types.Psychic, Types.Fairy,
             68, 65, 65, 125, 115, 80,
@@ -342,6 +376,17 @@
             {
                 new MegaEvolution(new PokemonSpecies(282, "Mega Gardevoir", Types.Psychic, Types.Fairy,
                     68, 85, 65, 165, 135, 100, Ability.Pixilate), MegaStone.Gardevoirite)
+            },
+            LearnSet =
+            {
+                MoveInfo.DazzlingGleam,
+                MoveInfo.DrainingKiss,
+                MoveInfo.EnergyBall,
+                MoveInfo.MagicalLeaf,
+                MoveInfo.Moonblast,
+                MoveInfo.Psychic,
+                MoveInfo.ShadowBall,
+                MoveInfo.Thunderbolt
             }
         };
 
@@ -353,6 +398,21 @@
             {
                 new MegaEvolution(new PokemonSpecies(94, "Mega Gengar", Types.Ghost, Types.Poison,
                     60, 65, 80, 170, 95, 130, null), MegaStone.Gengarite)
+            },
+            LearnSet =
+            {
+                MoveInfo.BrickBreak,
+                MoveInfo.DarkPulse,
+                MoveInfo.DazzlingGleam,
+                MoveInfo.EnergyBall,
+                MoveInfo.PoisonJab,
+                MoveInfo.Psychic,
+                MoveInfo.ShadowBall,
+                MoveInfo.ShadowClaw,
+                MoveInfo.ShadowPunch,
+                MoveInfo.SludgeBomb,
+                MoveInfo.Thunderbolt,
+                MoveInfo.Venoshock
             }
         };
 
@@ -360,22 +420,85 @@
             65, 60, 110, 130, 95, 65,
             Ability.SnowCloak, HiddenAbility: Ability.IceBody)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.Bite,
+                MoveInfo.FrostBreath,
+                MoveInfo.IceBeam,
+                MoveInfo.IceFang,
+                MoveInfo.IceShard,
+                MoveInfo.IcyWind,
+                MoveInfo.QuickAttack,
+                MoveInfo.ShadowBall
+            }
         };
 
         public static PokemonSpecies Golduck { get; } = new PokemonSpecies(55, nameof(Golduck), Types.Water, null,
             80, 82, 78, 95, 80, 85,
-            Ability.CloudNine, HiddenAbility: Ability.SwiftSwim);
+            Ability.CloudNine, HiddenAbility: Ability.SwiftSwim)
+        {
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.AquaJet,
+                MoveInfo.BrickBreak,
+                MoveInfo.HydroPump,
+                MoveInfo.IceBeam,
+                MoveInfo.Psychic,
+                MoveInfo.Scald,
+                MoveInfo.ShadowClaw,
+                MoveInfo.Surf,
+                MoveInfo.Waterfall,
+                MoveInfo.WaterPulse
+            }
+        };
 
         public static PokemonSpecies Goodra { get; } = new PokemonSpecies(706, nameof(Goodra), Types.Dragon, null,
             90, 100, 70, 110, 150, 80,
-            Ability.SapSipper, Ability.Hydration, Ability.Gooey);
+            Ability.SapSipper, Ability.Hydration, Ability.Gooey)
+        {
+            LearnSet =
+            {
+                MoveInfo.BodySlam,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.DragonBreath,
+                MoveInfo.DragonPulse,
+                MoveInfo.Earthquake,
+                MoveInfo.Flamethrower,
+                MoveInfo.IceBeam,
+                MoveInfo.PowerWhip,
+                MoveInfo.RockSlide,
+                MoveInfo.SludgeBomb,
+                MoveInfo.SludgeWave,
+                MoveInfo.Thunderbolt
+            }
+        };
 
         public static PokemonSpecies Greninja { get; } = new PokemonSpecies(658, nameof(Greninja), Types.Water, Types.Dark,
             72, 95, 67, 103, 71, 122,
             Ability.Torrent)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.Acrobatics,
+                MoveInfo.AerialAce,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Crunch,
+                MoveInfo.DarkPulse,
+                MoveInfo.Extrasensory,
+                MoveInfo.HydroPump,
+                MoveInfo.IceBeam,
+                MoveInfo.NightSlash,
+                MoveInfo.QuickAttack,
+                MoveInfo.RockSlide,
+                MoveInfo.Scald,
+                MoveInfo.ShadowSneak,
+                MoveInfo.Waterfall,
+                MoveInfo.WaterPulse
+            }
         };
 
         public static PokemonSpecies Gyarados { get; } = new PokemonSpecies(130, nameof(Gyarados), Types.Water, Types.Flying,
@@ -386,12 +509,47 @@
             {
                 new MegaEvolution(new PokemonSpecies(130, "Mega Gyarados", Types.Water, Types.Dark,
                     95, 155, 109, 70, 130, 81, null), MegaStone.Gyaradosite)
+            },
+            LearnSet =
+            {
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.Crunch,
+                MoveInfo.Earthquake,
+                MoveInfo.Flamethrower,
+                MoveInfo.Hurricane,
+                MoveInfo.HydroPump,
+                MoveInfo.IceBeam,
+                MoveInfo.IceFang,
+                MoveInfo.Scald,
+                MoveInfo.StoneEdge,
+                MoveInfo.Surf,
+                MoveInfo.Thunderbolt,
+                MoveInfo.Waterfall
             }
         };
 
         public static PokemonSpecies Haxorus { get; } = new PokemonSpecies(612, nameof(Haxorus), Types.Dragon, null,
             76, 147, 90, 60, 70, 97,
-            Ability.Rivalry);
+            Ability.Rivalry)
+        {
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.BrickBreak,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.DragonClaw,
+                MoveInfo.DragonPulse,
+                MoveInfo.Earthquake,
+                MoveInfo.PoisonJab,
+                MoveInfo.RockSlide,
+                MoveInfo.ShadowClaw,
+                MoveInfo.Slash,
+                MoveInfo.Surf,
+                MoveInfo.XScissor
+            }
+        };
 
         public static PokemonSpecies Heracross { get; } = new PokemonSpecies(214, nameof(Heracross), Types.Bug, Types.Fighting,
             80, 125, 75, 40, 95, 85,
@@ -401,6 +559,20 @@
             {
                 new MegaEvolution(new PokemonSpecies(214, "Mega Heracross", Types.Bug, Types.Fighting,
                     80, 185, 115, 40, 105, 75, null), MegaStone.Heracronite)
+            },
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.BrickBreak,
+                MoveInfo.BrutalSwing,
+                MoveInfo.Bulldoze,
+                MoveInfo.Earthquake,
+                MoveInfo.HornAttack,
+                MoveInfo.Megahorn,
+                MoveInfo.NightSlash,
+                MoveInfo.ShadowClaw,
+                MoveInfo.StoneEdge,
+                MoveInfo.Venoshock
             }
         };
 
@@ -412,6 +584,16 @@
             {
                 new MegaEvolution(new PokemonSpecies(229, "Mega Houndoom", Types.Dark, Types.Fire,
                     75, 90, 90, 140, 90, 115, Ability.SolarPower), MegaStone.Houndoominite)
+            },
+            LearnSet =
+            {
+                MoveInfo.Crunch,
+                MoveInfo.DarkPulse,
+                MoveInfo.FireFang,
+                MoveInfo.Flamethrower,
+                MoveInfo.ShadowBall,
+                MoveInfo.SludgeBomb,
+                MoveInfo.ThunderFang
             }
         };
 
@@ -419,7 +601,17 @@
             76, 104, 71, 104, 71, 108,
             Ability.Blaze, HiddenAbility: Ability.IronFist)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.Acrobatics,
+                MoveInfo.BrickBreak,
+                MoveInfo.Earthquake,
+                MoveInfo.Flamethrower,
+                MoveInfo.MachPunch,
+                MoveInfo.ShadowClaw,
+                MoveInfo.ThunderPunch
+            }
         };
         
         public static PokemonSpecies Kangaskhan { get; } = new PokemonSpecies(115, nameof(Kangaskhan), Types.Normal, null,
@@ -431,25 +623,55 @@
                 new MegaEvolution(new PokemonSpecies(115, "Mega Kangaskhan", Types.Normal, null,
                     105, 125, 100, 60, 100, 100, null), MegaStone.Kangaskhanite)
             },
-            GenderRatio = GenderRatio.FemaleOnly
+            GenderRatio = GenderRatio.FemaleOnly,
+            LearnSet =
+            {
+                MoveInfo.DizzyPunch,
+                MoveInfo.Flamethrower,
+                MoveInfo.IceBeam,
+                MoveInfo.Thunderbolt
+            }
         };
 
         public static PokemonSpecies Kommo { get; } = new PokemonSpecies(784, "Kommo-o", Types.Dragon, Types.Fighting,
             75, 110, 125, 100, 105, 85,
-            Ability.BulletProof, Ability.Soundproof, Ability.Overcoat);
+            Ability.BulletProof, Ability.Soundproof, Ability.Overcoat)
+        {
+            LearnSet =
+            {
+                MoveInfo.BrickBreak,
+                MoveInfo.ClangingScales,
+                MoveInfo.FlashCannon,
+                MoveInfo.PoisonJab
+            }
+        };
 
         public static PokemonSpecies Leafeon { get; } = new PokemonSpecies(470, nameof(Leafeon), Types.Grass, null,
             65, 110, 130, 60, 65, 95,
             Ability.LeafGuard, HiddenAbility: Ability.Chlorophyll)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.AerialAce,
+                MoveInfo.GigaDrain,
+                MoveInfo.RazorLeaf,
+                MoveInfo.XScissor
+            }
         };
 
         public static PokemonSpecies Lilligant { get; } = new PokemonSpecies(549, nameof(Lilligant), Types.Grass, null,
             70, 60, 75, 110, 75, 90,
             Ability.Chlorophyll, Ability.OwnTempo, Ability.LeafGuard)
         {
-            GenderRatio = GenderRatio.FemaleOnly
+            GenderRatio = GenderRatio.FemaleOnly,
+            LearnSet =
+            {
+                MoveInfo.EnergyBall,
+                MoveInfo.GigaImpact,
+                MoveInfo.HyperBeam,
+                MoveInfo.PetalBlizzard
+            }
         };
 
         public static PokemonSpecies Lucario { get; } = new PokemonSpecies(448, nameof(Lucario), Types.Fighting, Types.Steel,
@@ -461,22 +683,54 @@
                 new MegaEvolution(new PokemonSpecies(448, "Mega Lucario", Types.Fighting, Types.Steel,
                     70, 145, 88, 140, 70, 112, Ability.Adaptability), MegaStone.Lucarionite)
             },
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.AuraSphere,
+                MoveInfo.CloseCombat,
+                MoveInfo.DragonPulse,
+                MoveInfo.MetalClaw
+            }
         };
 
         public static PokemonSpecies LycanrocMidday { get; } = new PokemonSpecies(745, "Midday Lycanroc", Types.Rock, null,
             75, 115, 65, 55, 65, 112,
-            Ability.KeenEye, Ability.SandRush, Ability.Steadfast);
+            Ability.KeenEye, Ability.SandRush, Ability.Steadfast)
+        {
+            LearnSet =
+            {
+                MoveInfo.Accelerock,
+                MoveInfo.Crunch,
+                MoveInfo.StoneEdge,
+                MoveInfo.BrickBreak
+            }
+        };
 
         public static PokemonSpecies LycanrocMidnight { get; } = new PokemonSpecies(745, "Midnight Lycanroc", Types.Rock, null,
             85, 115, 75, 55, 75, 82,
-            Ability.KeenEye, Ability.VitalSpirit, Ability.NoGuard);
+            Ability.KeenEye, Ability.VitalSpirit, Ability.NoGuard)
+        {
+            LearnSet =
+            {
+                MoveInfo.BrickBreak,
+                MoveInfo.Crunch,
+                MoveInfo.RockSlide,
+                MoveInfo.StoneEdge
+            }
+        };
 
         public static PokemonSpecies Magmortar { get; } = new PokemonSpecies(467, nameof(Magmortar), Types.Fire, null,
             75, 95, 67, 125, 95, 83,
             Ability.FlameBody, HiddenAbility: Ability.VitalSpirit)
         {
-            GenderRatio = new GenderRatio(75, 25)
+            GenderRatio = new GenderRatio(75, 25),
+            LearnSet =
+            {
+                MoveInfo.BrickBreak,
+                MoveInfo.Earthquake,
+                MoveInfo.Flamethrower,
+                MoveInfo.Thunderbolt
+            }
         };
 
         public static PokemonSpecies Mawile { get; } = new PokemonSpecies(303, nameof(Mawile), Types.Steel, Types.Fairy,
@@ -487,6 +741,13 @@
             {
                 new MegaEvolution(new PokemonSpecies(303, "Mega Mawile", Types.Steel, Types.Fairy,
                     50, 105, 125, 55, 95, 50, Ability.HugePower), MegaStone.Mawilite)
+            },
+            LearnSet =
+            {
+                MoveInfo.Crunch,
+                MoveInfo.IronHead,
+                MoveInfo.PlayRough,
+                MoveInfo.RockTomb
             }
         };
 

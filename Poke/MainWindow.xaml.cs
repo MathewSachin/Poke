@@ -18,23 +18,23 @@ namespace Poke
 
             if (TeamTypeBox.SelectedIndex == 1)
             {
-                var vm = new TeamBuilderViewModel();
-
-                var result = new TeamBuilderWindow
-                {
-                    DataContext = vm
-                }.ShowDialog();
+                var win = new TeamBuilderWindow();
+                
+                var result = win.ShowDialog();
 
                 if (!result.GetValueOrDefault())
                     return;
 
-                try
+                if (win.DataContext is TeamBuilderViewModel vm)
                 {
-                    sideGen = () => vm.GetSide(format);
-                }
-                catch
-                {
-                    // Ignore errors
+                    try
+                    {
+                        sideGen = () => vm.GetSide(format);
+                    }
+                    catch
+                    {
+                        // Ignore errors
+                    }
                 }
             }
 

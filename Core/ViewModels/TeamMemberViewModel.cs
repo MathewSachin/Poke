@@ -6,7 +6,11 @@ namespace Poke
 {
     public class TeamMemberViewModel : NotifyPropertyChanged
     {
+        static readonly IEnumerable<HeldItem> HeldItems = Lists.MegaStones.Cast<HeldItem>().Concat(Gem.Gems.Values);
+
         public IEnumerable<PokemonSpecies> AvailablePokemon => TeamBuilderViewModel.Filtered;
+
+        public IEnumerable<HeldItem> AvailableHeldItems => HeldItems;
 
         public IEnumerable<MoveInfo> AvailableMoves => _species?.LearnSet.Count >= 4 ? _species.LearnSet : Lists.Moves;
 
@@ -37,6 +41,7 @@ namespace Poke
 
                 if (Species.MegaEvolutions.Count > 0)
                     HeldItem = Species.MegaEvolutions[0].MegaStone;
+                else HeldItem = Gem.Gems[Species.PrimaryType];
 
                 OnPropertyChanged(nameof(AvailableMoves));
                 

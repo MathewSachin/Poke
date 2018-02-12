@@ -2,11 +2,13 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:poke="clr-namespace:Poke;assembly=Core"
-        xmlns:local="clr-namespace:Poke"
         Title="Team Builder"
         ResizeMode="NoResize"
         SizeToContent="Height"
         Width="500">
+    <Window.DataContext>
+        <poke:TeamBuilderViewModel/>
+    </Window.DataContext>
     <DockPanel>
         <Button Content="OK"
                 DockPanel.Dock="Bottom"
@@ -86,19 +88,35 @@
                                        FontSize="15"
                                        DockPanel.Dock="Bottom"/>
 
-                            <Image Source="{Binding AsyncValue}"
-                                   Width="150"
-                                   VerticalAlignment="Top"
-                                   Margin="0,10">
-                                <Image.DataContext>
-                                    <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
-                                                  ConverterParameter="Front">
-                                        <MultiBinding.Bindings>
-                                            <Binding Path="Species"/>
-                                        </MultiBinding.Bindings>
-                                    </MultiBinding>
-                                </Image.DataContext>
-                            </Image>
+                            <DockPanel>
+                                <StackPanel Orientation="Horizontal"
+                                            DockPanel.Dock="Top">
+                                    <Label Content="{Binding Species.PrimaryType}"
+                                           FontSize="10"
+                                           Padding="2"
+                                           Foreground="White"
+                                           Background="{Binding Species.PrimaryType, Converter={StaticResource TypeToColorConverter}}"/>
+                                    <Label Content="{Binding Species.SecondaryType}"
+                                           FontSize="10"
+                                           Padding="2"
+                                           Foreground="White"
+                                           Background="{Binding Species.SecondaryType, Converter={StaticResource TypeToColorConverter}}"/>
+                                </StackPanel>
+
+                                <Image Source="{Binding AsyncValue}"
+                                       Width="150"
+                                       VerticalAlignment="Top"
+                                       Margin="0,10">
+                                    <Image.DataContext>
+                                        <MultiBinding Converter="{StaticResource PokemonSpriteConverter}"
+                                                      ConverterParameter="Front">
+                                            <MultiBinding.Bindings>
+                                                <Binding Path="Species"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </Image.DataContext>
+                                </Image>
+                            </DockPanel>
 
                             <StackPanel>
                                 <Label Content="Species"/>
@@ -123,7 +141,7 @@
                                 <Label Content="Held Item"/>
 
                                 <ComboBox DisplayMemberPath="Name"
-                                          ItemsSource="{x:Static poke:Lists.MegaStones}"
+                                          ItemsSource="{Binding AvailableHeldItems}"
                                           SelectedValue="{Binding HeldItem}"
                                           Margin="0,2,0,5"/>
 
