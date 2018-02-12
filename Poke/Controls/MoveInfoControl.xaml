@@ -8,14 +8,19 @@
                    DockPanel.Dock="Top"
                    Margin="3"/>
 
+            <TextBlock Text="{Binding Description}"
+                       TextWrapping="Wrap"
+                       Margin="5,0"
+                       DockPanel.Dock="Bottom"/>
+
             <TextBlock Text="{Binding Info.Description}"
                        TextWrapping="Wrap"
-                       Margin="5,15"
+                       Margin="5,0"
                        DockPanel.Dock="Bottom"/>
 
             <Grid ShowGridLines="True"
                   DockPanel.Dock="Bottom"
-                  Margin="0,5,0,0">
+                  Margin="0,5,0,15">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -43,13 +48,30 @@
                        HorizontalAlignment="Center"
                        Margin="5"/>
 
+                <Label Content="{Binding Power, TargetNullValue='--'}"
+                       Grid.Row="1"
+                       HorizontalAlignment="Center"
+                       Margin="5"/>
+
                 <Label Content="{Binding Info.Accuracy, TargetNullValue='--'}"
                        Grid.Row="1"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
                        Margin="5"/>
 
+                <Label Content="{Binding Accuracy, TargetNullValue='--'}"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       Margin="5"/>
+
                 <Label Content="{Binding PPLeft}"
+                       Grid.Row="1"
+                       Grid.Column="2"
+                       HorizontalAlignment="Center"
+                       Margin="5"/>
+
+                <Label Content="{Binding PP}"
                        Grid.Row="1"
                        Grid.Column="2"
                        HorizontalAlignment="Center"

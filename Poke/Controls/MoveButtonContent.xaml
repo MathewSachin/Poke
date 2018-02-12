@@ -9,7 +9,7 @@
         <DockPanel>
             <TextBlock DockPanel.Dock="Right"
                        Margin="5,0">
-                <Run Text="{Binding PPLeft}"/> / <Run Text="{Binding PP, Mode=OneWay}"/>
+                <Run Text="{Binding PPLeft}"/> / <Run Text="{Binding Info.PP, Mode=OneWay}"/>
             </TextBlock>
             <Label Content="{Binding Type}"
                    FontSize="10"

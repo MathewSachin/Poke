@@ -12,7 +12,7 @@
             Type = Info.Type;
             Kind = Info.Kind;
 
-            PPLeft = PP = Info.PP;
+            PPLeft = Info.PP;
         }
         
         public string Name { get; }
@@ -36,8 +36,6 @@
         }
 
         public MoveKind Kind { get; }
-        
-        public int PP { get; }
 
         int _ppLeft;
 

@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+      xmlns:poke="clr-namespace:Poke"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="MovePage">
@@ -22,71 +23,8 @@
                        Foreground="White"
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
-        
-        <StackPanel Margin="5">
-            <DockPanel>
-                <Label Content="{Binding Kind}"
-                       Foreground="White"
-                       Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
-                       DockPanel.Dock="Right"
-                       Margin="3"
-                       FontSize="10"
-                       Padding="2"/>
 
-                <Label Content="{Binding Type}"
-                       FontSize="10"
-                       Margin="3"
-                       Padding="2"
-                       HorizontalAlignment="Left"
-                       Foreground="White"
-                       Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
-            </DockPanel>
-
-            <Grid ShowGridLines="True"
-                  Margin="0,5,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Label Content="Power"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-                <Label Content="Accuracy"
-                       Grid.Column="1"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-                <Label Content="PP"
-                       Grid.Column="2"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-
-                <Label Content="{Binding Power, TargetNullValue='--'}"
-                       Grid.Row="1"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-
-                <Label Content="{Binding Accuracy, TargetNullValue='--'}"
-                       Grid.Row="1"
-                       Grid.Column="1"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-
-                <Label Content="{Binding PP}"
-                       Grid.Row="1"
-                       Grid.Column="2"
-                       HorizontalAlignment="Center"
-                       Margin="5"/>
-            </Grid>
-
-            <TextBlock Text="{Binding Description}"
-                       TextWrapping="Wrap"
-                       Margin="5,15"/>
-        </StackPanel>
+        <poke:MoveInfoControl Margin="5"
+                              VerticalAlignment="Top"/>
     </DockPanel>
 </Page>
