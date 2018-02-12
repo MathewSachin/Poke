@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Poke
@@ -51,6 +52,19 @@ namespace Poke
                 Move4 = shuffle[3];
                 
                 OnPropertyChanged();
+
+                AvailableAbilities.Clear();
+
+                if (Species.AbilitySlot1 != null)
+                    AvailableAbilities.Add(Species.AbilitySlot1);
+
+                if (Species.AbilitySlot2 != null)
+                    AvailableAbilities.Add(Species.AbilitySlot2);
+
+                if (Species.HiddenAbility != null)
+                    AvailableAbilities.Add(Species.HiddenAbility);
+
+                Ability = Species.GetAbility(out var _);
             }
         }
 
@@ -121,6 +135,21 @@ namespace Poke
             set
             {
                 _nature = value;
+                
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<Ability> AvailableAbilities { get; } = new ObservableCollection<Ability>();
+
+        Ability _ability;
+
+        public Ability Ability
+        {
+            get => _ability;
+            set
+            {
+                _ability = value;
                 
                 OnPropertyChanged();
             }

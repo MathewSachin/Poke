@@ -4,7 +4,7 @@ namespace Poke
 {
     public class Pokemon : NotifyPropertyChanged
     {
-        public Pokemon(PokemonSpecies Species, int Level, string NickName = null, Nature Nature = null)
+        public Pokemon(PokemonSpecies Species, int Level, string NickName = null, Nature Nature = null, int? Ability = null)
         {
             Name = NickName;
             this.Level = Level;
@@ -25,10 +25,10 @@ namespace Poke
 
             Shiny = BattleViewModel.Random.Next(8192) == 4096;
 
-            SetSpecies(Species);
+            SetSpecies(Species, Ability);
         }
 
-        void SetSpecies(PokemonSpecies PokemonSpecies)
+        void SetSpecies(PokemonSpecies PokemonSpecies, int? AbilityIndex = null)
         {
             // Update if not nick name
             if (Name == null || Species != null && Name == Species.Name)
@@ -47,9 +47,17 @@ namespace Poke
             }
 
             Stats = newStats;
-            
-            Ability = Species.GetAbility(out var slot);
-            AbilitySlot = slot;
+
+            if (AbilityIndex != null && AbilityIndex >= 1 && AbilityIndex <= 3)
+            {
+                Ability = Species.GetAbility(AbilityIndex.Value);
+                AbilitySlot = AbilityIndex.Value;
+            }
+            else
+            {
+                Ability = Species.GetAbility(out var slot);
+                AbilitySlot = slot;
+            }
         }
         
         public bool CanMegaEvolve(out MegaEvolution Mega)

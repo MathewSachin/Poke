@@ -106,26 +106,33 @@
                                 <ComboBox DisplayMemberPath="Name"
                                           ItemsSource="{Binding AvailablePokemon}"
                                           SelectedValue="{Binding Species}"
-                                          Margin="0,2"/>
+                                          Margin="0,2,0,5"/>
 
                                 <Label Content="Nickname"/>
 
                                 <TextBox Text="{Binding Name}"
-                                         Margin="0,2"/>
+                                         Margin="0,2,0,5"/>
 
+                                <Label Content="Ability"/>
+
+                                <ComboBox DisplayMemberPath="Name"
+                                          ItemsSource="{Binding AvailableAbilities}"
+                                          SelectedValue="{Binding Ability}"
+                                          Margin="0,2,0,5"/>
+                                
                                 <Label Content="Held Item"/>
 
                                 <ComboBox DisplayMemberPath="Name"
                                           ItemsSource="{x:Static poke:Lists.MegaStones}"
                                           SelectedValue="{Binding HeldItem}"
-                                          Margin="0,2"/>
+                                          Margin="0,2,0,5"/>
 
                                 <Label Content="Nature"/>
 
                                 <ComboBox DisplayMemberPath="Name"
                                           ItemsSource="{x:Static poke:Lists.Natures}"
                                           SelectedValue="{Binding Nature}"
-                                          Margin="0,2"/>
+                                          Margin="0,2,0,5"/>
                             </StackPanel>
                         </DockPanel>
                     </ScrollViewer>
