@@ -6,7 +6,12 @@ namespace Poke
 {
     public class TeamMemberViewModel : NotifyPropertyChanged
     {
-        static readonly IEnumerable<HeldItem> HeldItems = Lists.MegaStones.Cast<HeldItem>().Concat(Gem.Gems.Values);
+        static readonly IEnumerable<HeldItem> HeldItems = Lists.MegaStones
+            .Cast<HeldItem>()
+            .Concat(Gem.Gems.Values)
+            .Concat(TypeZCrystal.Crystrals.Values)
+            .Concat(Memory.Memories.Values)
+            .Concat(Plate.Plates.Values);
 
         public IEnumerable<PokemonSpecies> AvailablePokemon => TeamBuilderViewModel.Filtered;
 
