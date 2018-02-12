@@ -755,34 +755,83 @@
             80, 82, 100, 83, 100, 80,
             Ability.Overgrow, HiddenAbility: Ability.LeafGuard)
         {
-            GenderRatio = new GenderRatio(87.5, 12.5)
+            GenderRatio = new GenderRatio(87.5, 12.5),
+            LearnSet =
+            {
+                MoveInfo.PetalBlizzard,
+                MoveInfo.BodySlam,
+                MoveInfo.Earthquake,
+                MoveInfo.FrenzyPlant
+            }
         };
 
         public static PokemonSpecies Milotic { get; } = new PokemonSpecies(350, nameof(Milotic), Types.Water, null,
             95, 60, 79, 100, 125, 81,
-            Ability.MarvelScale);
+            Ability.MarvelScale)
+        {
+            LearnSet =
+            {
+                MoveInfo.WaterPulse,
+                MoveInfo.DragonPulse,
+                MoveInfo.IceBeam,
+                MoveInfo.BrutalSwing
+            }
+        };
 
         public static PokemonSpecies Mimikyu { get; } = new PokemonSpecies(778, nameof(Mimikyu), Types.Ghost, Types.Fairy,
             55, 90, 80, 50, 105, 96,
-            Ability.Disguise);
+            Ability.Disguise)
+        {
+            LearnSet =
+            {
+                MoveInfo.PlayRough,
+                MoveInfo.ShadowClaw,
+                MoveInfo.WoodHammer,
+                MoveInfo.Thunderbolt
+            }
+        };
 
         public static PokemonSpecies Ninetales { get; } = new PokemonSpecies(38, nameof(Ninetales), Types.Fire, null,
             73, 76, 75, 81, 100, 100,
             Ability.FlashFire, HiddenAbility: Ability.Drought)
         {
-            GenderRatio = new GenderRatio(25, 75)
+            GenderRatio = new GenderRatio(25, 75),
+            LearnSet =
+            {
+                MoveInfo.Flamethrower,
+                MoveInfo.QuickAttack,
+                MoveInfo.Psychic,
+                MoveInfo.EnergyBall
+            }
         };
 
         public static PokemonSpecies NinetalesAlolan { get; } = new PokemonSpecies(38, "Alolan Ninetales", Types.Ice, Types.Fairy,
             73, 67, 75, 81, 100, 100,
             Ability.SnowCloak, HiddenAbility: Ability.SnowWarning)
         {
-            GenderRatio = new GenderRatio(25, 75)
+            GenderRatio = new GenderRatio(25, 75),
+            LearnSet =
+            {
+                MoveInfo.DazzlingGleam,
+                MoveInfo.IceBeam,
+                MoveInfo.DarkPulse,
+                MoveInfo.Blizzard,
+                MoveInfo.IceShard
+            }
         };
 
         public static PokemonSpecies Noivern { get; } = new PokemonSpecies(715, nameof(Noivern), Types.Flying, Types.Dragon,
             85, 70, 80, 97, 80, 123,
-            Ability.Frisk, HiddenAbility: Ability.Telepathy);
+            Ability.Frisk, HiddenAbility: Ability.Telepathy)
+        {
+            LearnSet =
+            {
+                MoveInfo.Acrobatics,
+                MoveInfo.DragonClaw,
+                MoveInfo.Boomburst,
+                MoveInfo.WildCharge
+            }
+        };
 
         public static PokemonSpecies Pangoro { get; } = new PokemonSpecies(675, nameof(Pangoro), Types.Fighting, Types.Dark,
             95, 124, 78, 69, 71, 58,

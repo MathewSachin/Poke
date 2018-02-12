@@ -4,23 +4,30 @@ namespace Poke
 {
     public class Pokemon : NotifyPropertyChanged
     {
-        public Pokemon(PokemonSpecies Species, int Level, string NickName = null, Nature Nature = null, int? Ability = null)
+        public Pokemon(PokemonSpecies Species, int Level, string NickName = null, Nature Nature = null, int? Ability = null, Gender? RequestedGender = null)
         {
             Name = NickName;
             this.Level = Level;
             this.Nature = Nature ?? Lists.Natures.Random();
-            
-            if (Species.GenderRatio == GenderRatio.Genderless)
-                Gender = Gender.Genderless;
-            else if (Species.GenderRatio == GenderRatio.MaleOnly)
-                Gender = Gender.Male;
-            else if (Species.GenderRatio == GenderRatio.FemaleOnly)
-                Gender = Gender.Female;
+
+            if (RequestedGender != null)
+            {
+                Gender = RequestedGender.Value;
+            }
             else
             {
-                var random = BattleViewModel.Random.Next(100);
+                if (Species.GenderRatio == GenderRatio.Genderless)
+                    Gender = Gender.Genderless;
+                else if (Species.GenderRatio == GenderRatio.MaleOnly)
+                    Gender = Gender.Male;
+                else if (Species.GenderRatio == GenderRatio.FemaleOnly)
+                    Gender = Gender.Female;
+                else
+                {
+                    var random = BattleViewModel.Random.Next(100);
 
-                Gender = random < Species.GenderRatio.Female ? Gender.Female : Gender.Male;
+                    Gender = random < Species.GenderRatio.Female ? Gender.Female : Gender.Male;
+                }
             }
 
             Shiny = BattleViewModel.Random.Next(8192) == 4096;

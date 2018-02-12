@@ -145,6 +145,12 @@
                                           SelectedValue="{Binding HeldItem}"
                                           Margin="0,2,0,5"/>
 
+                                <Label Content="Gender"/>
+
+                                <ComboBox ItemsSource="{Binding AvailableGenders}"
+                                          SelectedValue="{Binding Gender}"
+                                          Margin="0,2,0,5"/>
+
                                 <Label Content="Nature"/>
 
                                 <ComboBox DisplayMemberPath="Name"

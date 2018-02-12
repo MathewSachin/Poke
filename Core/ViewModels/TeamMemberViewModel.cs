@@ -14,6 +14,21 @@ namespace Poke
 
         public IEnumerable<MoveInfo> AvailableMoves => _species?.LearnSet.Count >= 4 ? _species.LearnSet : Lists.Moves;
 
+        public ObservableCollection<Gender> AvailableGenders { get; } = new ObservableCollection<Gender>();
+
+        Gender _gender;
+
+        public Gender Gender
+        {
+            get => _gender;
+            set
+            {
+                _gender = value;
+                
+                OnPropertyChanged();
+            }
+        }
+
         string _name;
 
         public string Name
@@ -70,6 +85,22 @@ namespace Poke
                     AvailableAbilities.Add(Species.HiddenAbility);
 
                 Ability = Species.GetAbility(out var _);
+
+                AvailableGenders.Clear();
+
+                if (Species.GenderRatio == GenderRatio.Genderless)
+                    AvailableGenders.Add(Gender.Genderless);
+                else if (Species.GenderRatio == GenderRatio.MaleOnly)
+                    AvailableGenders.Add(Gender.Male);
+                else if (Species.GenderRatio == GenderRatio.FemaleOnly)
+                    AvailableGenders.Add(Gender.Female);
+                else
+                {
+                    AvailableGenders.Add(Gender.Male);
+                    AvailableGenders.Add(Gender.Female);
+                }
+
+                Gender = AvailableGenders[0];
             }
         }
 

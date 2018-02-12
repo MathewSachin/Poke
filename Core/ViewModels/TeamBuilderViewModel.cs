@@ -31,7 +31,7 @@ namespace Poke
                     else if (M.Ability == M.Species.HiddenAbility)
                         abilityIndex = 3;
 
-                    var pokemon = new Pokemon(M.Species, 55, M.Name, M.Nature, abilityIndex)
+                    var pokemon = new Pokemon(M.Species, 55, M.Name, M.Nature, abilityIndex, M.Gender)
                     {
                         HeldItem = M.HeldItem
                     };
