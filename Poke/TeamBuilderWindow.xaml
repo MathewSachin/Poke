@@ -61,7 +61,6 @@
                                 
                                 <Grid.Resources>
                                     <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
-                                        <Setter Property="ItemsSource" Value="{Binding AvailableMoves}"/>
                                         <Setter Property="Margin" Value="2"/>
                                         <Setter Property="ItemTemplate">
                                             <Setter.Value>
@@ -77,15 +76,19 @@
                                     </Style>
                                 </Grid.Resources>
 
-                                <ComboBox SelectedValue="{Binding Move1}"/>
+                                <ComboBox SelectedValue="{Binding Move1}"
+                                          ItemsSource="{Binding AvailableMoves}"/>
 
                                 <ComboBox SelectedValue="{Binding Move2}"
+                                          ItemsSource="{Binding AvailableMoves}"
                                           Grid.Column="1"/>
 
                                 <ComboBox SelectedValue="{Binding Move3}"
+                                          ItemsSource="{Binding AvailableMoves}"
                                           Grid.Row="1"/>
 
                                 <ComboBox SelectedValue="{Binding Move4}"
+                                          ItemsSource="{Binding AvailableMoves}"
                                           Grid.Row="1"
                                           Grid.Column="1"/>
                             </Grid>

@@ -17,7 +17,7 @@ namespace Poke
 
         public IEnumerable<HeldItem> AvailableHeldItems => HeldItems;
 
-        public IEnumerable<MoveInfo> AvailableMoves => _species?.LearnSet.Count >= 4 ? _species.LearnSet : Lists.Moves;
+        public ObservableCollection<MoveInfo> AvailableMoves { get; } = new ObservableCollection<MoveInfo>();
 
         public ObservableCollection<Gender> AvailableGenders { get; } = new ObservableCollection<Gender>();
 
@@ -63,8 +63,13 @@ namespace Poke
                     HeldItem = Species.MegaEvolutions[0].MegaStone;
                 else HeldItem = Gem.Gems[Species.PrimaryType];
 
-                OnPropertyChanged(nameof(AvailableMoves));
-                
+                AvailableMoves.Clear();
+
+                foreach (var move in _species.LearnSet)
+                {
+                    AvailableMoves.Add(move);
+                }
+
                 var shuffle = AvailableMoves
                     .Where(M => M.Kind != MoveKind.Status)
                     .Shuffle()
