@@ -38,7 +38,7 @@ namespace Poke
             
             var arr = PokemonGenerators.Shuffle();
             
-            OpponentSide = new Side(Format, arr[0].Invoke(), arr[1].Invoke(), arr[2].Invoke(), arr[3].Invoke(), arr[4].Invoke(), arr[5].Invoke());
+            OpponentSide = new Side(Format, arr.Take(6).Select(M => M.Invoke()).ToArray());
 
             var text = $"The opposing player sent out {OpponentSide.Battling[0]}";
 
@@ -66,7 +66,7 @@ namespace Poke
             }
             catch
             {
-                PlayerSide = new Side(Format, arr[6].Invoke(), arr[7].Invoke(), arr[8].Invoke(), arr[9].Invoke(), arr[10].Invoke(), arr[11].Invoke());
+                PlayerSide = new Side(Format, arr.Skip(6).Take(6).Select(M => M.Invoke()).ToArray());
             }
             
             // Assign a single Z Crystal

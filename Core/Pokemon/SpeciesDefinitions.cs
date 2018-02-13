@@ -611,15 +611,31 @@
                 MoveInfo.AerialAce,
                 MoveInfo.BrutalSwing,
                 MoveInfo.Bulldoze,
+                MoveInfo.Confide,
+                MoveInfo.DoubleTeam,
+                MoveInfo.DracoMeteor,
                 MoveInfo.DragonBreath,
                 MoveInfo.DragonClaw,
+                MoveInfo.DragonDance,
                 MoveInfo.DragonRush,
                 MoveInfo.EarthPower,
                 MoveInfo.Earthquake,
+                MoveInfo.FireBlast,
                 MoveInfo.Flamethrower,
+                MoveInfo.GigaImpact,
+                MoveInfo.Gust,
+                MoveInfo.HyperBeam,
+                MoveInfo.MudShot,
+                MoveInfo.MudSlap,
+                MoveInfo.QuickAttack,
                 MoveInfo.RockSlide,
+                MoveInfo.RockTomb,
+                MoveInfo.SandAttack,
+                MoveInfo.Sandstorm,
+                MoveInfo.Screech,
                 MoveInfo.SteelWing,
-                MoveInfo.StoneEdge
+                MoveInfo.StoneEdge,
+                MoveInfo.SunnyDay
             }
         };
         
@@ -634,14 +650,30 @@
             },
             LearnSet =
             {
+                MoveInfo.CalmMind,
+                MoveInfo.ChargeBeam,
+                MoveInfo.Confide,
+                MoveInfo.ConfuseRay,
+                MoveInfo.Confusion,
                 MoveInfo.DazzlingGleam,
+                MoveInfo.DisarmingVoice,
+                MoveInfo.DoubleTeam,
                 MoveInfo.DrainingKiss,
                 MoveInfo.EnergyBall,
+                MoveInfo.FocusBlast,
+                MoveInfo.GigaImpact,
+                MoveInfo.Growl,
+                MoveInfo.HyperBeam,
                 MoveInfo.MagicalLeaf,
                 MoveInfo.Moonblast,
                 MoveInfo.Psychic,
+                MoveInfo.RainDance,
                 MoveInfo.ShadowBall,
-                MoveInfo.Thunderbolt
+                MoveInfo.ShadowSneak,
+                MoveInfo.SunnyDay,
+                MoveInfo.Thunderbolt,
+                MoveInfo.ThunderWave,
+                MoveInfo.WillOWisp
             }
         };
 
@@ -656,18 +688,35 @@
             },
             LearnSet =
             {
+                MoveInfo.Astonish,
                 MoveInfo.BrickBreak,
+                MoveInfo.Confide,
+                MoveInfo.ConfuseRay,
                 MoveInfo.DarkPulse,
                 MoveInfo.DazzlingGleam,
+                MoveInfo.DoubleTeam,
                 MoveInfo.EnergyBall,
+                MoveInfo.FirePunch,
+                MoveInfo.FocusBlast,
+                MoveInfo.GigaImpact,
+                MoveInfo.Hex,
+                MoveInfo.HyperBeam,
+                MoveInfo.IcePunch,
+                MoveInfo.Lick,
                 MoveInfo.PoisonJab,
                 MoveInfo.Psychic,
+                MoveInfo.RainDance,
+                MoveInfo.ScaryFace,
                 MoveInfo.ShadowBall,
                 MoveInfo.ShadowClaw,
                 MoveInfo.ShadowPunch,
                 MoveInfo.SludgeBomb,
+                MoveInfo.SunnyDay,
+                MoveInfo.Thunder,
                 MoveInfo.Thunderbolt,
-                MoveInfo.Venoshock
+                MoveInfo.ThunderPunch,
+                MoveInfo.Venoshock,
+                MoveInfo.WillOWisp
             }
         };
 
@@ -678,14 +727,28 @@
             GenderRatio = new GenderRatio(87.5, 12.5),
             LearnSet =
             {
+                MoveInfo.BabyDollEyes,
                 MoveInfo.Bite,
+                MoveInfo.Blizzard,
+                MoveInfo.Confide,
+                MoveInfo.DoubleTeam,
                 MoveInfo.FrostBreath,
+                MoveInfo.GigaImpact,
+                MoveInfo.Hail,
+                MoveInfo.HyperBeam,
                 MoveInfo.IceBeam,
                 MoveInfo.IceFang,
                 MoveInfo.IceShard,
                 MoveInfo.IcyWind,
                 MoveInfo.QuickAttack,
-                MoveInfo.ShadowBall
+                MoveInfo.RainDance,
+                MoveInfo.SandAttack,
+                MoveInfo.ShadowBall,
+                MoveInfo.SunnyDay,
+                MoveInfo.Tackle,
+                MoveInfo.TailWhip,
+                MoveInfo.Tickle,
+                MoveInfo.WorkUp
             }
         };
 
@@ -697,15 +760,35 @@
             {
                 MoveInfo.AerialAce,
                 MoveInfo.AquaJet,
+                MoveInfo.Blizzard,
                 MoveInfo.BrickBreak,
+                MoveInfo.CalmMind,
+                MoveInfo.Confide,
+                MoveInfo.ConfuseRay,
+                MoveInfo.Confusion,
+                MoveInfo.CrossChop,
+                MoveInfo.DoubleTeam,
+                MoveInfo.FocusBlast,
+                MoveInfo.GigaImpact,
+                MoveInfo.Hail,
                 MoveInfo.HydroPump,
+                MoveInfo.HyperBeam,
                 MoveInfo.IceBeam,
+                MoveInfo.LowSweep,
+                MoveInfo.MudBomb,
+                MoveInfo.Psybeam,
                 MoveInfo.Psychic,
+                MoveInfo.RainDance,
                 MoveInfo.Scald,
+                MoveInfo.Scratch,
+                MoveInfo.Screech,
                 MoveInfo.ShadowClaw,
                 MoveInfo.Surf,
+                MoveInfo.TailWhip,
                 MoveInfo.Waterfall,
-                MoveInfo.WaterPulse
+                MoveInfo.WaterGun,
+                MoveInfo.WaterPulse,
+                MoveInfo.ZenHeadbutt
             }
         };
 
@@ -715,18 +798,38 @@
         {
             LearnSet =
             {
+                MoveInfo.AcidArmor,
+                MoveInfo.Absorb,
+                MoveInfo.AquaTail,
+                MoveInfo.Blizzard,
                 MoveInfo.BodySlam,
                 MoveInfo.BrutalSwing,
+                MoveInfo.Bubble,
                 MoveInfo.Bulldoze,
+                MoveInfo.Confide,
+                MoveInfo.DoubleTeam,
+                MoveInfo.DracoMeteor,
                 MoveInfo.DragonBreath,
                 MoveInfo.DragonPulse,
                 MoveInfo.Earthquake,
+                MoveInfo.FireBlast,
                 MoveInfo.Flamethrower,
+                MoveInfo.FocusBlast,
+                MoveInfo.GigaImpact,
+                MoveInfo.Hail,
+                MoveInfo.HyperBeam,
                 MoveInfo.IceBeam,
+                MoveInfo.IronTail,
+                MoveInfo.MuddyWater,
+                MoveInfo.PoisonTail,
                 MoveInfo.PowerWhip,
+                MoveInfo.RainDance,
                 MoveInfo.RockSlide,
                 MoveInfo.SludgeBomb,
                 MoveInfo.SludgeWave,
+                MoveInfo.SunnyDay,
+                MoveInfo.Tackle,
+                MoveInfo.Thunder,
                 MoveInfo.Thunderbolt
             }
         };
@@ -740,19 +843,34 @@
             {
                 MoveInfo.Acrobatics,
                 MoveInfo.AerialAce,
+                MoveInfo.Blizzard,
+                MoveInfo.Bubble,
                 MoveInfo.BrutalSwing,
+                MoveInfo.Confide,
                 MoveInfo.Crunch,
                 MoveInfo.DarkPulse,
+                MoveInfo.DoubleTeam,
                 MoveInfo.Extrasensory,
+                MoveInfo.GigaImpact,
+                MoveInfo.Growl,
+                MoveInfo.HydroCannon,
                 MoveInfo.HydroPump,
+                MoveInfo.HyperBeam,
                 MoveInfo.IceBeam,
+                MoveInfo.Lick,
                 MoveInfo.NightSlash,
+                MoveInfo.Pound,
                 MoveInfo.QuickAttack,
+                MoveInfo.RainDance,
                 MoveInfo.RockSlide,
+                MoveInfo.RockTomb,
                 MoveInfo.Scald,
                 MoveInfo.ShadowSneak,
+                MoveInfo.SmokeScreen,
+                MoveInfo.Surf,
                 MoveInfo.Waterfall,
-                MoveInfo.WaterPulse
+                MoveInfo.WaterPulse,
+                MoveInfo.WorkUp
             }
         };
 
