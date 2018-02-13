@@ -58,28 +58,34 @@
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
+                                
+                                <Grid.Resources>
+                                    <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                                        <Setter Property="ItemsSource" Value="{Binding AvailableMoves}"/>
+                                        <Setter Property="Margin" Value="2"/>
+                                        <Setter Property="ItemTemplate">
+                                            <Setter.Value>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Name}">
+                                                        <TextBlock.ToolTip>
+                                                            <poke1:MoveInfoControl Width="200"/>
+                                                        </TextBlock.ToolTip>
+                                                    </TextBlock>
+                                                </DataTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </Grid.Resources>
 
-                                <ComboBox ItemsSource="{Binding AvailableMoves}"
-                                          DisplayMemberPath="Name"
-                                          SelectedValue="{Binding Move1}"
-                                          Margin="2"/>
+                                <ComboBox SelectedValue="{Binding Move1}"/>
 
-                                <ComboBox ItemsSource="{Binding AvailableMoves}"
-                                          DisplayMemberPath="Name"
-                                          SelectedValue="{Binding Move2}"
-                                          Margin="2"
+                                <ComboBox SelectedValue="{Binding Move2}"
                                           Grid.Column="1"/>
 
-                                <ComboBox ItemsSource="{Binding AvailableMoves}"
-                                          DisplayMemberPath="Name"
-                                          SelectedValue="{Binding Move3}"
-                                          Margin="2"
+                                <ComboBox SelectedValue="{Binding Move3}"
                                           Grid.Row="1"/>
 
-                                <ComboBox ItemsSource="{Binding AvailableMoves}"
-                                          DisplayMemberPath="Name"
-                                          SelectedValue="{Binding Move4}"
-                                          Margin="2"
+                                <ComboBox SelectedValue="{Binding Move4}"
                                           Grid.Row="1"
                                           Grid.Column="1"/>
                             </Grid>
