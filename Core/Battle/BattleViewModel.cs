@@ -663,7 +663,7 @@ namespace Poke
 
                                 if (UseZ && PlayerSide.Battling[i].HeldItem is ZCrystal z)
                                 {
-                                    move = new Move(z.Upgrade(move));
+                                    move = z.Upgrade(move);
 
                                     UseZ = false;
                                     PlayerSide.UsedZ = true;

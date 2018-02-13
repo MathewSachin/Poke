@@ -19,9 +19,9 @@ namespace Poke
             return Move.Type == Type && Move.Kind != MoveKind.Status;
         }
 
-        public override MoveInfo Upgrade(Move Move)
+        public override ZMove Upgrade(Move Move)
         {
-            return _upgrader(Move);
+            return new ZMove(_upgrader(Move), Move);
         }
 
         public static int GetZPower(MoveInfo MoveInfo)

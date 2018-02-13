@@ -12,7 +12,7 @@
             Type = Info.Type;
             Kind = Info.Kind;
 
-            PPLeft = Info.PP;
+            _ppLeft = Info.PP;
         }
         
         public string Name { get; }
@@ -39,7 +39,7 @@
 
         int _ppLeft;
 
-        public int PPLeft
+        public virtual int PPLeft
         {
             get => _ppLeft;
             set

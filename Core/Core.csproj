@@ -47,6 +47,7 @@
     <Compile Include="Abilities\StatFallPreventionAbility.cs" />
     <Compile Include="Abilities\WeatherEffectNegatorAbility.cs" />
     <Compile Include="FilterFunction.cs" />
+    <Compile Include="Moves\ZMove.cs" />
     <Compile Include="Stats\EV.cs" />
     <Compile Include="ViewModels\AbilityViewModel.cs" />
     <Compile Include="Battle\Commands.cs" />

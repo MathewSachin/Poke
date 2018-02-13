@@ -20,7 +20,7 @@ namespace Poke
             return _supportedSpecies.Contains(Pokemon.Species) && Move.Info == BaseMove;
         }
 
-        public override MoveInfo Upgrade(Move Move) => ZMove;
+        public override ZMove Upgrade(Move Move) => new ZMove(ZMove, Move);
 
         static ExclusiveZCrystal MakeCrystal(string CrystalName, MoveInfo BaseMove, string MoveName, int Power, params PokemonSpecies[] SupportedSpecies)
         {

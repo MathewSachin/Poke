@@ -14,6 +14,6 @@
 
         public abstract bool Supports(Pokemon Pokemon, Move Move);
 
-        public abstract MoveInfo Upgrade(Move Move);
+        public abstract ZMove Upgrade(Move Move);
     }
 }
