@@ -7,7 +7,7 @@ namespace Poke
 {
     public class Side : NotifyPropertyChanged
     {
-        public Side(int Format, params Pokemon[] Party)
+        public Side(int Format, bool Opponent, bool Computer, params Pokemon[] Party)
         {
             if (Party == null || Party.Length == 0)
                 throw new ArgumentException("Party Empty", nameof(Party));
@@ -19,6 +19,8 @@ namespace Poke
                 throw new ArgumentException("Party size lesser than required for the format", nameof(Format));
 
             this.Format = Format;
+            this.Opponent = Opponent;
+            this.Computer = Computer;
             _party = Party;
 
             for (var i = 0; i < Format; ++i)
@@ -29,6 +31,10 @@ namespace Poke
         }
 
         public int Format { get; }
+
+        public bool Opponent { get; }
+
+        public bool Computer { get; }
 
         public ObservableCollection<Pokemon> Battling { get; } = new ObservableCollection<Pokemon>();
         

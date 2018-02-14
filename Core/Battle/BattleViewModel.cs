@@ -38,7 +38,7 @@ namespace Poke
             
             var arr = PokemonGenerators.Shuffle();
             
-            OpponentSide = new Side(Format, arr.Take(6).Select(M => M.Invoke()).ToArray());
+            OpponentSide = new Side(Format, true, true, arr.Take(6).Select(M => M.Invoke()).ToArray());
 
             var text = $"The opposing player sent out {OpponentSide.Battling[0]}";
 
@@ -66,7 +66,7 @@ namespace Poke
             }
             catch
             {
-                PlayerSide = new Side(Format, arr.Skip(6).Take(6).Select(M => M.Invoke()).ToArray());
+                PlayerSide = new Side(Format, false, false, arr.Skip(6).Take(6).Select(M => M.Invoke()).ToArray());
             }
             
             // Assign a single Z Crystal
@@ -505,25 +505,41 @@ namespace Poke
                 if (pokemon != null)
                     yield return new PokemonMovePair(pokemon, null);
         }
-        
-        async void BattleLoop()
+
+        async Task SwitchFainted(IEnumerable<Side> Sides)
         {
-            while (true)
+            // Switch In Queue
+            var switchedIn = new List<PokemonMovePair>();
+
+            foreach (var side in Sides)
             {
-                await Reset();
-
-                do
+                if (side.Computer)
                 {
-                    #region Switch Fainted
-                    // Switch In Queue
-                    var switchedIn = new List<PokemonMovePair>();
-
-                    // Replace Player's fainted Pokemon
                     for (var i = 0; i < Format; ++i)
                     {
-                        if (PlayerSide.Battling[i] != null && PlayerSide.Battling[i].IsFainted)
+                        if (side.Battling[i] != null && side.Battling[i].IsFainted)
                         {
-                            if (PlayerSide.Party.Any(Pokemon => !Pokemon.IsFainted && !PlayerSide.Battling.Contains(Pokemon)))
+                            var switchable = side.Party.FirstOrDefault(Pokemon => !Pokemon.IsFainted && !side.Battling.Contains(Pokemon));
+
+                            if (switchable != null)
+                            {
+                                side.Battling[i] = switchable;
+
+                                await WriteStatus($"The opposing player sent {switchable}");
+
+                                switchedIn.Add(new PokemonMovePair(switchable, null));
+                            }
+                            else side.Battling[i] = null;
+                        }
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < Format; ++i)
+                    {
+                        if (side.Battling[i] != null && side.Battling[i].IsFainted)
+                        {
+                            if (side.Party.Any(Pokemon => !Pokemon.IsFainted && !side.Battling.Contains(Pokemon)))
                             {
                                 await WriteStatus("Which Pokemon do you want to send next?", false);
 
@@ -531,51 +547,266 @@ namespace Poke
 
                                 await WaitForPlayer();
 
-                                PlayerSide.Battling[i] = _toSwitch;
+                                side.Battling[i] = _toSwitch;
 
                                 await WriteStatus($"Go {_toSwitch}");
 
                                 switchedIn.Add(new PokemonMovePair(_toSwitch, null));
                             }
-                            else PlayerSide.Battling[i] = null;
+                            else side.Battling[i] = null;
                         }
                     }
+                }
+            }
 
-                    // Replace Opponent's fainted Pokemon
-                    for (var i = 0; i < Format; ++i)
+            // Switch In effects work in order of Pokemons' Speed
+            var switchOrder = MoveOrder(switchedIn).ToArray();
+
+            foreach (var data in switchOrder)
+            {
+                await SwitchInEffects(data.Attacker);
+            }
+
+            foreach (var data in switchOrder)
+            {
+                await PostTurnStatusEffects(data.Attacker);
+                await PostTurnWeatherEffects(data.Attacker);
+            }
+        }
+
+        async Task PlayerMoves(Side Player, Side Opponent,
+            List<PokemonMovePair> SwithInQueue,
+            List<PokemonMovePair> MegaQueue,
+            List<PokemonMovePair> MoveQueue)
+        {
+            for (var i = 0; i < Format; ++i)
+            {
+                if (Player.Battling[i] == null)
+                    continue;
+
+                // Recharging Pokemon skip a turn
+                if (Player.Battling[i].Recharging)
+                {
+                    await WriteStatus($"{Player.Battling[i]} is recharging");
+
+                    Player.Battling[i].Recharging = false;
+
+                    continue;
+                }
+
+                // Until a valid move is chosen or Pokemon is switched out
+                while (true)
+                {
+                    BattleState = BattleState.Move;
+
+                    MovingPokemon = Player.Battling[i];
+
+                    await WriteStatus($"What will {Player.Battling[i]} do?", false);
+
+                    _toMove = null;
+                    _toSwitch = null;
+
+                    CanMegaEvolve = !Player.UsedMegaEvolution && Player.Battling[i].CanMegaEvolve(out var _);
+
+                    CanZ = !Player.UsedZ
+                        && Player.Battling[i].HeldItem is ZCrystal zCrystal
+                        && Player.Battling[i].Moves.Any(M => zCrystal.Supports(Player.Battling[i], M));
+
+                    if (CanZ)
+                        ZSelector = new ZMoveSelectionViewModel(Player.Battling[i]);
+
+                    await WaitForPlayer();
+
+                    CanMegaEvolve = CanZ = false;
+
+                    // Switch
+                    if (_toSwitch != null)
                     {
-                        if (OpponentSide.Battling[i] != null && OpponentSide.Battling[i].IsFainted)
+                        SwitchOutEffects(Player.Battling[i]);
+
+                        await WriteStatus($"{Player.Battling[i]}, Come back!");
+
+                        Player.Battling[i] = _toSwitch;
+
+                        await WriteStatus($"Go {_toSwitch}");
+
+                        SwithInQueue.Add(new PokemonMovePair(_toSwitch, null));
+
+                        break;
+                    }
+
+                    // Move
+                    if (_toMove != null)
+                    {
+                        var move = Player.Battling[i].Moves[_toMove.Value];
+
+                        if (move.PPLeft == 0)
                         {
-                            var switchable = OpponentSide.Party.FirstOrDefault(Pokemon => !Pokemon.IsFainted && !OpponentSide.Battling.Contains(Pokemon));
+                            await WriteStatus("This move has no PP Left");
 
-                            if (switchable != null)
+                            continue;
+                        }
+
+                        if (move.Disabled)
+                        {
+                            await WriteStatus($"{GetStatusName(Player.Battling[i])}'s {move} was disabled");
+
+                            continue;
+                        }
+
+                        if (UseZ && Player.Battling[i].HeldItem is ZCrystal z)
+                        {
+                            move = z.Upgrade(move);
+
+                            UseZ = false;
+                            Player.UsedZ = true;
+                            BattleState = BattleState.Wait;
+                        }
+
+                        Pokemon target = null;
+
+                        if (Format == 1)
+                            target = Opponent.Battling[0];
+                        else if (move.Info.Target == MoveTarget.Normal)
+                        {
+                            SelectOpponent.Clear();
+
+                            foreach (var pokemon in Player.Battling[i].GetAdjacentFoes())
                             {
-                                OpponentSide.Battling[i] = switchable;
-
-                                await WriteStatus($"The opposing player sent {switchable}");
-
-                                switchedIn.Add(new PokemonMovePair(switchable, null));
+                                SelectOpponent.Add(pokemon);
                             }
-                            else OpponentSide.Battling[i] = null;
+
+                            if (SelectOpponent.Count == 0)
+                            {
+                                await WriteStatus("No available targets");
+
+                                break;
+                            }
+
+                            if (SelectOpponent.Count == 1)
+                            {
+                                target = SelectOpponent[0];
+                            }
+                            else
+                            {
+                                BattleState = BattleState.Target;
+
+                                await WriteStatus("Select Target", false);
+
+                                if (!await WaitForPlayer(true))
+                                    continue;
+
+                                target = _target;
+                            }
+                        }
+
+                        if (UseMegaEvolution
+                            && !Player.UsedMegaEvolution
+                            && Player.Battling[i].CanMegaEvolve(out var _))
+                        {
+                            MegaQueue.Add(new PokemonMovePair(Player.Battling[i], null));
+
+                            Player.UsedMegaEvolution = true;
+                        }
+
+                        MoveQueue.Add(new PokemonMovePair(Player.Battling[i], move)
+                        {
+                            Target = target
+                        });
+
+                        break;
+                    }
+                }
+            }
+        }
+
+        async Task ComputerMoves(Side Computer,
+            List<PokemonMovePair> MegaQueue,
+            List<PokemonMovePair> MoveQueue)
+        {
+            for (var i = 0; i < Format; ++i)
+            {
+                if (Computer.Battling[i] == null)
+                    continue;
+
+                // Recharging Pokemon skip a turn
+                if (Computer.Battling[i].Recharging)
+                {
+                    await WriteStatus($"{Computer.Battling[i]} is recharging");
+
+                    Computer.Battling[i].Recharging = false;
+
+                    continue;
+                }
+
+                if (!Computer.UsedMegaEvolution && Computer.Battling[i].CanMegaEvolve(out var _))
+                {
+                    MegaQueue.Add(new PokemonMovePair(Computer.Battling[i], null));
+
+                    Computer.UsedMegaEvolution = true;
+                }
+
+                var moves = new List<Move>();
+
+                for (var j = 0; j < 4; ++j)
+                {
+                    var move = Computer.Battling[i].Moves[j];
+
+                    if (move.PPLeft != 0 && move.Kind != MoveKind.Status && !move.Disabled)
+                        moves.Add(move);
+                }
+
+                Pokemon target = null;
+                Move moveToUse;
+
+                if (Format == 1)
+                {
+                    target = Computer.OpposingSide.Battling.Where(Pokemon => Pokemon != null)
+                        .OrderBy(M => Random.Next())
+                        .First();
+
+                    moveToUse = moves.OrderByDescending(M => target.GetTypeEffectiveness(M.Type))
+                        .ThenBy(M => Random.Next())
+                        .First();
+                }
+                else
+                {
+                    moveToUse = moves.OrderBy(M => Random.Next()).First();
+
+                    if (moveToUse.Info.Target == MoveTarget.Normal)
+                    {
+                        target = Computer.Battling[i].GetAdjacentFoes()
+                            .OrderByDescending(P => P.GetTypeEffectiveness(moveToUse.Type))
+                            .ThenBy(P => Random.Next())
+                            .FirstOrDefault();
+
+                        if (target == null)
+                        {
+                            await WriteStatus($"{GetStatusName(Computer.Battling[i])} is loafing around");
+
+                            continue;
                         }
                     }
+                }
 
-                    // Switch In effects work in order of Pokemons' Speed
-                    var switchOrder = MoveOrder(switchedIn).ToArray();
+                MoveQueue.Add(new PokemonMovePair(Computer.Battling[i], moveToUse)
+                {
+                    Target = target
+                });
+            }
+        }
 
-                    foreach (var data in switchOrder)
-                    {
-                        await SwitchInEffects(data.Attacker);
-                    }
+        async void BattleLoop()
+        {
+            while (true)
+            {
+                await Reset();
 
-                    foreach (var data in switchOrder)
-                    {
-                        await PostTurnStatusEffects(data.Attacker);
-                        await PostTurnWeatherEffects(data.Attacker);
-                    }
+                var sides = new[] { PlayerSide, OpponentSide };
 
-                    switchedIn.Clear();
-                    #endregion
+                do
+                {
+                    await SwitchFainted(sides);
 
                     // Move Queue
                     var moveQueue = new List<PokemonMovePair>();
@@ -583,222 +814,20 @@ namespace Poke
                     // Mega Evolution Queue
                     var megaQueue = new List<PokemonMovePair>();
 
+                    var switchedIn = new List<PokemonMovePair>();
+
                     // TODO: Check Move Target type
 
-                    // Player's moves
-                    for (var i = 0; i < Format; ++i)
+                    foreach (var side in sides)
                     {
-                        if (PlayerSide.Battling[i] == null)
-                            continue;
-
-                        // Recharging Pokemon skip a turn
-                        if (PlayerSide.Battling[i].Recharging)
+                        if (side.Computer)
                         {
-                            await WriteStatus($"{PlayerSide.Battling[i]} is recharging");
-
-                            PlayerSide.Battling[i].Recharging = false;
-
-                            continue;
+                            await ComputerMoves(side, megaQueue, moveQueue);
                         }
-
-                        // Until a valid move is chosen or Pokemon is switched out
-                        while (true)
-                        {
-                            BattleState = BattleState.Move;
-
-                            MovingPokemon = PlayerSide.Battling[i];
-
-                            await WriteStatus($"What will {PlayerSide.Battling[i]} do?", false);
-
-                            _toMove = null;
-                            _toSwitch = null;
-
-                            CanMegaEvolve = !PlayerSide.UsedMegaEvolution && PlayerSide.Battling[i].CanMegaEvolve(out var _);
-
-                            CanZ = !PlayerSide.UsedZ
-                                && PlayerSide.Battling[i].HeldItem is ZCrystal zCrystal
-                                && PlayerSide.Battling[i].Moves.Any(M => zCrystal.Supports(PlayerSide.Battling[i], M));
-
-                            if (CanZ)
-                                ZSelector = new ZMoveSelectionViewModel(PlayerSide.Battling[i]);
-
-                            await WaitForPlayer();
-
-                            CanMegaEvolve = CanZ = false;
-                            
-                            // Switch
-                            if (_toSwitch != null)
-                            {
-                                SwitchOutEffects(PlayerSide.Battling[i]);
-
-                                await WriteStatus($"{PlayerSide.Battling[i]}, Come back!");
-
-                                PlayerSide.Battling[i] = _toSwitch;
-
-                                await WriteStatus($"Go {_toSwitch}");
-
-                                switchedIn.Add(new PokemonMovePair(_toSwitch, null));
-
-                                break;
-                            }
-
-                            // Move
-                            if (_toMove != null)
-                            {
-                                var move = PlayerSide.Battling[i].Moves[_toMove.Value];
-
-                                if (move.PPLeft == 0)
-                                {
-                                    await WriteStatus("This move has no PP Left");
-
-                                    continue;
-                                }
-
-                                if (move.Disabled)
-                                {
-                                    await WriteStatus($"{GetStatusName(PlayerSide.Battling[i])}'s {move} was disabled");
-
-                                    continue;
-                                }
-
-                                if (UseZ && PlayerSide.Battling[i].HeldItem is ZCrystal z)
-                                {
-                                    move = z.Upgrade(move);
-
-                                    UseZ = false;
-                                    PlayerSide.UsedZ = true;
-                                    BattleState = BattleState.Wait;
-                                }
-
-                                Pokemon target = null;
-
-                                if (Format == 1)
-                                    target = OpponentSide.Battling[0];
-                                else if (move.Info.Target == MoveTarget.Normal)
-                                {
-                                    SelectOpponent.Clear();
-
-                                    foreach (var pokemon in PlayerSide.Battling[i].GetAdjacentFoes())
-                                    {
-                                        SelectOpponent.Add(pokemon);
-                                    }
-
-                                    if (SelectOpponent.Count == 0)
-                                    {
-                                        await WriteStatus("No available targets");
-
-                                        break;
-                                    }
-
-                                    if (SelectOpponent.Count == 1)
-                                    {
-                                        target = SelectOpponent[0];
-                                    }
-                                    else
-                                    {
-                                        BattleState = BattleState.Target;
-
-                                        await WriteStatus("Select Target", false);
-
-                                        if (!await WaitForPlayer(true))
-                                            continue;
-
-                                        target = _target;
-                                    }
-                                }
-
-                                if (UseMegaEvolution
-                                    && !PlayerSide.UsedMegaEvolution
-                                    && PlayerSide.Battling[i].CanMegaEvolve(out var _))
-                                {
-                                    megaQueue.Add(new PokemonMovePair(PlayerSide.Battling[i], null));
-
-                                    PlayerSide.UsedMegaEvolution = true;
-                                }
-
-                                moveQueue.Add(new PokemonMovePair(PlayerSide.Battling[i], move)
-                                {
-                                    Target = target
-                                });
-
-                                break;
-                            }
-                        }
+                        else await PlayerMoves(side, side.OpposingSide, switchedIn, megaQueue, moveQueue);
                     }
 
-                    // Opponent's moves
-                    for (var i = 0; i < Format; ++i)
-                    {
-                        if (OpponentSide.Battling[i] == null)
-                            continue;
-
-                        // Recharging Pokemon skip a turn
-                        if (OpponentSide.Battling[i].Recharging)
-                        {
-                            await WriteStatus($"{OpponentSide.Battling[i]} is recharging");
-
-                            OpponentSide.Battling[i].Recharging = false;
-
-                            continue;
-                        }
-
-                        if (!OpponentSide.UsedMegaEvolution && OpponentSide.Battling[i].CanMegaEvolve(out var _))
-                        {
-                            megaQueue.Add(new PokemonMovePair(OpponentSide.Battling[i], null));
-
-                            OpponentSide.UsedMegaEvolution = true;
-                        }
-                        
-                        var moves = new List<Move>();
-
-                        for (var j = 0; j < 4; ++j)
-                        {
-                            var move = OpponentSide.Battling[i].Moves[j];
-
-                            if (move.PPLeft != 0 && move.Kind != MoveKind.Status && !move.Disabled)
-                                moves.Add(move);
-                        }
-
-                        Pokemon target = null;
-                        Move moveToUse;
-
-                        if (Format == 1)
-                        {
-                            target = PlayerSide.Battling.Where(Pokemon => Pokemon != null)
-                                .OrderBy(M => Random.Next())
-                                .First();
-
-                            moveToUse = moves.OrderByDescending(M => target.GetTypeEffectiveness(M.Type))
-                                .ThenBy(M => Random.Next())
-                                .First();
-                        }
-                        else
-                        {
-                            moveToUse = moves.OrderBy(M => Random.Next()).First();
-
-                            if (moveToUse.Info.Target == MoveTarget.Normal)
-                            {
-                                target = OpponentSide.Battling[i].GetAdjacentFoes()
-                                    .OrderByDescending(P => P.GetTypeEffectiveness(moveToUse.Type))
-                                    .ThenBy(P => Random.Next())
-                                    .FirstOrDefault();
-
-                                if (target == null)
-                                {
-                                    await WriteStatus($"{GetStatusName(OpponentSide.Battling[i])} is loafing around");
-
-                                    continue;
-                                }
-                            }
-                        }
-
-                        moveQueue.Add(new PokemonMovePair(OpponentSide.Battling[i], moveToUse)
-                        {
-                            Target = target
-                        });
-                    }
-
-                    switchOrder = MoveOrder(switchedIn).ToArray();
+                    var switchOrder = MoveOrder(switchedIn).ToArray();
 
                     // Switch In Effects
                     foreach (var data in switchOrder)

@@ -217,7 +217,7 @@ namespace Poke
 
         public string GetStatusName(Pokemon Pokemon)
         {
-            return (Pokemon.Side == OpponentSide ? "The opposing " : "") + Pokemon;
+            return (Pokemon.Side.Opponent ? "The opposing " : "") + Pokemon;
         }
 
         public async Task WriteStatus(string Text, bool Wait = true)
@@ -295,7 +295,7 @@ namespace Poke
 
         public async Task ShowAbility(Pokemon Pokemon)
         {
-            var playerTurn = Pokemon.Side == PlayerSide;
+            var playerTurn = !Pokemon.Side.Opponent;
 
             if (playerTurn)
                 AbilityPlayer = $"{Pokemon}'s {Pokemon.Ability}";

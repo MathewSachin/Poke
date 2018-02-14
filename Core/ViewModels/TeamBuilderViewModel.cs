@@ -18,7 +18,7 @@ namespace Poke
 
         public Side GetSide(int Format)
         {
-            return new Side(Format, Members
+            return new Side(Format, false, false, Members
                 .Where(M => M.Species != null && M.Move1 != null && M.Move2 != null && M.Move3 != null && M.Move4 != null)
                 .Select(M =>
                 {
