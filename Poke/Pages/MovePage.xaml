@@ -8,23 +8,43 @@
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300"
       Title="MovePage">
-    <DockPanel>
+    <DockPanel Margin="5">
         <DockPanel Background="{StaticResource Accent}"
                    DockPanel.Dock="Top"
-                   Margin="0,0,0,10">
+                   Margin="-5,-5,-5,10">
             <mui:ModernButton IconData="{StaticResource Icon_Back}"
                               Style="{StaticResource ActionButton}"
                               ToolTip="Back"
                               Click="GoBack"
                               Margin="10"/>
 
-            <TextBlock Text="{Binding Name}"
+            <TextBlock Text="{Binding Move.Name}"
                        VerticalAlignment="Center"
                        Foreground="White"
                        Style="{StaticResource Heading1}"/>
         </DockPanel>
 
-        <poke:MoveInfoControl Margin="5"
-                              VerticalAlignment="Top"/>
+        <poke:MoveInfoControl Margin="0,5"
+                              DataContext="{Binding Move}"
+                              DockPanel.Dock="Top"/>
+        
+        <TextBlock Text="Pokemon that learn this move"
+                   Style="{StaticResource Title}"
+                   Margin="5,10,5,5"
+                   FontSize="15"
+                   DockPanel.Dock="Top"/>
+        
+        <ItemsControl Style="{StaticResource VirtualizingItemsControl}"
+                      ItemsSource="{Binding Pokemon}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Margin="5"
+                            HorizontalContentAlignment="Stretch"
+                            Click="GoToPokemon">
+                        <poke:PokemonButtonContent/>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </DockPanel>
 </Page>

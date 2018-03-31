@@ -56,6 +56,7 @@
     <Compile Include="Battle\BattleViewModel.cs" />
     <Compile Include="Battle\Weather.cs" />
     <Compile Include="ViewModels\AbilitiesViewModel.cs" />
+    <Compile Include="ViewModels\MoveViewModel.cs" />
     <Compile Include="ViewModels\PokemonListViewModel.cs" />
     <Compile Include="ViewModels\MovesViewModel.cs" />
     <Compile Include="TypeEffect.cs" />

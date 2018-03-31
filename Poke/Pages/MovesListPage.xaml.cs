@@ -20,7 +20,7 @@ namespace Poke
             {
                 NavigationService?.Navigate(new MovePage
                 {
-                    DataContext = move
+                    DataContext = new MoveViewModel(move)
                 });
             }
         }
