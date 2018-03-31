@@ -12,6 +12,31 @@
                 <ResourceDictionary Source="Resources/ActionButton.xaml"/>
                 <ResourceDictionary Source="Resources/Icons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+
+            <Style TargetType="TabItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Grid Name="Panel">
+                                <Label Content="{TemplateBinding Header}"
+                                       Name="HeaderLabel"
+                                       Margin="10,2"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" 
+                                         Value="True">
+                                    <Setter TargetName="Panel" 
+                                            Property="Background"
+                                            Value="{DynamicResource Accent}" />
+                                    <Setter TargetName="HeaderLabel"
+                                            Property="Foreground" 
+                                            Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

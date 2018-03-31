@@ -65,84 +65,124 @@
                 </StackPanel>
             </StackPanel>
         </DockPanel>
+        
+        <TabControl>
+            <TabItem Header="Main">
+                <ScrollViewer Margin="10,0">
+                    <StackPanel>
+                        <TextBlock Text="Abilities"
+                                   Margin="5"
+                                   Style="{StaticResource Title}"
+                                   FontSize="15"/>
 
-        <ScrollViewer Margin="10,0">
-            <StackPanel>
-                <TextBlock Text="Abilities"
-                           Margin="5"
-                           Style="{StaticResource Title}"
-                           FontSize="15"/>
-                
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
 
-                    <Button Content="{Binding Species.AbilitySlot1.Name}"
-                            CommandParameter="{Binding Species.AbilitySlot1}"
-                            Click="GoToAbility"
-                            Margin="5"/>
+                            <Button Content="{Binding Species.AbilitySlot1.Name}"
+                                    CommandParameter="{Binding Species.AbilitySlot1}"
+                                    Click="GoToAbility"
+                                    Margin="5"/>
 
-                    <Button Content="{Binding Species.AbilitySlot2.Name}"
-                            CommandParameter="{Binding Species.AbilitySlot2}"
-                            Click="GoToAbility"
-                            Margin="5"
-                            Grid.Column="1"/>
+                            <Button Content="{Binding Species.AbilitySlot2.Name}"
+                                    CommandParameter="{Binding Species.AbilitySlot2}"
+                                    Click="GoToAbility"
+                                    Margin="5"
+                                    Grid.Column="1"/>
 
-                    <Button Content="{Binding Species.HiddenAbility.Name}"
-                            CommandParameter="{Binding Species.HiddenAbility}"
-                            Click="GoToAbility"
-                            Margin="5"
-                            Grid.Column="2"
-                            Foreground="#c62828"/>
-                </Grid>
+                            <Button Content="{Binding Species.HiddenAbility.Name}"
+                                    CommandParameter="{Binding Species.HiddenAbility}"
+                                    Click="GoToAbility"
+                                    Margin="5"
+                                    Grid.Column="2"
+                                    Foreground="#c62828"/>
+                        </Grid>
 
-                <TextBlock Text="Base Stats"
-                           Margin="5,20,0,5"
-                           Style="{StaticResource Title}"
-                           FontSize="15"/>
+                        <TextBlock Text="Base Stats"
+                                   Margin="5,20,0,5"
+                                   Style="{StaticResource Title}"
+                                   FontSize="15"/>
 
-                <ItemsControl ItemsSource="{Binding Species.BaseStats}"
+                        <ItemsControl ItemsSource="{Binding Species.BaseStats}"
+                              Margin="5">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <DockPanel Margin="5">
+                                        <Label Content="{Binding Value}"
+                                               DockPanel.Dock="Right"
+                                               Margin="5,0,0,0"
+                                               HorizontalContentAlignment="Right"    
+                                               Width="25"/>
+
+                                        <TextBlock Text="{Binding Key, Converter={StaticResource SpaceAtCaptitalsConverter}}"
+                                                   MinWidth="100"/>
+
+                                        <ProgressBar Maximum="200"
+                                                     Height="5"
+                                                     Value="{Binding Value, Mode=OneWay}"
+                                                     Margin="10,0,0,0"/>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <DockPanel Margin="10,5">
+                            <TextBlock Text="Total"
+                                       MinWidth="100"/>
+
+                            <TextBlock Text="{Binding BaseStatTotal}"
+                                       Margin="10,0,0,0"/>
+                        </DockPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Moves">
+                <ItemsControl Style="{StaticResource VirtualizingItemsControl}"
+                              ItemsSource="{Binding Species.LearnSet}"
                               Margin="5">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <DockPanel Margin="5">
-                                <Label Content="{Binding Value}"
+                                <Label Content="{Binding Kind}"
+                                       Foreground="White"
+                                       Background="{Binding Kind, Converter={StaticResource MoveKindToColorConverter}}"
                                        DockPanel.Dock="Right"
-                                       Margin="5,0,0,0"
-                                       HorizontalContentAlignment="Right"    
-                                       Width="25"/>
+                                       Padding="5,0"
+                                       VerticalContentAlignment="Center"
+                                       Width="60"/>
 
-                                <TextBlock Text="{Binding Key, Converter={StaticResource SpaceAtCaptitalsConverter}}"
-                                           MinWidth="100"/>
+                                <Label Content="{Binding Type}"
+                                       DockPanel.Dock="Right"
+                                       Width="60"
+                                       Padding="5,0"
+                                       Margin="5,0"
+                                       Foreground="White"
+                                       VerticalContentAlignment="Center"
+                                       Background="{Binding Type, Converter={StaticResource TypeToColorConverter}}"/>
 
-                                <ProgressBar Maximum="200"
-                                             Height="5"
-                                             Value="{Binding Value, Mode=OneWay}"
-                                             Margin="10,0,0,0"/>
+                                <Button Click="GoToMove"
+                                        Content="{Binding Name}"
+                                        HorizontalContentAlignment="Left"
+                                        Padding="10,2"/>
                             </DockPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+            </TabItem>
+            <TabItem Header="Type Effectiveness">
+                <StackPanel>
+                    <TextBlock Text="Type Effectiveness"
+                               Margin="5,20,0,5"
+                               Style="{StaticResource Title}"
+                               FontSize="15"/>
 
-                <DockPanel Margin="10,5">
-                    <TextBlock Text="Total"
-                               MinWidth="100"/>
-
-                    <TextBlock Text="{Binding BaseStatTotal}"
-                               Margin="10,0,0,0"/>
-                </DockPanel>
-
-                <TextBlock Text="Type Effectiveness"
-                           Margin="5,20,0,5"
-                           Style="{StaticResource Title}"
-                           FontSize="15"/>
-
-                <poke:TypeEffectivenessControl DataContext="{Binding TypeEffectiveness}"
-                                               Margin="5"/>
-            </StackPanel>
-        </ScrollViewer>
+                    <poke:TypeEffectivenessControl DataContext="{Binding TypeEffectiveness}"
+                                                   Margin="5"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Page>

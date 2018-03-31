@@ -25,5 +25,16 @@ namespace Poke
                 });
             }
         }
+
+        void GoToMove(object Sender, RoutedEventArgs E)
+        {
+            if (Sender is FrameworkElement element && element.DataContext is MoveInfo move)
+            {
+                NavigationService?.Navigate(new MovePage
+                {
+                    DataContext = move
+                });
+            }
+        }
     }
 }
