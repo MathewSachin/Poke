@@ -1,6 +1,7 @@
 package com.poke.app.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -80,7 +81,7 @@ private fun TypeSelector(selected: PokemonType?, onSelect: (PokemonType) -> Unit
             ) {
                 TypeBadge(
                     type = type,
-                    modifier = Modifier.clickableIf { onSelect(type) }
+                    modifier = Modifier.clickable { onSelect(type) }
                 )
             }
         }
@@ -173,5 +174,3 @@ private fun AllTypeChart(attacker: PokemonType) {
     }
 }
 
-private fun Modifier.clickableIf(onClick: () -> Unit): Modifier =
-    this.then(androidx.compose.foundation.clickable(onClick = onClick))
