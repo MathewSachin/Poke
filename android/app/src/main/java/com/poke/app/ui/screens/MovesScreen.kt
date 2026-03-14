@@ -99,7 +99,7 @@ fun MoveCard(move: MoveInfo, onClick: () -> Unit) {
             }
             Column(horizontalAlignment = Alignment.End) {
                 Text("Pwr: ${move.power ?: "—"}", fontSize = 12.sp)
-                Text("Acc: ${move.accuracy ?: "—"}%", fontSize = 12.sp)
+                Text("Acc: ${if (move.accuracy != null) "${move.accuracy}%" else "—"}", fontSize = 12.sp)
                 Text("PP: ${move.pp}", fontSize = 12.sp)
             }
         }
