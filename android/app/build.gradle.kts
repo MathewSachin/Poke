@@ -21,6 +21,9 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            // Use debug signing so the APK is installable when sideloaded.
+            // Replace with a proper release keystore for Play Store distribution.
+            signingConfig = signingConfigs.getByName("debug")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

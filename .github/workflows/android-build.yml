@@ -49,7 +49,7 @@ jobs:
           cd android
           ./gradlew assembleDebug --no-daemon
 
-      - name: Build release APK (unsigned)
+      - name: Build release APK
         run: |
           cd android
           ./gradlew assembleRelease --no-daemon
@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: poke-release-apk
-          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+          path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
 
   release:
