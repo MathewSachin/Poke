@@ -402,7 +402,6 @@ object GameData {
         MoveInfo("Withdraw", PokemonType.Water, MoveKind.Status, null, null, 40, "Raises user's Defense by one stage."),
         MoveInfo("Work Up", PokemonType.Normal, MoveKind.Status, null, null, 30, "Raises user's Attack and Sp. Atk by one stage each."),
         MoveInfo("Autotomize", PokemonType.Steel, MoveKind.Status, null, null, 15, "Raises user's Speed by two stages and halves weight."),
-        MoveInfo("BellyDrum", PokemonType.Normal, MoveKind.Status, null, null, 10, "Halves user's HP; raises Attack to max."),
     )
 
     // ── Pokémon Species ────────────────────────────────────────────────────────

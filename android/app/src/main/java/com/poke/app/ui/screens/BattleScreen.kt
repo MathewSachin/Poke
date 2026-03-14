@@ -166,11 +166,19 @@ fun BattleScreen(onBack: () -> Unit) {
                 Card(
                     modifier = Modifier.fillMaxWidth().padding(16.dp),
                     colors = CardDefaults.cardColors(
-                        containerColor = if (state.winner == "player") Color(0xFF2E7D32) else Color(0xFFC62828)
+                        containerColor = when (state.winner) {
+                            "player" -> Color(0xFF2E7D32)
+                            "draw" -> Color(0xFF6D4C41)
+                            else -> Color(0xFFC62828)
+                        }
                     )
                 ) {
                     Text(
-                        if (state.winner == "player") "🏆 You won!" else "💀 You lost...",
+                        when (state.winner) {
+                            "player" -> "🏆 You won!"
+                            "draw" -> "🤝 It's a draw!"
+                            else -> "💀 You lost..."
+                        },
                         modifier = Modifier.padding(24.dp).fillMaxWidth(),
                         color = Color.White,
                         fontWeight = FontWeight.Bold,

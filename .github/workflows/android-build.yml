@@ -2,7 +2,7 @@ name: Android Build
 
 on:
   push:
-    branches: [ main, master, copilot/convert-android-kotlin-app ]
+    branches: [ main, master ]
     paths:
       - 'android/**'
       - '.github/workflows/android-build.yml'
@@ -112,7 +112,7 @@ jobs:
           VERSION_NAME=$(grep "versionName" android/app/build.gradle.kts | grep -oP '"\K[^"]+')
           echo "version_code=${VERSION_CODE}" >> $GITHUB_OUTPUT
           echo "version_name=${VERSION_NAME}" >> $GITHUB_OUTPUT
-          echo "tag=v${VERSION_NAME}" >> $GITHUB_OUTPUT
+          echo "tag=v${VERSION_NAME}-${VERSION_CODE}" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

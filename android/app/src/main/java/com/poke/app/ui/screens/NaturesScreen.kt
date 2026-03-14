@@ -1,6 +1,6 @@
 package com.poke.app.ui.screens
 
-import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -10,21 +10,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.poke.app.data.GameData
 
 @Composable
 fun NaturesScreen() {
-    val statColor = mapOf(
-        "Attack" to Color(0xFFEF5350),
-        "Defense" to Color(0xFF42A5F5),
-        "Sp. Atk" to Color(0xFFAB47BC),
-        "Sp. Def" to Color(0xFF26A69A),
-        "Speed" to Color(0xFFFF7043)
-    )
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -54,11 +45,10 @@ fun NaturesScreen() {
         }
         HorizontalDivider()
         GameData.natures.forEach { nature ->
-            val incColor = if (nature.increased != null) Color(0xFFE8F5E9) else Color.Transparent
-            val rowBg = incColor
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(if (nature.increased != null) Color(0xFFE8F5E9) else Color.Transparent)
                     .padding(horizontal = 8.dp, vertical = 3.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {

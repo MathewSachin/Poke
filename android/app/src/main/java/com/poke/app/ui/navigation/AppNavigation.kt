@@ -1,5 +1,6 @@
 package com.poke.app.ui.navigation
 
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Groups
@@ -61,7 +62,7 @@ fun AppNavigation() {
             composable(Screen.Pokedex.route) {
                 PokedexScreen(
                     onPokemonClick = { pokemonName ->
-                        navController.navigate("pokemon_detail/$pokemonName")
+                        navController.navigate("pokemon_detail/${Uri.encode(pokemonName)}")
                     }
                 )
             }
@@ -72,7 +73,7 @@ fun AppNavigation() {
             composable(Screen.Moves.route) {
                 MovesScreen(
                     onMoveClick = { moveName ->
-                        navController.navigate("move_detail/$moveName")
+                        navController.navigate("move_detail/${Uri.encode(moveName)}")
                     }
                 )
             }
