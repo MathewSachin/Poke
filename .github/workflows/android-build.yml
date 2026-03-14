@@ -68,6 +68,40 @@ jobs:
           path: android/app/build/outputs/apk/release/app-release.apk
           retention-days: 30
 
+  test-install:
+    name: Test APK Install on Emulator
+    runs-on: ubuntu-latest
+    needs: build
+    permissions: {}
+
+    steps:
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Download debug APK
+        uses: actions/download-artifact@v4
+        with:
+          name: poke-debug-apk
+          path: apk/
+
+      - name: Install and launch APK on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          target: google_apis
+          arch: x86_64
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: |
+            adb install apk/app-debug.apk
+            adb shell am start -n com.poke.app/.MainActivity
+            sleep 5
+            adb shell pidof com.poke.app || (echo "ERROR: App process not found after launch" && exit 1)
+            echo "APK installed and launched successfully"
+
   release:
     name: Create Release with APK
     runs-on: ubuntu-latest
