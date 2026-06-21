@@ -294,5 +294,4 @@ export const MOVES: Move[] = [
   { name: 'Spike Cannon', type: PokemonType.Normal, kind: 'Physical', power: 20, accuracy: 100, pp: 15, description: 'Hits 2-5 times in one turn.', priority: 0 },
   { name: 'Leaf Storm', type: PokemonType.Grass, kind: 'Special', power: 130, accuracy: 90, pp: 5, description: "Lowers user's Sp. Atk by two stages.", priority: 0 },
   { name: 'Solar Beam', type: PokemonType.Grass, kind: 'Special', power: 120, accuracy: 100, pp: 10, description: 'Charges on turn 1, attacks on turn 2.', priority: 0 },
-  { name: 'Sword Dance', type: PokemonType.Normal, kind: 'Status', power: null, accuracy: null, pp: 20, description: "Raises user's Attack by two stages.", priority: 0 },
 ];
