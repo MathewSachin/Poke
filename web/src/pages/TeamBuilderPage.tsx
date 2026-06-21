@@ -149,11 +149,10 @@ export function TeamBuilderPage() {
   }
 
   function importSampleBuild() {
-    const seed = POKEMON.slice(0, 6).map((pokemon) => ({
+    const seeded = POKEMON.slice(0, 6).map((pokemon) => ({
       pokemon,
       config: buildDefaultConfig(pokemon),
     }));
-    const seeded = createEmptySlots().map((slot, index) => seed[index] ?? slot);
     updateSlots(seeded);
     setExpandedSlot(0);
   }

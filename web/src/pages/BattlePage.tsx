@@ -4,6 +4,7 @@ import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battl
 import type { BattlePokemon } from '../data/battle';
 import type { Move } from '../data/gameData';
 import { TypeBadge } from '../components/TypeBadge';
+import { PokemonType } from '../data/types';
 
 type BattleFormat = 1 | 2 | 3;
 type Weather = 'None' | 'Sun' | 'Rain' | 'Sandstorm' | 'Hail';
@@ -26,6 +27,7 @@ interface BattleState {
 }
 
 function randomInt(maxExclusive: number): number {
+  if (maxExclusive <= 0) return 0;
   return Math.floor(Math.random() * maxExclusive);
 }
 
@@ -83,12 +85,12 @@ function allFainted(side: SideState): boolean {
 
 function weatherMultiplier(weather: Weather, move: Move): number {
   if (weather === 'Sun') {
-    if (move.type === 9) return 1.5;
-    if (move.type === 10) return 0.5;
+    if (move.type === PokemonType.Fire) return 1.5;
+    if (move.type === PokemonType.Water) return 0.5;
   }
   if (weather === 'Rain') {
-    if (move.type === 10) return 1.5;
-    if (move.type === 9) return 0.5;
+    if (move.type === PokemonType.Water) return 1.5;
+    if (move.type === PokemonType.Fire) return 0.5;
   }
   return 1;
 }
@@ -266,9 +268,7 @@ export function BattlePage() {
       const attacker = atkSide.party[atkPartyIndex];
       if (!attacker || attacker.hp <= 0) continue;
       if (defSide.active.length === 0) continue;
-
       const targetSlotResolved = Math.min(action.targetSlot, defSide.active.length - 1);
-      if (targetSlotResolved < 0) continue;
       const defPartyIndex = defSide.active[targetSlotResolved];
       const defender = defSide.party[defPartyIndex];
       if (!defender || defender.hp <= 0) continue;
