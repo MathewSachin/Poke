@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { ABILITIES, MOVES, NATURES, POKEMON, spriteUrl } from '../data/gameData';
+import { MOVES, NATURES, POKEMON, spriteUrl } from '../data/gameData';
 import { TypeBadge } from '../components/TypeBadge';
 import type { PokemonSpecies } from '../data/gameData';
 
@@ -56,7 +56,7 @@ function buildDefaultConfig(pokemon: PokemonSpecies): TeamMemberConfig {
     gender: 'Male',
     nature: NATURES[0]?.name ?? 'Hardy',
     ability: pokemon.ability1,
-    heldItem: HELD_ITEMS[0],
+    heldItem: HELD_ITEMS[0] ?? 'None',
     moves: selected,
   };
 }
@@ -84,7 +84,7 @@ function parseStoredSlots(): Slot[] {
           gender: slot.config.gender || 'Male',
           nature: slot.config.nature || NATURES[0]?.name || 'Hardy',
           ability: slot.config.ability || pokemon.ability1,
-          heldItem: slot.config.heldItem || HELD_ITEMS[0],
+          heldItem: slot.config.heldItem || HELD_ITEMS[0] || 'None',
           moves: Array.isArray(slot.config.moves) ? [...slot.config.moves].slice(0, 4) : ['', '', '', ''],
         },
       };
@@ -413,9 +413,6 @@ export function TeamBuilderPage() {
         )}
       </div>
 
-      <div className="mt-4 text-xs text-gray-500">
-        Ability database contains {ABILITIES.length} entries.
-      </div>
     </div>
   );
 }

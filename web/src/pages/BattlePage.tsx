@@ -221,7 +221,10 @@ export function BattlePage() {
       } else {
         const randomMove = randomPick(getMovesForSpecies(battler));
         const liveTargets = next.opponent.active.filter((idx) => next.opponent.party[idx].hp > 0);
-        const resolvedTarget = Math.max(0, next.opponent.active.findIndex((idx) => idx === randomPick(liveTargets.length ? liveTargets : next.opponent.active)));
+        if (liveTargets.length === 0) return;
+        const chosenTargetPartyIndex = randomPick(liveTargets);
+        const resolvedTarget = next.opponent.active.findIndex((idx) => idx === chosenTargetPartyIndex);
+        if (resolvedTarget < 0) return;
         actions.push({
           actorSide: 'player',
           actorSlot: slotIndex,
@@ -239,8 +242,10 @@ export function BattlePage() {
       if (!battler || battler.hp <= 0) return;
       const randomMove = randomPick(getMovesForSpecies(battler));
       const liveTargets = next.player.active.filter((idx) => next.player.party[idx].hp > 0);
-      const targetPartyIndex = randomPick(liveTargets.length ? liveTargets : next.player.active);
-      const resolvedTarget = Math.max(0, next.player.active.findIndex((idx) => idx === targetPartyIndex));
+      if (liveTargets.length === 0) return;
+      const targetPartyIndex = randomPick(liveTargets);
+      const resolvedTarget = next.player.active.findIndex((idx) => idx === targetPartyIndex);
+      if (resolvedTarget < 0) return;
       actions.push({
         actorSide: 'opponent',
         actorSlot: slotIndex,
@@ -260,8 +265,10 @@ export function BattlePage() {
       const atkPartyIndex = atkSide.active[action.actorSlot];
       const attacker = atkSide.party[atkPartyIndex];
       if (!attacker || attacker.hp <= 0) continue;
+      if (defSide.active.length === 0) continue;
 
       const targetSlotResolved = Math.min(action.targetSlot, defSide.active.length - 1);
+      if (targetSlotResolved < 0) continue;
       const defPartyIndex = defSide.active[targetSlotResolved];
       const defender = defSide.party[defPartyIndex];
       if (!defender || defender.hp <= 0) continue;
