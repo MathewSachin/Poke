@@ -181,6 +181,8 @@ export function BattlePage() {
     currentMoveOptions.find((move) => move.name === selectedMoveName)?.name ??
     currentMoveOptions[0]?.name ??
     '';
+  const activeGridClass =
+    state.format === 1 ? 'grid-cols-1' : state.format === 2 ? 'grid-cols-2' : 'grid-cols-3';
 
   const switchCandidates = state.player.party
     .map((pokemon, index) => ({ pokemon, index }))
@@ -300,7 +302,14 @@ export function BattlePage() {
       const targetName = defender.species.name;
       const zLabel = action.zBoost ? ' as a Z-Move' : '';
       const megaLabel = action.megaBoost ? ' after Mega Evolution' : '';
-      next.log.push(`${actorName} used ${action.move.name}${zLabel}${megaLabel} on ${targetName}! Dealt ${damage} dmg.${effectivenessLabel(action.move.type, defender.species.primaryType, defender.species.secondaryType)}`);
+      const effectivenessText = effectivenessLabel(
+        action.move.type,
+        defender.species.primaryType,
+        defender.species.secondaryType,
+      );
+      next.log.push(
+        `${actorName} used ${action.move.name}${zLabel}${megaLabel} on ${targetName}! Dealt ${damage} dmg.${effectivenessText}`,
+      );
       if (defender.hp <= 0) {
         next.log.push(`${targetName} fainted!`);
       }
@@ -408,7 +417,7 @@ export function BattlePage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div>
             <p className="font-semibold text-sm text-gray-700 mb-2">Your active Pokémon</p>
-            <div className={`grid gap-2 ${state.format === 1 ? 'grid-cols-1' : state.format === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+            <div className={`grid gap-2 ${activeGridClass}`}>
               {playerActives.map((battler, index) => (
                 <button key={`p_${state.player.active[index]}`} onClick={() => setPlayerSlot(index)} className={playerSlot === index ? 'ring-2 ring-blue-400 rounded-xl' : ''}>
                   <BattlerCard battler={battler} label={`Slot ${index + 1}`} fainted={battler.hp <= 0} />
@@ -418,7 +427,7 @@ export function BattlePage() {
           </div>
           <div>
             <p className="font-semibold text-sm text-gray-700 mb-2">Opponent active Pokémon</p>
-            <div className={`grid gap-2 ${state.format === 1 ? 'grid-cols-1' : state.format === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+            <div className={`grid gap-2 ${activeGridClass}`}>
               {opponentActives.map((battler, index) => (
                 <button key={`o_${state.opponent.active[index]}`} onClick={() => setTargetSlot(index)} className={targetSlot === index ? 'ring-2 ring-red-400 rounded-xl' : ''}>
                   <BattlerCard battler={battler} label={`Target ${index + 1}`} fainted={battler.hp <= 0} />

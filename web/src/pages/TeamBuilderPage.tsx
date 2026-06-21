@@ -53,7 +53,7 @@ function buildDefaultConfig(pokemon: PokemonSpecies): TeamMemberConfig {
 
   return {
     nickname: pokemon.name,
-    gender: 'Male',
+    gender: 'Genderless',
     nature: NATURES[0]?.name ?? 'Hardy',
     ability: pokemon.ability1,
     heldItem: HELD_ITEMS[0] ?? 'None',
@@ -83,7 +83,7 @@ function parseStoredSlots(): Slot[] {
         config: {
           ...slot.config,
           nickname: slot.config.nickname || pokemon.name,
-          gender: slot.config.gender || 'Male',
+          gender: slot.config.gender || 'Genderless',
           nature: slot.config.nature || NATURES[0]?.name || 'Hardy',
           ability: slot.config.ability || pokemon.ability1,
           heldItem: slot.config.heldItem || HELD_ITEMS[0] || 'None',
