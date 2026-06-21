@@ -69,9 +69,11 @@ function parseStoredSlots(): Slot[] {
   const raw = localStorage.getItem(TEAM_STORAGE_KEY);
   if (!raw) return createEmptySlots();
   try {
-    const parsed = JSON.parse(raw) as Slot[];
-    if (!Array.isArray(parsed) || parsed.length !== 6) return createEmptySlots();
-    return parsed.map((slot) => {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return createEmptySlots();
+    if (parsed.length !== 6) return createEmptySlots();
+    return parsed.map((slotUnknown) => {
+      const slot = slotUnknown as Partial<Slot>;
       const storedPokemon = slot?.pokemon;
       if (!storedPokemon || !slot.config) return { pokemon: null, config: null };
       const pokemon = POKEMON.find((p) => p.number === storedPokemon.number && p.name === storedPokemon.name);
@@ -99,6 +101,7 @@ export function TeamBuilderPage() {
   const [pickerFor, setPickerFor] = useState<number | null>(null);
   const [pickerSearch, setPickerSearch] = useState('');
   const [expandedSlot, setExpandedSlot] = useState<number | null>(null);
+  const [exportStatus, setExportStatus] = useState<string | null>(null);
 
   const filteredPicker = useMemo(
     () => POKEMON.filter((p) => p.name.toLowerCase().includes(pickerSearch.toLowerCase())),
@@ -133,13 +136,18 @@ export function TeamBuilderPage() {
     updateSlots(next);
   }
 
-  function saveTeamToClipboard() {
+  async function saveTeamToClipboard() {
     const payload = teamSummary.map(({ pokemon, config }) => ({
       pokemon: pokemon.name,
       number: pokemon.number,
       ...config,
     }));
-    navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+      setExportStatus('Team copied to clipboard.');
+    } catch {
+      setExportStatus('Clipboard export failed. Copy is blocked by your browser.');
+    }
   }
 
   function resetTeam() {
@@ -163,7 +171,9 @@ export function TeamBuilderPage() {
 
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 mb-4 flex flex-wrap gap-2">
         <button
-          onClick={saveTeamToClipboard}
+          onClick={() => {
+            void saveTeamToClipboard();
+          }}
           disabled={teamSummary.length === 0}
           className="px-3 py-2 rounded-lg text-sm font-medium border border-gray-200 bg-gray-50 disabled:opacity-40"
         >
@@ -182,6 +192,7 @@ export function TeamBuilderPage() {
           Reset Team
         </button>
       </div>
+      {exportStatus && <p className="text-xs text-gray-500 mb-4">{exportStatus}</p>}
 
       <div className="flex flex-col gap-3">
         {slots.map((slot, i) => {

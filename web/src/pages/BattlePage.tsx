@@ -31,7 +31,8 @@ function randomInt(maxExclusive: number): number {
   return Math.floor(Math.random() * maxExclusive);
 }
 
-function randomPick<T>(arr: T[]): T {
+function randomPick<T>(arr: T[]): T | null {
+  if (arr.length === 0) return null;
   return arr[randomInt(arr.length)];
 }
 
@@ -47,11 +48,15 @@ function getMovesForSpecies(pokemon: BattlePokemon): Move[] {
 
 function buildParty(excluded: Set<string>): BattlePokemon[] {
   const party: BattlePokemon[] = [];
-  while (party.length < 6) {
-    const species = randomPick(POKEMON);
-    const key = `${species.number}_${species.name}`;
-    if (excluded.has(key)) continue;
-    excluded.add(key);
+  while (party.length < 6 && POKEMON.length > 0) {
+    const available = POKEMON.filter((species) => !excluded.has(`${species.number}_${species.name}`));
+    const source = available.length > 0 ? available : POKEMON;
+    const species = randomPick(source);
+    if (!species) break;
+    if (available.length > 0) {
+      const key = `${species.number}_${species.name}`;
+      excluded.add(key);
+    }
     party.push(makeBattlePokemon(species));
   }
   return party;
@@ -222,9 +227,11 @@ export function BattlePage() {
         });
       } else {
         const randomMove = randomPick(getMovesForSpecies(battler));
+        if (!randomMove) return;
         const liveTargets = next.opponent.active.filter((idx) => next.opponent.party[idx].hp > 0);
         if (liveTargets.length === 0) return;
         const chosenTargetPartyIndex = randomPick(liveTargets);
+        if (chosenTargetPartyIndex == null) return;
         const resolvedTarget = next.opponent.active.findIndex((idx) => idx === chosenTargetPartyIndex);
         if (resolvedTarget < 0) return;
         actions.push({
@@ -243,9 +250,11 @@ export function BattlePage() {
       const battler = next.opponent.party[partyIndex];
       if (!battler || battler.hp <= 0) return;
       const randomMove = randomPick(getMovesForSpecies(battler));
+      if (!randomMove) return;
       const liveTargets = next.player.active.filter((idx) => next.player.party[idx].hp > 0);
       if (liveTargets.length === 0) return;
       const targetPartyIndex = randomPick(liveTargets);
+      if (targetPartyIndex == null) return;
       const resolvedTarget = next.player.active.findIndex((idx) => idx === targetPartyIndex);
       if (resolvedTarget < 0) return;
       actions.push({
