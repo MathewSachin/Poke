@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MOVES, POKEMON } from '../data/gameData';
 import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battle';
 import type { BattlePokemon } from '../data/battle';
@@ -169,22 +169,20 @@ export function BattlePage() {
   const opponentActives = state.opponent.active.map((partyIndex) => opponentParty[partyIndex]);
 
   const currentPlayerBattler = playerActives[playerSlot] ?? playerActives[0];
-  const currentMoveOptions = useMemo(() => getMovesForSpecies(currentPlayerBattler), [currentPlayerBattler]);
-
-  useEffect(() => {
-    if (!currentMoveOptions.find((move) => move.name === selectedMoveName)) {
-      setSelectedMoveName(currentMoveOptions[0]?.name ?? '');
-    }
-  }, [currentMoveOptions, selectedMoveName]);
+  const currentMoveOptions = getMovesForSpecies(currentPlayerBattler);
+  const selectedMoveResolved =
+    currentMoveOptions.find((move) => move.name === selectedMoveName)?.name ??
+    currentMoveOptions[0]?.name ??
+    '';
 
   const switchCandidates = state.player.party
     .map((pokemon, index) => ({ pokemon, index }))
     .filter(({ pokemon, index }) => pokemon.hp > 0 && !state.player.active.includes(index));
 
   function applyActionTurn() {
-    if (state.over || !currentPlayerBattler || !selectedMoveName) return;
+    if (state.over || !currentPlayerBattler || !selectedMoveResolved) return;
 
-    const selectedMove = MOVES.find((move) => move.name === selectedMoveName);
+    const selectedMove = MOVES.find((move) => move.name === selectedMoveResolved);
     if (!selectedMove) return;
 
     const next: BattleState = {
@@ -428,7 +426,7 @@ export function BattlePage() {
             <label className="text-sm block mb-2">
               <span className="text-gray-600">Move</span>
               <select
-                value={selectedMoveName}
+                value={selectedMoveResolved}
                 onChange={(e) => setSelectedMoveName(e.target.value)}
                 className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
               >

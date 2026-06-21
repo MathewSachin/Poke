@@ -72,8 +72,9 @@ function parseStoredSlots(): Slot[] {
     const parsed = JSON.parse(raw) as Slot[];
     if (!Array.isArray(parsed) || parsed.length !== 6) return createEmptySlots();
     return parsed.map((slot) => {
-      if (!slot?.pokemon || !slot.config) return { pokemon: null, config: null };
-      const pokemon = POKEMON.find((p) => p.number === slot.pokemon.number && p.name === slot.pokemon.name);
+      const storedPokemon = slot?.pokemon;
+      if (!storedPokemon || !slot.config) return { pokemon: null, config: null };
+      const pokemon = POKEMON.find((p) => p.number === storedPokemon.number && p.name === storedPokemon.name);
       if (!pokemon) return { pokemon: null, config: null };
       return {
         pokemon,
@@ -186,6 +187,7 @@ export function TeamBuilderPage() {
       <div className="flex flex-col gap-3">
         {slots.map((slot, i) => {
           const config = slot.config;
+          const slotPokemonName = slot.pokemon?.name ?? `slot_${i}`;
           const learnset = slot.pokemon
             ? slot.pokemon.learnset
               .map((name) => MOVES.find((m) => m.name === name))
@@ -313,7 +315,7 @@ export function TeamBuilderPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                       {config.moves.map((selectedMove, moveIndex) => (
                         <select
-                          key={`${slot.pokemon.name}_move_${moveIndex}`}
+                          key={`${slotPokemonName}_move_${moveIndex}`}
                           value={selectedMove}
                           onChange={(e) =>
                             updateConfig(i, (current) => {

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { POKEMON, MOVES, spriteUrl, baseStatTotal } from '../data/gameData';
 import { TypeBadge } from '../components/TypeBadge';
@@ -46,20 +46,16 @@ export function PokemonDetailPage() {
     pokemon.hiddenAbility ? { name: pokemon.hiddenAbility, slot: 'Hidden Ability', hidden: true } : null,
   ].filter(Boolean) as { name: string; slot: string; hidden: boolean }[];
 
-  const learnsetMoves = useMemo(
-    () =>
-      pokemon.learnset
-        .map((moveName) => MOVES.find((m) => m.name === moveName))
-        .filter((m): m is NonNullable<typeof m> => m != null)
-        .sort((a, b) => {
-          if (a.kind !== b.kind) {
-            const rank = { Physical: 0, Special: 1, Status: 2 };
-            return rank[a.kind] - rank[b.kind];
-          }
-          return a.name.localeCompare(b.name);
-        }),
-    [pokemon.learnset],
-  );
+  const learnsetMoves = pokemon.learnset
+    .map((moveName) => MOVES.find((m) => m.name === moveName))
+    .filter((m): m is NonNullable<typeof m> => m != null)
+    .sort((a, b) => {
+      if (a.kind !== b.kind) {
+        const rank = { Physical: 0, Special: 1, Status: 2 };
+        return rank[a.kind] - rank[b.kind];
+      }
+      return a.name.localeCompare(b.name);
+    });
 
   const weaknesses = ALL_TYPES.filter((t) => getCombinedEffectiveness(t, pokemon.primaryType, pokemon.secondaryType) > 1);
   const resistances = ALL_TYPES.filter((t) => {
