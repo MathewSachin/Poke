@@ -1,97 +1,112 @@
-import { useState, useCallback } from 'react';
-import { POKEMON, MOVES } from '../data/gameData';
-import { makeBattlePokemon, calcDamage, effectivenessLabel } from '../data/battle';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { MOVES, POKEMON } from '../data/gameData';
+import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battle';
 import type { BattlePokemon } from '../data/battle';
 import type { Move } from '../data/gameData';
 import { TypeBadge } from '../components/TypeBadge';
 
+type BattleFormat = 1 | 2 | 3;
+type Weather = 'None' | 'Sun' | 'Rain' | 'Sandstorm' | 'Hail';
+
+interface SideState {
+  party: BattlePokemon[];
+  active: number[];
+}
+
 interface BattleState {
-  player: BattlePokemon;
-  opponent: BattlePokemon;
+  format: BattleFormat;
+  weather: Weather;
+  player: SideState;
+  opponent: SideState;
   log: string[];
   over: boolean;
   winner: 'player' | 'opponent' | 'draw' | null;
+  playerMegaUsed: boolean;
+  playerZUsed: boolean;
 }
 
-function randomPick<T>(arr: T[], exclude?: T): T {
-  const pool = exclude ? arr.filter((x) => x !== exclude) : arr;
-  return pool[Math.floor(Math.random() * pool.length)];
+function randomInt(maxExclusive: number): number {
+  return Math.floor(Math.random() * maxExclusive);
 }
 
-function getPlayerMoves(player: BattlePokemon): Move[] {
-  const learnset = player.species.learnset;
-  if (learnset.length > 0) {
-    const found = learnset
-      .slice(0, 4)
-      .map((n) => MOVES.find((m) => m.name === n))
-      .filter((m): m is Move => m != null);
-    if (found.length > 0) return found;
+function randomPick<T>(arr: T[]): T {
+  return arr[randomInt(arr.length)];
+}
+
+function getMovesForSpecies(pokemon: BattlePokemon): Move[] {
+  const fromLearnset = pokemon.species.learnset
+    .map((name) => MOVES.find((move) => move.name === name))
+    .filter((move): move is Move => move != null);
+  const damaging = fromLearnset.filter((move) => move.kind !== 'Status');
+  if (damaging.length >= 4) return damaging.slice(0, 4);
+  if (fromLearnset.length >= 4) return fromLearnset.slice(0, 4);
+  return MOVES.filter((move) => move.kind !== 'Status').slice(0, 4);
+}
+
+function buildParty(excluded: Set<string>): BattlePokemon[] {
+  const party: BattlePokemon[] = [];
+  while (party.length < 6) {
+    const species = randomPick(POKEMON);
+    const key = `${species.number}_${species.name}`;
+    if (excluded.has(key)) continue;
+    excluded.add(key);
+    party.push(makeBattlePokemon(species));
   }
-  return MOVES.filter((m) => m.kind !== 'Status')
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 4);
+  return party;
 }
 
-function newBattle(): BattleState {
-  const playerSpecies = randomPick(POKEMON);
-  const opponentSpecies = randomPick(POKEMON, playerSpecies);
-  const player = makeBattlePokemon(playerSpecies);
-  const opponent = makeBattlePokemon(opponentSpecies);
+function firstAliveBench(side: SideState): number | null {
+  const activeSet = new Set(side.active);
+  for (let i = 0; i < side.party.length; i += 1) {
+    if (activeSet.has(i)) continue;
+    if (side.party[i].hp > 0) return i;
+  }
+  return null;
+}
+
+function ensureActiveSlots(side: SideState): SideState {
+  const nextActive = [...side.active];
+  for (let i = 0; i < nextActive.length; i += 1) {
+    const partyIndex = nextActive[i];
+    const battler = side.party[partyIndex];
+    if (battler && battler.hp > 0) continue;
+    const replacement = firstAliveBench({ ...side, active: nextActive });
+    if (replacement == null) continue;
+    nextActive[i] = replacement;
+  }
+  return { ...side, active: nextActive };
+}
+
+function allFainted(side: SideState): boolean {
+  return side.party.every((pokemon) => pokemon.hp <= 0);
+}
+
+function weatherMultiplier(weather: Weather, move: Move): number {
+  if (weather === 'Sun') {
+    if (move.type === 9) return 1.5;
+    if (move.type === 10) return 0.5;
+  }
+  if (weather === 'Rain') {
+    if (move.type === 10) return 1.5;
+    if (move.type === 9) return 0.5;
+  }
+  return 1;
+}
+
+function newBattle(format: BattleFormat): BattleState {
+  const excluded = new Set<string>();
+  const playerParty = buildParty(excluded);
+  const opponentParty = buildParty(excluded);
   return {
-    player,
-    opponent,
-    log: [`A wild ${opponent.species.name} appeared!`],
+    format,
+    weather: 'None',
+    player: { party: playerParty, active: Array.from({ length: format }, (_, i) => i) },
+    opponent: { party: opponentParty, active: Array.from({ length: format }, (_, i) => i) },
+    log: ['A battle started!'],
     over: false,
     winner: null,
-  };
-}
-
-function simulateTurn(
-  state: BattleState,
-  playerMove: Move,
-  opponentMove: Move,
-): BattleState {
-  const log = [...state.log];
-  let { player, opponent } = state;
-  let playerHp = player.hp;
-  let opponentHp = opponent.hp;
-
-  const playerFirst = player.species.speed >= opponent.species.speed;
-
-  function attackOpponent() {
-    const dmg = calcDamage(player, playerMove, opponent);
-    opponentHp = Math.max(0, opponentHp - dmg);
-    const effStr = effectivenessLabel(playerMove.type, opponent.species.primaryType, opponent.species.secondaryType);
-    log.push(`${player.species.name} used ${playerMove.name}! Dealt ${dmg} dmg.${effStr}`);
-  }
-
-  function attackPlayer() {
-    const dmg = calcDamage(opponent, opponentMove, player);
-    playerHp = Math.max(0, playerHp - dmg);
-    const effStr = effectivenessLabel(opponentMove.type, player.species.primaryType, player.species.secondaryType);
-    log.push(`${opponent.species.name} used ${opponentMove.name}! Dealt ${dmg} dmg.${effStr}`);
-  }
-
-  if (playerFirst) {
-    attackOpponent();
-    if (opponentHp > 0) attackPlayer();
-  } else {
-    attackPlayer();
-    if (playerHp > 0) attackOpponent();
-  }
-
-  const over = playerHp <= 0 || opponentHp <= 0;
-  let winner: BattleState['winner'] = null;
-  if (playerHp <= 0 && opponentHp <= 0) { winner = 'draw'; }
-  else if (opponentHp <= 0) { log.push(`${opponent.species.name} fainted!`); winner = 'player'; }
-  else if (playerHp <= 0) { log.push(`${player.species.name} fainted!`); winner = 'opponent'; }
-
-  return {
-    player: { ...player, hp: playerHp },
-    opponent: { ...opponent, hp: opponentHp },
-    log,
-    over,
-    winner,
+    playerMegaUsed: false,
+    playerZUsed: false,
   };
 }
 
@@ -108,80 +123,385 @@ function HpBar({ hp, maxHp }: { hp: number; maxHp: number }) {
   );
 }
 
-function BattlerCard({ battler, label }: { battler: BattlePokemon; label: string }) {
+function BattlerCard({
+  battler,
+  label,
+  fainted,
+}: {
+  battler: BattlePokemon;
+  label: string;
+  fainted: boolean;
+}) {
   return (
-    <div className="flex flex-col items-center text-center flex-1">
-      <p className="text-xs text-gray-400 mb-1">{label}</p>
-      <img src={battler.spriteUrl} alt={battler.species.name} className="w-20 h-20 object-contain" />
-      <p className="font-bold text-sm text-gray-800">{battler.species.name}</p>
+    <div className={`rounded-xl border p-2 ${fainted ? 'opacity-60 bg-gray-100 border-gray-200' : 'bg-white border-gray-200'}`}>
+      <p className="text-xs text-gray-400">{label}</p>
+      <img src={battler.spriteUrl} alt={battler.species.name} className="w-16 h-16 mx-auto object-contain" />
+      <p className="font-bold text-xs text-center text-gray-800">{battler.species.name}</p>
       <div className="flex gap-1 justify-center mt-0.5">
         <TypeBadge type={battler.species.primaryType} small />
         {battler.species.secondaryType != null && <TypeBadge type={battler.species.secondaryType} small />}
       </div>
-      <div className="w-full px-2 mt-2">
-        <HpBar hp={battler.hp} maxHp={battler.maxHp} />
-      </div>
+      <HpBar hp={battler.hp} maxHp={battler.maxHp} />
     </div>
   );
 }
 
 export function BattlePage() {
-  const [state, setState] = useState<BattleState>(newBattle);
-  const playerMoves = getPlayerMoves(state.player);
-  const logRef = useCallback((el: HTMLDivElement | null) => {
-    if (el) el.scrollTop = el.scrollHeight;
-  }, [state.log.length]);
+  const [state, setState] = useState<BattleState>(() => newBattle(1));
+  const [playerSlot, setPlayerSlot] = useState(0);
+  const [targetSlot, setTargetSlot] = useState(0);
+  const [selectedMoveName, setSelectedMoveName] = useState<string>('');
+  const [pendingMega, setPendingMega] = useState(false);
+  const [pendingZMove, setPendingZMove] = useState(false);
+  const [switchSlot, setSwitchSlot] = useState(0);
+  const [switchToIndex, setSwitchToIndex] = useState(0);
+  const logRef = useRef<HTMLDivElement | null>(null);
 
-  function handleMove(move: Move) {
-    if (state.over) return;
-    const oppDamagingMoves = MOVES.filter((m) => m.kind !== 'Status');
-    const opponentMove = oppDamagingMoves[Math.floor(Math.random() * oppDamagingMoves.length)];
-    setState((s) => simulateTurn(s, move, opponentMove));
+  useEffect(() => {
+    if (logRef.current) {
+      logRef.current.scrollTop = logRef.current.scrollHeight;
+    }
+  }, [state.log]);
+
+  const playerParty = state.player.party;
+  const opponentParty = state.opponent.party;
+  const playerActives = state.player.active.map((partyIndex) => playerParty[partyIndex]);
+  const opponentActives = state.opponent.active.map((partyIndex) => opponentParty[partyIndex]);
+
+  const currentPlayerBattler = playerActives[playerSlot] ?? playerActives[0];
+  const currentMoveOptions = useMemo(() => getMovesForSpecies(currentPlayerBattler), [currentPlayerBattler]);
+
+  useEffect(() => {
+    if (!currentMoveOptions.find((move) => move.name === selectedMoveName)) {
+      setSelectedMoveName(currentMoveOptions[0]?.name ?? '');
+    }
+  }, [currentMoveOptions, selectedMoveName]);
+
+  const switchCandidates = state.player.party
+    .map((pokemon, index) => ({ pokemon, index }))
+    .filter(({ pokemon, index }) => pokemon.hp > 0 && !state.player.active.includes(index));
+
+  function applyActionTurn() {
+    if (state.over || !currentPlayerBattler || !selectedMoveName) return;
+
+    const selectedMove = MOVES.find((move) => move.name === selectedMoveName);
+    if (!selectedMove) return;
+
+    const next: BattleState = {
+      ...state,
+      player: { ...state.player, party: state.player.party.map((p) => ({ ...p })), active: [...state.player.active] },
+      opponent: { ...state.opponent, party: state.opponent.party.map((p) => ({ ...p })), active: [...state.opponent.active] },
+      log: [...state.log],
+    };
+
+    type Action = {
+      actorSide: 'player' | 'opponent';
+      actorSlot: number;
+      targetSlot: number;
+      move: Move;
+      zBoost: boolean;
+      megaBoost: boolean;
+      speed: number;
+    };
+
+    const actions: Action[] = [];
+    const selectedPlayerPartyIndex = next.player.active[playerSlot];
+
+    next.player.active.forEach((partyIndex, slotIndex) => {
+      const battler = next.player.party[partyIndex];
+      if (!battler || battler.hp <= 0) return;
+      if (slotIndex === playerSlot) {
+        actions.push({
+          actorSide: 'player',
+          actorSlot: slotIndex,
+          targetSlot,
+          move: selectedMove,
+          zBoost: pendingZMove && !next.playerZUsed,
+          megaBoost: pendingMega && !next.playerMegaUsed,
+          speed: battler.speed,
+        });
+      } else {
+        const randomMove = randomPick(getMovesForSpecies(battler));
+        const liveTargets = next.opponent.active.filter((idx) => next.opponent.party[idx].hp > 0);
+        const resolvedTarget = Math.max(0, next.opponent.active.findIndex((idx) => idx === randomPick(liveTargets.length ? liveTargets : next.opponent.active)));
+        actions.push({
+          actorSide: 'player',
+          actorSlot: slotIndex,
+          targetSlot: resolvedTarget,
+          move: randomMove,
+          zBoost: false,
+          megaBoost: false,
+          speed: battler.speed,
+        });
+      }
+    });
+
+    next.opponent.active.forEach((partyIndex, slotIndex) => {
+      const battler = next.opponent.party[partyIndex];
+      if (!battler || battler.hp <= 0) return;
+      const randomMove = randomPick(getMovesForSpecies(battler));
+      const liveTargets = next.player.active.filter((idx) => next.player.party[idx].hp > 0);
+      const targetPartyIndex = randomPick(liveTargets.length ? liveTargets : next.player.active);
+      const resolvedTarget = Math.max(0, next.player.active.findIndex((idx) => idx === targetPartyIndex));
+      actions.push({
+        actorSide: 'opponent',
+        actorSlot: slotIndex,
+        targetSlot: resolvedTarget,
+        move: randomMove,
+        zBoost: false,
+        megaBoost: false,
+        speed: battler.speed,
+      });
+    });
+
+    actions.sort((a, b) => b.speed - a.speed);
+
+    for (const action of actions) {
+      const atkSide = action.actorSide === 'player' ? next.player : next.opponent;
+      const defSide = action.actorSide === 'player' ? next.opponent : next.player;
+      const atkPartyIndex = atkSide.active[action.actorSlot];
+      const attacker = atkSide.party[atkPartyIndex];
+      if (!attacker || attacker.hp <= 0) continue;
+
+      const targetSlotResolved = Math.min(action.targetSlot, defSide.active.length - 1);
+      const defPartyIndex = defSide.active[targetSlotResolved];
+      const defender = defSide.party[defPartyIndex];
+      if (!defender || defender.hp <= 0) continue;
+
+      const attackerForDamage = { ...attacker };
+      if (action.megaBoost) {
+        attackerForDamage.attack = Math.floor(attackerForDamage.attack * 1.25);
+        attackerForDamage.spAttack = Math.floor(attackerForDamage.spAttack * 1.25);
+        attackerForDamage.speed = Math.floor(attackerForDamage.speed * 1.1);
+      }
+
+      let damage = calcDamage(attackerForDamage, action.move, defender);
+      damage = Math.floor(damage * weatherMultiplier(next.weather, action.move));
+      if (action.zBoost) damage = Math.floor(damage * 1.5);
+      damage = Math.max(1, damage);
+
+      defender.hp = Math.max(0, defender.hp - damage);
+
+      const actorName = attacker.species.name;
+      const targetName = defender.species.name;
+      const zLabel = action.zBoost ? ' as a Z-Move' : '';
+      const megaLabel = action.megaBoost ? ' after Mega Evolution' : '';
+      next.log.push(`${actorName} used ${action.move.name}${zLabel}${megaLabel} on ${targetName}! Dealt ${damage} dmg.${effectivenessLabel(action.move.type, defender.species.primaryType, defender.species.secondaryType)}`);
+      if (defender.hp <= 0) {
+        next.log.push(`${targetName} fainted!`);
+      }
+
+      if (action.megaBoost && action.actorSide === 'player') next.playerMegaUsed = true;
+      if (action.zBoost && action.actorSide === 'player') next.playerZUsed = true;
+    }
+
+    next.player = ensureActiveSlots(next.player);
+    next.opponent = ensureActiveSlots(next.opponent);
+
+    if (allFainted(next.player) && allFainted(next.opponent)) {
+      next.over = true;
+      next.winner = 'draw';
+    } else if (allFainted(next.opponent)) {
+      next.over = true;
+      next.winner = 'player';
+    } else if (allFainted(next.player)) {
+      next.over = true;
+      next.winner = 'opponent';
+    }
+
+    if (!next.over && pendingMega && !state.playerMegaUsed) {
+      const battler = next.player.party[selectedPlayerPartyIndex];
+      if (battler) next.log.push(`${battler.species.name} Mega Evolved!`);
+    }
+
+    setPendingMega(false);
+    setPendingZMove(false);
+    setState(next);
   }
 
-  function handleNewBattle() {
-    setState(newBattle());
+  function switchPokemon() {
+    if (state.over) return;
+    const side = { ...state.player, active: [...state.player.active], party: state.player.party.map((p) => ({ ...p })) };
+    const activePartyIndex = side.active[switchSlot];
+    const replacement = side.party[switchToIndex];
+    if (
+      activePartyIndex === switchToIndex ||
+      !replacement ||
+      replacement.hp <= 0 ||
+      side.active.includes(switchToIndex)
+    ) {
+      return;
+    }
+
+    const oldName = side.party[activePartyIndex].species.name;
+    side.active[switchSlot] = switchToIndex;
+    const newName = side.party[switchToIndex].species.name;
+    setState((prev) => ({
+      ...prev,
+      player: side,
+      log: [...prev.log, `You withdrew ${oldName} and sent out ${newName}!`],
+    }));
+  }
+
+  function changeFormat(format: BattleFormat) {
+    setState(newBattle(format));
+    setPlayerSlot(0);
+    setTargetSlot(0);
+    setPendingMega(false);
+    setPendingZMove(false);
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-6">
+    <div className="max-w-5xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-4">Battle Simulator</h1>
 
-      {/* Arena */}
-      <div className="bg-green-50 rounded-2xl p-4 flex items-start gap-4 border border-green-100 mb-4">
-        <BattlerCard battler={state.player} label="You" />
-        <span className="font-bold text-gray-400 text-xl mt-8">VS</span>
-        <BattlerCard battler={state.opponent} label="Foe" />
+      <div className="bg-white border border-gray-200 rounded-xl p-3 mb-4 grid grid-cols-1 md:grid-cols-3 gap-2">
+        <label className="text-sm">
+          <span className="text-gray-600">Battle Format</span>
+          <select
+            value={state.format}
+            onChange={(e) => changeFormat(Number(e.target.value) as BattleFormat)}
+            className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
+          >
+            <option value={1}>Singles (1v1)</option>
+            <option value={2}>Doubles (2v2)</option>
+            <option value={3}>Triples (3v3)</option>
+          </select>
+        </label>
+        <label className="text-sm">
+          <span className="text-gray-600">Weather</span>
+          <select
+            value={state.weather}
+            onChange={(e) => setState((prev) => ({ ...prev, weather: e.target.value as Weather }))}
+            className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
+          >
+            <option value="None">None</option>
+            <option value="Sun">Sun</option>
+            <option value="Rain">Rain</option>
+            <option value="Sandstorm">Sandstorm</option>
+            <option value="Hail">Hail</option>
+          </select>
+        </label>
+        <button
+          onClick={() => setState(newBattle(state.format))}
+          className="mt-5 md:mt-0 h-10 self-end bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg"
+        >
+          New Battle
+        </button>
       </div>
 
-      {/* Battle log */}
-      <div
-        ref={logRef}
-        className="bg-gray-900 rounded-xl p-3 h-36 overflow-y-auto mb-4 flex flex-col gap-0.5"
-      >
-        {state.log.slice(-12).map((line, i) => (
+      <div className="bg-green-50 rounded-2xl p-4 border border-green-100 mb-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div>
+            <p className="font-semibold text-sm text-gray-700 mb-2">Your active Pokémon</p>
+            <div className={`grid gap-2 ${state.format === 1 ? 'grid-cols-1' : state.format === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+              {playerActives.map((battler, index) => (
+                <button key={`p_${state.player.active[index]}`} onClick={() => setPlayerSlot(index)} className={playerSlot === index ? 'ring-2 ring-blue-400 rounded-xl' : ''}>
+                  <BattlerCard battler={battler} label={`Slot ${index + 1}`} fainted={battler.hp <= 0} />
+                </button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <p className="font-semibold text-sm text-gray-700 mb-2">Opponent active Pokémon</p>
+            <div className={`grid gap-2 ${state.format === 1 ? 'grid-cols-1' : state.format === 2 ? 'grid-cols-2' : 'grid-cols-3'}`}>
+              {opponentActives.map((battler, index) => (
+                <button key={`o_${state.opponent.active[index]}`} onClick={() => setTargetSlot(index)} className={targetSlot === index ? 'ring-2 ring-red-400 rounded-xl' : ''}>
+                  <BattlerCard battler={battler} label={`Target ${index + 1}`} fainted={battler.hp <= 0} />
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div ref={logRef} className="bg-gray-900 rounded-xl p-3 h-40 overflow-y-auto mb-4 flex flex-col gap-0.5">
+        {state.log.slice(-16).map((line, i) => (
           <p key={i} className="text-green-300 text-xs font-mono">{line}</p>
         ))}
       </div>
 
-      {/* Move buttons or result */}
       {!state.over ? (
-        <div>
-          <p className="text-sm font-medium text-gray-600 mb-2">Choose a move:</p>
-          <div className="grid grid-cols-2 gap-2">
-            {playerMoves.map((move) => (
-              <button
-                key={move.name}
-                onClick={() => handleMove(move)}
-                className="border border-gray-200 rounded-xl px-3 py-2.5 bg-white hover:bg-gray-50 text-left shadow-sm hover:shadow transition-all"
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+          <div className="bg-white border border-gray-200 rounded-xl p-3">
+            <p className="text-sm font-semibold text-gray-700 mb-2">Move command</p>
+            <label className="text-sm block mb-2">
+              <span className="text-gray-600">Move</span>
+              <select
+                value={selectedMoveName}
+                onChange={(e) => setSelectedMoveName(e.target.value)}
+                className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
               >
-                <p className="font-semibold text-sm text-gray-800">{move.name}</p>
-                <div className="mt-1">
-                  <TypeBadge type={move.type} small />
-                  <span className="ml-1 text-xs text-gray-500">{move.power != null ? `${move.power} pwr` : 'Status'}</span>
-                </div>
-              </button>
-            ))}
+                {currentMoveOptions.map((move) => (
+                  <option key={move.name} value={move.name}>
+                    {move.name} ({move.kind})
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              <label className="text-xs flex items-center gap-2 border border-gray-200 rounded-lg px-2 py-1.5">
+                <input
+                  type="checkbox"
+                  checked={pendingMega && !state.playerMegaUsed}
+                  disabled={state.playerMegaUsed}
+                  onChange={(e) => setPendingMega(e.target.checked)}
+                />
+                Mega Evolution
+              </label>
+              <label className="text-xs flex items-center gap-2 border border-gray-200 rounded-lg px-2 py-1.5">
+                <input
+                  type="checkbox"
+                  checked={pendingZMove && !state.playerZUsed}
+                  disabled={state.playerZUsed}
+                  onChange={(e) => setPendingZMove(e.target.checked)}
+                />
+                Z-Move
+              </label>
+            </div>
+            <button
+              onClick={applyActionTurn}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg"
+            >
+              Execute Turn
+            </button>
+          </div>
+
+          <div className="bg-white border border-gray-200 rounded-xl p-3">
+            <p className="text-sm font-semibold text-gray-700 mb-2">Switch command</p>
+            <div className="grid grid-cols-2 gap-2">
+              <label className="text-sm">
+                <span className="text-gray-600">Active slot</span>
+                <select
+                  value={switchSlot}
+                  onChange={(e) => setSwitchSlot(Number(e.target.value))}
+                  className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
+                >
+                  {state.player.active.map((_, index) => (
+                    <option key={index} value={index}>{index + 1}</option>
+                  ))}
+                </select>
+              </label>
+              <label className="text-sm">
+                <span className="text-gray-600">Switch to</span>
+                <select
+                  value={switchToIndex}
+                  onChange={(e) => setSwitchToIndex(Number(e.target.value))}
+                  className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2"
+                >
+                  {switchCandidates.map(({ pokemon, index }) => (
+                    <option key={index} value={index}>{pokemon.species.name}</option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            <button
+              onClick={switchPokemon}
+              disabled={switchCandidates.length === 0}
+              className="mt-2 w-full bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white font-semibold py-2 rounded-lg"
+            >
+              Switch Pokémon
+            </button>
           </div>
         </div>
       ) : (
@@ -200,7 +520,7 @@ export function BattlePage() {
             </p>
           </div>
           <button
-            onClick={handleNewBattle}
+            onClick={() => setState(newBattle(state.format))}
             className="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-xl transition-colors"
           >
             New Battle

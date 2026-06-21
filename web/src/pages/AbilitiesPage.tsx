@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { ABILITIES } from '../data/gameData';
 
 export function AbilitiesPage() {
@@ -27,7 +28,12 @@ export function AbilitiesPage() {
           <div className="divide-y divide-gray-100">
             {filtered.map((a) => (
               <div key={a.name} className="px-4 py-3">
-                <span className="font-semibold text-gray-800 text-sm">{a.name}</span>
+                <Link
+                  to={`/abilities/${encodeURIComponent(a.name)}`}
+                  className="font-semibold text-gray-800 text-sm hover:text-red-600"
+                >
+                  {a.name}
+                </Link>
                 {a.description && (
                   <p className="text-gray-500 text-sm mt-0.5">{a.description}</p>
                 )}

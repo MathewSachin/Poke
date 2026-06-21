@@ -6,6 +6,7 @@ import { PokemonDetailPage } from './pages/PokemonDetailPage';
 import { MovesPage } from './pages/MovesPage';
 import { MoveDetailPage } from './pages/MoveDetailPage';
 import { AbilitiesPage } from './pages/AbilitiesPage';
+import { AbilityDetailPage } from './pages/AbilityDetailPage';
 import { NaturesPage } from './pages/NaturesPage';
 import { TypeEffectivenessPage } from './pages/TypeEffectivenessPage';
 import { TeamBuilderPage } from './pages/TeamBuilderPage';
@@ -24,6 +25,7 @@ export default function App() {
             <Route path="/moves" element={<MovesPage />} />
             <Route path="/moves/:name" element={<MoveDetailPage />} />
             <Route path="/abilities" element={<AbilitiesPage />} />
+            <Route path="/abilities/:name" element={<AbilityDetailPage />} />
             <Route path="/natures" element={<NaturesPage />} />
             <Route path="/type-effectiveness" element={<TypeEffectivenessPage />} />
             <Route path="/team-builder" element={<TeamBuilderPage />} />
