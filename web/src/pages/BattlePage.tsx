@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { MOVES, POKEMON } from '../data/gameData';
 import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battle';
 import type { BattlePokemon } from '../data/battle';
@@ -231,7 +231,7 @@ export function BattlePage() {
   const actionTimerRef = useRef<number | null>(null);
   const frameTimerRef = useRef<number | null>(null);
 
-  const clearTurnTimers = () => {
+  const clearTurnTimers = useCallback(() => {
     if (actionTimerRef.current != null) {
       window.clearTimeout(actionTimerRef.current);
       actionTimerRef.current = null;
@@ -240,12 +240,9 @@ export function BattlePage() {
       window.clearTimeout(frameTimerRef.current);
       frameTimerRef.current = null;
     }
-  };
-
-  useEffect(() => () => {
-    if (actionTimerRef.current != null) window.clearTimeout(actionTimerRef.current);
-    if (frameTimerRef.current != null) window.clearTimeout(frameTimerRef.current);
   }, []);
+
+  useEffect(() => () => clearTurnTimers(), [clearTurnTimers]);
 
   const playerParty = state.player.party;
   const opponentParty = state.opponent.party;
@@ -483,6 +480,15 @@ export function BattlePage() {
   const spriteSize = state.format === 1 ? 88 : state.format === 2 ? 72 : 60;
   const TAB_NAME_LEN = 7;
   const actionUiDisabled = state.over || isAnimatingTurn;
+  const spriteAttackTransform = (side: 'player' | 'opponent', slot: number) => {
+    const isAttacking = activeAnimation?.side === side && activeAnimation.slot === slot;
+    if (side === 'player') {
+      if (!isAttacking) return 'scaleX(-1)';
+      return `scaleX(-1) translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
+    }
+    if (!isAttacking) return 'none';
+    return `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
+  };
 
   // Shared button base style
   const menuBtn = (bg: string): React.CSSProperties => ({
@@ -607,7 +613,7 @@ export function BattlePage() {
                   objectFit: 'contain',
                   opacity: battler.hp <= 0 ? 0.25 : 1,
                   imageRendering: 'pixelated',
-                  transform: activeAnimation?.side === 'opponent' && activeAnimation.slot === i ? `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)` : 'translateX(0)',
+                  transform: spriteAttackTransform('opponent', i),
                   transition: 'transform 0.18s ease-out',
                 }}
               />
@@ -634,7 +640,7 @@ export function BattlePage() {
                   height: `${spriteSize}px`,
                   objectFit: 'contain',
                   opacity: battler.hp <= 0 ? 0.25 : 1,
-                  transform: activeAnimation?.side === 'player' && activeAnimation.slot === i ? `scaleX(-1) translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)` : 'scaleX(-1)',
+                  transform: spriteAttackTransform('player', i),
                   transition: 'transform 0.18s ease-out',
                   imageRendering: 'pixelated',
                 }}
