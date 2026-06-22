@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MOVES, POKEMON } from '../data/gameData';
 import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battle';
 import type { BattlePokemon } from '../data/battle';
@@ -8,6 +8,7 @@ import { PokemonType, TYPE_COLORS, typeName } from '../data/types';
 type BattleFormat = 1 | 2 | 3;
 type Weather = 'None' | 'Sun' | 'Rain' | 'Sandstorm' | 'Hail';
 type MenuState = 'main' | 'fight' | 'pokemon';
+type ActiveAnimation = { side: 'player' | 'opponent'; slot: number } | null;
 
 interface SideState {
   party: BattlePokemon[];
@@ -117,6 +118,20 @@ function newBattle(format: BattleFormat): BattleState {
   };
 }
 
+function cloneBattleState(state: BattleState): BattleState {
+  return {
+    ...state,
+    player: { ...state.player, party: state.player.party.map((pokemon) => ({ ...pokemon })), active: [...state.player.active] },
+    opponent: { ...state.opponent, party: state.opponent.party.map((pokemon) => ({ ...pokemon })), active: [...state.opponent.active] },
+    log: [...state.log],
+  };
+}
+
+function sameActiveSlots(a: number[], b: number[]): boolean {
+  if (a.length !== b.length) return false;
+  return a.every((value, index) => value === b[index]);
+}
+
 function GameHpBar({ hp, maxHp, showNumbers }: { hp: number; maxHp: number; showNumbers?: boolean }) {
   const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
   const color = pct > 50 ? '#48d048' : pct > 20 ? '#f8c820' : '#e82010';
@@ -204,7 +219,27 @@ export function BattlePage() {
   const [pendingZMove, setPendingZMove] = useState(false);
   const [hoveredMove, setHoveredMove] = useState<Move | null>(null);
   const [showLog, setShowLog] = useState(false);
+  const [isAnimatingTurn, setIsAnimatingTurn] = useState(false);
+  const [activeAnimation, setActiveAnimation] = useState<ActiveAnimation>(null);
   const logRef = useRef<HTMLDivElement | null>(null);
+  const actionTimerRef = useRef<number | null>(null);
+  const frameTimerRef = useRef<number | null>(null);
+
+  const clearTurnTimers = () => {
+    if (actionTimerRef.current != null) {
+      window.clearTimeout(actionTimerRef.current);
+      actionTimerRef.current = null;
+    }
+    if (frameTimerRef.current != null) {
+      window.clearTimeout(frameTimerRef.current);
+      frameTimerRef.current = null;
+    }
+  };
+
+  useEffect(() => () => {
+    if (actionTimerRef.current != null) window.clearTimeout(actionTimerRef.current);
+    if (frameTimerRef.current != null) window.clearTimeout(frameTimerRef.current);
+  }, []);
 
   const playerParty = state.player.party;
   const opponentParty = state.opponent.party;
@@ -214,14 +249,10 @@ export function BattlePage() {
   const currentMoveOptions = getMovesForSpecies(currentPlayerBattler);
 
   function executeTurn(selectedMove: Move) {
-    if (state.over || !currentPlayerBattler) return;
+    if (state.over || !currentPlayerBattler || isAnimatingTurn) return;
 
-    const next: BattleState = {
-      ...state,
-      player: { ...state.player, party: state.player.party.map((p) => ({ ...p })), active: [...state.player.active] },
-      opponent: { ...state.opponent, party: state.opponent.party.map((p) => ({ ...p })), active: [...state.opponent.active] },
-      log: [...state.log],
-    };
+    const next = cloneBattleState(state);
+    const turnFrames: Array<{ state: BattleState; animation: ActiveAnimation }> = [];
 
     type Action = {
       actorSide: 'player' | 'opponent';
@@ -338,6 +369,10 @@ export function BattlePage() {
 
       if (action.megaBoost && action.actorSide === 'player') next.playerMegaUsed = true;
       if (action.zBoost && action.actorSide === 'player') next.playerZUsed = true;
+      turnFrames.push({
+        state: cloneBattleState(next),
+        animation: { side: action.actorSide, slot: action.actorSlot },
+      });
     }
 
     next.player = ensureActiveSlots(next.player);
@@ -359,15 +394,52 @@ export function BattlePage() {
       if (battler) next.log.push(`${battler.species.name} Mega Evolved!`);
     }
 
+    const finalState = cloneBattleState(next);
+    const latestFrameState = turnFrames[turnFrames.length - 1]?.state;
+    if (
+      !latestFrameState
+      || latestFrameState.log.length !== finalState.log.length
+      || latestFrameState.over !== finalState.over
+      || latestFrameState.winner !== finalState.winner
+      || !sameActiveSlots(latestFrameState.player.active, finalState.player.active)
+      || !sameActiveSlots(latestFrameState.opponent.active, finalState.opponent.active)
+    ) {
+      turnFrames.push({ state: finalState, animation: null });
+    }
+
     setPendingMega(false);
     setPendingZMove(false);
     setMenuState('main');
     setHoveredMove(null);
-    setState(next);
+
+    if (turnFrames.length === 0) {
+      setState(finalState);
+      return;
+    }
+
+    clearTurnTimers();
+    setIsAnimatingTurn(true);
+    let frameIndex = 0;
+    const playFrame = () => {
+      const frame = turnFrames[frameIndex];
+      if (!frame) {
+        setActiveAnimation(null);
+        setIsAnimatingTurn(false);
+        return;
+      }
+      setState(frame.state);
+      setActiveAnimation(frame.animation);
+      actionTimerRef.current = window.setTimeout(() => {
+        setActiveAnimation(null);
+      }, 220);
+      frameIndex += 1;
+      frameTimerRef.current = window.setTimeout(playFrame, frame.animation ? 620 : 340);
+    };
+    playFrame();
   }
 
   function doSwitch(toIndex: number) {
-    if (state.over) return;
+    if (state.over || isAnimatingTurn) return;
     const side = { ...state.player, active: [...state.player.active], party: state.player.party.map((p) => ({ ...p })) };
     const activePartyIndex = side.active[playerSlot];
     const replacement = side.party[toIndex];
@@ -384,6 +456,9 @@ export function BattlePage() {
   }
 
   function changeFormat(format: BattleFormat) {
+    clearTurnTimers();
+    setIsAnimatingTurn(false);
+    setActiveAnimation(null);
     setState(newBattle(format));
     setPlayerSlot(0);
     setTargetSlot(0);
@@ -393,7 +468,7 @@ export function BattlePage() {
     setHoveredMove(null);
   }
 
-  const latestMessage = state.log[state.log.length - 1] ?? 'A battle started!';
+  const latestMessage = isAnimatingTurn ? 'Actions are playing out...' : (state.log[state.log.length - 1] ?? 'A battle started!');
 
   const weatherIcon: Record<Weather, string> = {
     None: '', Sun: '☀️', Rain: '🌧️', Sandstorm: '🌪️', Hail: '❄️',
@@ -401,6 +476,7 @@ export function BattlePage() {
 
   const spriteSize = state.format === 1 ? 88 : state.format === 2 ? 72 : 60;
   const TAB_NAME_LEN = 7;
+  const actionUiDisabled = state.over || isAnimatingTurn;
 
   // Shared button base style
   const menuBtn = (bg: string): React.CSSProperties => ({
@@ -438,8 +514,9 @@ export function BattlePage() {
       <div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
         <select
           value={state.format}
+          disabled={isAnimatingTurn}
           onChange={(e) => changeFormat(Number(e.target.value) as BattleFormat)}
-          style={{ border: '2px solid #404040', borderRadius: '6px', padding: '5px 8px', fontWeight: 700, fontSize: '13px', background: '#f0f0f0', cursor: 'pointer' }}
+          style={{ border: '2px solid #404040', borderRadius: '6px', padding: '5px 8px', fontWeight: 700, fontSize: '13px', background: '#f0f0f0', cursor: isAnimatingTurn ? 'not-allowed' : 'pointer', opacity: isAnimatingTurn ? 0.65 : 1 }}
         >
           <option value={1}>Singles (1v1)</option>
           <option value={2}>Doubles (2v2)</option>
@@ -447,8 +524,9 @@ export function BattlePage() {
         </select>
         <select
           value={state.weather}
+          disabled={isAnimatingTurn}
           onChange={(e) => setState((prev) => ({ ...prev, weather: e.target.value as Weather }))}
-          style={{ border: '2px solid #404040', borderRadius: '6px', padding: '5px 8px', fontWeight: 700, fontSize: '13px', background: '#f0f0f0', cursor: 'pointer' }}
+          style={{ border: '2px solid #404040', borderRadius: '6px', padding: '5px 8px', fontWeight: 700, fontSize: '13px', background: '#f0f0f0', cursor: isAnimatingTurn ? 'not-allowed' : 'pointer', opacity: isAnimatingTurn ? 0.65 : 1 }}
         >
           <option value="None">☀️ Clear</option>
           <option value="Sun">🌞 Harsh Sun</option>
@@ -457,8 +535,18 @@ export function BattlePage() {
           <option value="Hail">❄️ Hail</option>
         </select>
         <button
-          onClick={() => { setState(newBattle(state.format)); setMenuState('main'); setHoveredMove(null); }}
-          style={{ ...menuBtn('#c03030'), padding: '6px 14px', fontSize: '13px', width: 'auto' }}
+          disabled={isAnimatingTurn}
+          onClick={() => {
+            clearTurnTimers();
+            setIsAnimatingTurn(false);
+            setActiveAnimation(null);
+            setState(newBattle(state.format));
+            setMenuState('main');
+            setHoveredMove(null);
+            setPendingMega(false);
+            setPendingZMove(false);
+          }}
+          style={{ ...menuBtn('#c03030'), padding: '6px 14px', fontSize: '13px', width: 'auto', opacity: isAnimatingTurn ? 0.65 : 1, cursor: isAnimatingTurn ? 'not-allowed' : 'pointer' }}
         >
           🔄 New Battle
         </button>
@@ -499,11 +587,23 @@ export function BattlePage() {
         {/* Opponent sprites — upper right, on platform */}
         <div style={{ position: 'absolute', top: '5%', right: '5%', display: 'flex', gap: '6px', alignItems: 'flex-end' }}>
           {opponentActives.map((battler, i) => (
-            <div key={`osp_${i}`} style={{ textAlign: 'center', cursor: 'pointer' }} onClick={() => setTargetSlot(i)}>
+            <div
+              key={`osp_${i}`}
+              style={{ textAlign: 'center', cursor: actionUiDisabled ? 'default' : 'pointer' }}
+              onClick={() => { if (!actionUiDisabled) setTargetSlot(i); }}
+            >
               <img
                 src={battler.spriteUrl}
                 alt={battler.species.name}
-                style={{ width: `${spriteSize}px`, height: `${spriteSize}px`, objectFit: 'contain', opacity: battler.hp <= 0 ? 0.25 : 1, imageRendering: 'pixelated' }}
+                style={{
+                  width: `${spriteSize}px`,
+                  height: `${spriteSize}px`,
+                  objectFit: 'contain',
+                  opacity: battler.hp <= 0 ? 0.25 : 1,
+                  imageRendering: 'pixelated',
+                  transform: activeAnimation?.side === 'opponent' && activeAnimation.slot === i ? 'translateX(-14px) translateY(-2px)' : 'translateX(0)',
+                  transition: 'transform 0.18s ease-out',
+                }}
               />
               {targetSlot === i && battler.hp > 0 && (
                 <div style={{ height: '3px', background: '#e83030', borderRadius: '2px', margin: '1px auto 0', width: '60%' }} />
@@ -517,13 +617,21 @@ export function BattlePage() {
           {playerActives.map((battler, i) => (
             <div
               key={`psp_${i}`}
-              style={{ textAlign: 'center', cursor: state.format > 1 ? 'pointer' : 'default' }}
-              onClick={() => { if (state.format > 1) setPlayerSlot(i); }}
+              style={{ textAlign: 'center', cursor: state.format > 1 && !actionUiDisabled ? 'pointer' : 'default' }}
+              onClick={() => { if (state.format > 1 && !actionUiDisabled) setPlayerSlot(i); }}
             >
               <img
                 src={battler.spriteUrl}
                 alt={battler.species.name}
-                style={{ width: `${spriteSize}px`, height: `${spriteSize}px`, objectFit: 'contain', opacity: battler.hp <= 0 ? 0.25 : 1, transform: 'scaleX(-1)', imageRendering: 'pixelated' }}
+                style={{
+                  width: `${spriteSize}px`,
+                  height: `${spriteSize}px`,
+                  objectFit: 'contain',
+                  opacity: battler.hp <= 0 ? 0.25 : 1,
+                  transform: activeAnimation?.side === 'player' && activeAnimation.slot === i ? 'scaleX(-1) translateX(-14px) translateY(-2px)' : 'scaleX(-1)',
+                  transition: 'transform 0.18s ease-out',
+                  imageRendering: 'pixelated',
+                }}
               />
               {playerSlot === i && state.format > 1 && (
                 <div style={{ height: '3px', background: '#3878e8', borderRadius: '2px', margin: '1px auto 0', width: '60%' }} />
@@ -597,9 +705,9 @@ export function BattlePage() {
           <div>
             {menuState === 'main' && (
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px' }}>
-                <button onClick={() => setMenuState('fight')} style={menuBtn('#d03030')}>⚔️ FIGHT</button>
+                <button disabled={actionUiDisabled} onClick={() => setMenuState('fight')} style={{ ...menuBtn('#d03030'), opacity: actionUiDisabled ? 0.6 : 1, cursor: actionUiDisabled ? 'not-allowed' : 'pointer' }}>⚔️ FIGHT</button>
                 <button style={{ ...menuBtn('#909090'), cursor: 'not-allowed', opacity: 0.6 }}>🎒 BAG</button>
-                <button onClick={() => setMenuState('pokemon')} style={menuBtn('#2888a0')}>🔄 POKÉMON</button>
+                <button disabled={actionUiDisabled} onClick={() => setMenuState('pokemon')} style={{ ...menuBtn('#2888a0'), opacity: actionUiDisabled ? 0.6 : 1, cursor: actionUiDisabled ? 'not-allowed' : 'pointer' }}>🔄 POKÉMON</button>
                 <button style={{ ...menuBtn('#909090'), cursor: 'not-allowed', opacity: 0.6 }}>🏃 RUN</button>
               </div>
             )}
@@ -612,6 +720,7 @@ export function BattlePage() {
                     {playerActives.map((b, i) => (
                       <button
                         key={i}
+                        disabled={actionUiDisabled}
                         onClick={() => setPlayerSlot(i)}
                         style={{
                           padding: '3px 9px',
@@ -621,8 +730,9 @@ export function BattlePage() {
                           borderRadius: '4px',
                           background: playerSlot === i ? '#3870e0' : '#d0d0d0',
                           color: playerSlot === i ? 'white' : '#282828',
-                          cursor: 'pointer',
+                          cursor: actionUiDisabled ? 'not-allowed' : 'pointer',
                           letterSpacing: '0.3px',
+                          opacity: actionUiDisabled ? 0.6 : 1,
                         }}
                       >
                         {b.species.name.substring(0, TAB_NAME_LEN).toUpperCase()}
@@ -638,6 +748,7 @@ export function BattlePage() {
                     return (
                       <button
                         key={move.name}
+                        disabled={actionUiDisabled}
                         onClick={() => executeTurn(move)}
                         onMouseEnter={() => setHoveredMove(move)}
                         onMouseLeave={() => setHoveredMove(null)}
@@ -650,11 +761,12 @@ export function BattlePage() {
                           fontSize: '11px',
                           letterSpacing: '0.3px',
                           padding: '9px 4px',
-                          cursor: 'pointer',
+                          cursor: actionUiDisabled ? 'not-allowed' : 'pointer',
                           textShadow: '1px 1px 0 rgba(0,0,0,0.45)',
                           boxShadow: `0 3px 0 rgba(0,0,0,0.35)`,
                           lineHeight: 1.2,
                           textTransform: 'uppercase',
+                          opacity: actionUiDisabled ? 0.6 : 1,
                         }}
                       >
                         {move.name}
@@ -667,12 +779,15 @@ export function BattlePage() {
                 <div style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
                   {!state.playerMegaUsed && (
                     <button
+                      disabled={actionUiDisabled}
                       onClick={() => setPendingMega((v) => !v)}
                       style={{
                         ...backBtn,
                         background: pendingMega ? '#d050b0' : '#888898',
                         fontSize: '11px',
                         padding: '5px 8px',
+                        cursor: actionUiDisabled ? 'not-allowed' : 'pointer',
+                        opacity: actionUiDisabled ? 0.6 : 1,
                       }}
                     >
                       ✧ MEGA
@@ -680,12 +795,15 @@ export function BattlePage() {
                   )}
                   {!state.playerZUsed && (
                     <button
+                      disabled={actionUiDisabled}
                       onClick={() => setPendingZMove((v) => !v)}
                       style={{
                         ...backBtn,
                         background: pendingZMove ? '#7038d0' : '#888898',
                         fontSize: '11px',
                         padding: '5px 8px',
+                        cursor: actionUiDisabled ? 'not-allowed' : 'pointer',
+                        opacity: actionUiDisabled ? 0.6 : 1,
                       }}
                     >
                       ⚡ Z
@@ -693,8 +811,9 @@ export function BattlePage() {
                   )}
                   <div style={{ flex: 1 }} />
                   <button
+                    disabled={actionUiDisabled}
                     onClick={() => { setMenuState('main'); setHoveredMove(null); setPendingMega(false); setPendingZMove(false); }}
-                    style={backBtn}
+                    style={{ ...backBtn, cursor: actionUiDisabled ? 'not-allowed' : 'pointer', opacity: actionUiDisabled ? 0.6 : 1 }}
                   >
                     ◀ BACK
                   </button>
@@ -710,6 +829,7 @@ export function BattlePage() {
                     {playerActives.map((b, i) => (
                       <button
                         key={i}
+                        disabled={actionUiDisabled}
                         onClick={() => setPlayerSlot(i)}
                         style={{
                           padding: '3px 9px',
@@ -719,7 +839,8 @@ export function BattlePage() {
                           borderRadius: '4px',
                           background: playerSlot === i ? '#3870e0' : '#d0d0d0',
                           color: playerSlot === i ? 'white' : '#282828',
-                          cursor: 'pointer',
+                          cursor: actionUiDisabled ? 'not-allowed' : 'pointer',
+                          opacity: actionUiDisabled ? 0.6 : 1,
                         }}
                       >
                         {b.species.name.substring(0, TAB_NAME_LEN).toUpperCase()}
@@ -738,15 +859,15 @@ export function BattlePage() {
                     return (
                       <button
                         key={index}
-                        onClick={() => canSwitch && doSwitch(index)}
-                        disabled={!canSwitch}
+                        onClick={() => canSwitch && !actionUiDisabled && doSwitch(index)}
+                        disabled={!canSwitch || actionUiDisabled}
                         style={{
                           background: isActive ? '#c0dcf8' : isFainted ? '#e0e0e0' : '#f8f8f0',
                           border: `2px solid ${isActive ? '#3870e0' : '#383838'}`,
                           borderRadius: '8px',
                           padding: '5px 3px',
                           opacity: isFainted ? 0.5 : 1,
-                          cursor: canSwitch ? 'pointer' : 'default',
+                          cursor: canSwitch && !actionUiDisabled ? 'pointer' : 'default',
                           textAlign: 'center',
                           boxShadow: canSwitch ? '0 2px 0 rgba(0,0,0,0.25)' : 'none',
                         }}
@@ -768,7 +889,13 @@ export function BattlePage() {
                     );
                   })}
                 </div>
-                <button onClick={() => setMenuState('main')} style={{ ...backBtn, width: '100%', textAlign: 'center' }}>◀ BACK</button>
+                <button
+                  disabled={actionUiDisabled}
+                  onClick={() => setMenuState('main')}
+                  style={{ ...backBtn, width: '100%', textAlign: 'center', cursor: actionUiDisabled ? 'not-allowed' : 'pointer', opacity: actionUiDisabled ? 0.6 : 1 }}
+                >
+                  ◀ BACK
+                </button>
               </div>
             )}
           </div>
