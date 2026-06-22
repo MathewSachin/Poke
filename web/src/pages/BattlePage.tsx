@@ -10,6 +10,12 @@ type Weather = 'None' | 'Sun' | 'Rain' | 'Sandstorm' | 'Hail';
 type MenuState = 'main' | 'fight' | 'pokemon';
 type ActiveAnimation = { side: 'player' | 'opponent'; slot: number } | null;
 
+const ATTACK_PUSH_X = 14;
+const ATTACK_PUSH_Y = -2;
+const ATTACK_RECOVER_MS = 220;
+const TURN_ATTACK_FRAME_MS = 620;
+const TURN_STATUS_FRAME_MS = 340;
+
 interface SideState {
   party: BattlePokemon[];
   active: number[];
@@ -431,9 +437,9 @@ export function BattlePage() {
       setActiveAnimation(frame.animation);
       actionTimerRef.current = window.setTimeout(() => {
         setActiveAnimation(null);
-      }, 220);
+      }, ATTACK_RECOVER_MS);
       frameIndex += 1;
-      frameTimerRef.current = window.setTimeout(playFrame, frame.animation ? 620 : 340);
+      frameTimerRef.current = window.setTimeout(playFrame, frame.animation ? TURN_ATTACK_FRAME_MS : TURN_STATUS_FRAME_MS);
     };
     playFrame();
   }
@@ -601,7 +607,7 @@ export function BattlePage() {
                   objectFit: 'contain',
                   opacity: battler.hp <= 0 ? 0.25 : 1,
                   imageRendering: 'pixelated',
-                  transform: activeAnimation?.side === 'opponent' && activeAnimation.slot === i ? 'translateX(-14px) translateY(-2px)' : 'translateX(0)',
+                  transform: activeAnimation?.side === 'opponent' && activeAnimation.slot === i ? `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)` : 'translateX(0)',
                   transition: 'transform 0.18s ease-out',
                 }}
               />
@@ -628,7 +634,7 @@ export function BattlePage() {
                   height: `${spriteSize}px`,
                   objectFit: 'contain',
                   opacity: battler.hp <= 0 ? 0.25 : 1,
-                  transform: activeAnimation?.side === 'player' && activeAnimation.slot === i ? 'scaleX(-1) translateX(-14px) translateY(-2px)' : 'scaleX(-1)',
+                  transform: activeAnimation?.side === 'player' && activeAnimation.slot === i ? `scaleX(-1) translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)` : 'scaleX(-1)',
                   transition: 'transform 0.18s ease-out',
                   imageRendering: 'pixelated',
                 }}
