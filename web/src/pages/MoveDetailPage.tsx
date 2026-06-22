@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom';
-import { MOVES } from '../data/gameData';
+import { MOVES, POKEMON, spriteUrl } from '../data/gameData';
 import { TypeBadge } from '../components/TypeBadge';
 
 export function MoveDetailPage() {
@@ -24,6 +24,8 @@ export function MoveDetailPage() {
     { label: 'Priority', value: move.priority !== 0 ? `${move.priority > 0 ? '+' : ''}${move.priority}` : '0' },
   ];
 
+  const learners = POKEMON.filter((p) => p.learnset.includes(move.name));
+
   return (
     <div className="max-w-xl mx-auto px-4 py-6">
       <Link to="/moves" className="text-red-500 hover:underline text-sm mb-4 inline-block">← Moves</Link>
@@ -38,6 +40,26 @@ export function MoveDetailPage() {
             </div>
           ))}
         </dl>
+
+        <section className="mt-6">
+          <h2 className="font-semibold text-gray-700 mb-2">Pokémon that learn this move</h2>
+          {learners.length === 0 ? (
+            <p className="text-sm text-gray-400">No Pokémon currently mapped to this move.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {learners.map((pokemon) => (
+                <Link
+                  key={`${pokemon.number}_${pokemon.name}`}
+                  to={`/pokedex/${pokemon.number}_${encodeURIComponent(pokemon.name)}`}
+                  className="flex items-center gap-2 border border-gray-200 rounded-xl px-3 py-2 hover:bg-gray-50"
+                >
+                  <img src={spriteUrl(pokemon.number)} alt={pokemon.name} className="w-8 h-8 object-contain" />
+                  <span className="text-sm font-medium text-gray-700">{pokemon.name}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </section>
       </div>
     </div>
   );
