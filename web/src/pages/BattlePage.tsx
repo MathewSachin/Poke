@@ -12,6 +12,7 @@ type ActiveAnimation = { side: 'player' | 'opponent'; slot: number } | null;
 
 const ATTACK_PUSH_X = 14;
 const ATTACK_PUSH_Y = -2;
+const ATTACK_OFFSET_TRANSFORM = `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
 const ATTACK_RECOVER_MS = 220;
 const TURN_ATTACK_FRAME_MS = 620;
 const TURN_STATUS_FRAME_MS = 340;
@@ -153,11 +154,11 @@ function clearTurnTimeouts(
   actionTimerRef: { current: number | null },
   frameTimerRef: { current: number | null },
 ): void {
-  if (actionTimerRef.current != null) {
+  if (actionTimerRef.current !== null) {
     window.clearTimeout(actionTimerRef.current);
     actionTimerRef.current = null;
   }
-  if (frameTimerRef.current != null) {
+  if (frameTimerRef.current !== null) {
     window.clearTimeout(frameTimerRef.current);
     frameTimerRef.current = null;
   }
@@ -257,6 +258,13 @@ export function BattlePage() {
   const frameTimerRef = useRef<number | null>(null);
 
   useEffect(() => () => clearTurnTimeouts(actionTimerRef, frameTimerRef), []);
+
+  const resetTurnControls = () => {
+    setPendingMega(false);
+    setPendingZMove(false);
+    setMenuState('main');
+    setHoveredMove(null);
+  };
 
   const playerParty = state.player.party;
   const opponentParty = state.opponent.party;
@@ -417,10 +425,7 @@ export function BattlePage() {
       turnFrames.push({ state: finalState, animation: null });
     }
 
-    setPendingMega(false);
-    setPendingZMove(false);
-    setMenuState('main');
-    setHoveredMove(null);
+    resetTurnControls();
 
     if (turnFrames.length === 0) {
       setState(finalState);
@@ -438,9 +443,10 @@ export function BattlePage() {
       }
       setState(frame.state);
       setActiveAnimation(frame.animation);
-      actionTimerRef.current = window.setTimeout(() => {
+      const clearAttackAnimation = () => {
         setActiveAnimation(null);
-      }, ATTACK_RECOVER_MS);
+      };
+      actionTimerRef.current = window.setTimeout(clearAttackAnimation, ATTACK_RECOVER_MS);
       frameTimerRef.current = window.setTimeout(() => playFrame(frameIndex + 1), frame.animation ? TURN_ATTACK_FRAME_MS : TURN_STATUS_FRAME_MS);
     };
     playFrame(0);
@@ -470,10 +476,7 @@ export function BattlePage() {
     setState(newBattle(format));
     setPlayerSlot(0);
     setTargetSlot(0);
-    setMenuState('main');
-    setPendingMega(false);
-    setPendingZMove(false);
-    setHoveredMove(null);
+    resetTurnControls();
   }
 
   const latestMessage = isAnimatingTurn ? 'Actions are playing out...' : (state.log[state.log.length - 1] ?? 'A battle started!');
@@ -487,13 +490,12 @@ export function BattlePage() {
   const actionUiDisabled = state.over || isAnimatingTurn;
   const spriteAttackTransform = (side: 'player' | 'opponent', slot: number) => {
     const isAttacking = activeAnimation?.side === side && activeAnimation.slot === slot;
-    const attackOffset = `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
     if (side === 'player') {
       if (!isAttacking) return 'scaleX(-1)';
-      return `scaleX(-1) ${attackOffset}`;
+      return `scaleX(-1) ${ATTACK_OFFSET_TRANSFORM}`;
     }
     if (!isAttacking) return 'none';
-    return attackOffset;
+    return ATTACK_OFFSET_TRANSFORM;
   };
 
   // Shared button base style
@@ -559,10 +561,7 @@ export function BattlePage() {
             setIsAnimatingTurn(false);
             setActiveAnimation(null);
             setState(newBattle(state.format));
-            setMenuState('main');
-            setHoveredMove(null);
-            setPendingMega(false);
-            setPendingZMove(false);
+            resetTurnControls();
           }}
           style={{ ...menuBtn('#c03030'), padding: '6px 14px', fontSize: '13px', width: 'auto', opacity: isAnimatingTurn ? 0.65 : 1, cursor: isAnimatingTurn ? 'not-allowed' : 'pointer' }}
         >
