@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MOVES, POKEMON } from '../data/gameData';
 import { calcDamage, effectivenessLabel, makeBattlePokemon } from '../data/battle';
 import type { BattlePokemon } from '../data/battle';
@@ -138,6 +138,31 @@ function sameActiveSlots(a: number[], b: number[]): boolean {
   return a.every((value, index) => value === b[index]);
 }
 
+function needsFinalFrame(latestFrameState: BattleState | undefined, finalState: BattleState): boolean {
+  if (!latestFrameState) return true;
+  return (
+    latestFrameState.log.length !== finalState.log.length
+    || latestFrameState.over !== finalState.over
+    || latestFrameState.winner !== finalState.winner
+    || !sameActiveSlots(latestFrameState.player.active, finalState.player.active)
+    || !sameActiveSlots(latestFrameState.opponent.active, finalState.opponent.active)
+  );
+}
+
+function clearTurnTimeouts(
+  actionTimerRef: { current: number | null },
+  frameTimerRef: { current: number | null },
+): void {
+  if (actionTimerRef.current != null) {
+    window.clearTimeout(actionTimerRef.current);
+    actionTimerRef.current = null;
+  }
+  if (frameTimerRef.current != null) {
+    window.clearTimeout(frameTimerRef.current);
+    frameTimerRef.current = null;
+  }
+}
+
 function GameHpBar({ hp, maxHp, showNumbers }: { hp: number; maxHp: number; showNumbers?: boolean }) {
   const pct = Math.max(0, Math.min(100, (hp / maxHp) * 100));
   const color = pct > 50 ? '#48d048' : pct > 20 ? '#f8c820' : '#e82010';
@@ -231,18 +256,7 @@ export function BattlePage() {
   const actionTimerRef = useRef<number | null>(null);
   const frameTimerRef = useRef<number | null>(null);
 
-  const clearTurnTimers = useCallback(() => {
-    if (actionTimerRef.current != null) {
-      window.clearTimeout(actionTimerRef.current);
-      actionTimerRef.current = null;
-    }
-    if (frameTimerRef.current != null) {
-      window.clearTimeout(frameTimerRef.current);
-      frameTimerRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => () => clearTurnTimers(), [clearTurnTimers]);
+  useEffect(() => () => clearTurnTimeouts(actionTimerRef, frameTimerRef), []);
 
   const playerParty = state.player.party;
   const opponentParty = state.opponent.party;
@@ -399,14 +413,7 @@ export function BattlePage() {
 
     const finalState = cloneBattleState(next);
     const latestFrameState = turnFrames[turnFrames.length - 1]?.state;
-    if (
-      !latestFrameState
-      || latestFrameState.log.length !== finalState.log.length
-      || latestFrameState.over !== finalState.over
-      || latestFrameState.winner !== finalState.winner
-      || !sameActiveSlots(latestFrameState.player.active, finalState.player.active)
-      || !sameActiveSlots(latestFrameState.opponent.active, finalState.opponent.active)
-    ) {
+    if (needsFinalFrame(latestFrameState, finalState)) {
       turnFrames.push({ state: finalState, animation: null });
     }
 
@@ -420,10 +427,9 @@ export function BattlePage() {
       return;
     }
 
-    clearTurnTimers();
+    clearTurnTimeouts(actionTimerRef, frameTimerRef);
     setIsAnimatingTurn(true);
-    let frameIndex = 0;
-    const playFrame = () => {
+    const playFrame = (frameIndex: number) => {
       const frame = turnFrames[frameIndex];
       if (!frame) {
         setActiveAnimation(null);
@@ -435,10 +441,9 @@ export function BattlePage() {
       actionTimerRef.current = window.setTimeout(() => {
         setActiveAnimation(null);
       }, ATTACK_RECOVER_MS);
-      frameIndex += 1;
-      frameTimerRef.current = window.setTimeout(playFrame, frame.animation ? TURN_ATTACK_FRAME_MS : TURN_STATUS_FRAME_MS);
+      frameTimerRef.current = window.setTimeout(() => playFrame(frameIndex + 1), frame.animation ? TURN_ATTACK_FRAME_MS : TURN_STATUS_FRAME_MS);
     };
-    playFrame();
+    playFrame(0);
   }
 
   function doSwitch(toIndex: number) {
@@ -459,7 +464,7 @@ export function BattlePage() {
   }
 
   function changeFormat(format: BattleFormat) {
-    clearTurnTimers();
+    clearTurnTimeouts(actionTimerRef, frameTimerRef);
     setIsAnimatingTurn(false);
     setActiveAnimation(null);
     setState(newBattle(format));
@@ -482,12 +487,13 @@ export function BattlePage() {
   const actionUiDisabled = state.over || isAnimatingTurn;
   const spriteAttackTransform = (side: 'player' | 'opponent', slot: number) => {
     const isAttacking = activeAnimation?.side === side && activeAnimation.slot === slot;
+    const attackOffset = `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
     if (side === 'player') {
       if (!isAttacking) return 'scaleX(-1)';
-      return `scaleX(-1) translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
+      return `scaleX(-1) ${attackOffset}`;
     }
     if (!isAttacking) return 'none';
-    return `translateX(-${ATTACK_PUSH_X}px) translateY(${ATTACK_PUSH_Y}px)`;
+    return attackOffset;
   };
 
   // Shared button base style
@@ -549,7 +555,7 @@ export function BattlePage() {
         <button
           disabled={isAnimatingTurn}
           onClick={() => {
-            clearTurnTimers();
+            clearTurnTimeouts(actionTimerRef, frameTimerRef);
             setIsAnimatingTurn(false);
             setActiveAnimation(null);
             setState(newBattle(state.format));
